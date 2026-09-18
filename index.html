@@ -402,7 +402,7 @@
                 id: 'rose-quartz',
                 name: 'Rose Quartz',
                 thName: 'โรสควอตซ์',
-                image: './images/stones/rose-quartz.png',
+                image: './rose-quartz.png',
                 power: 'ความรัก',
                 description: 'เสริมเสน่ห์ นำพาความรักที่บริสุทธิ์ เมตตามหานิยม',
                 colorHex: '#FBB6CE',
@@ -414,7 +414,7 @@
                 id: 'peach-quartz',
                 name: 'Peach Quartz',
                 thName: 'พีชควอตซ์',
-                image: './images/stones/peach-quartz.png',
+                image: './peach-quartz.png',
                 power: 'ความอ่อนโยน',
                 description: 'ปลอบประโลมจิตใจ เพิ่มเสน่ห์ความอ่อนหวาน นุ่มนวล',
                 colorHex: '#FFC0A9',
@@ -426,7 +426,7 @@
                 id: 'sunstone',
                 name: 'Sunstone',
                 thName: 'ซันสโตน',
-                image: './images/stones/sunstone.png',
+                image: './sunstone.png',
                 power: 'ความสุข',
                 description: 'ดึงดูดพลังบวก ความสดใส เพิ่มความมั่นใจในตัวเอง',
                 colorHex: '#DDA17E',
@@ -438,7 +438,7 @@
                 id: 'rhodonite',
                 name: 'Rhodonite',
                 thName: 'โรโดไนท์',
-                image: './images/stones/rhodonite.png',
+                image: './rhodonite.png',
                 power: 'ความกล้าหาญ',
                 description: 'เยียวยาแผลใจ สร้างความเข้มแข็ง เสริมความเข้าใจในรัก',
                 colorHex: '#C56277',
@@ -450,7 +450,7 @@
                 id: 'white-quartz',
                 name: 'White Quartz',
                 thName: 'ไวท์ควอตซ์',
-                image: './images/stones/white-quartz.png',
+                image: './white-quartz.png',
                 power: 'ความบริสุทธิ์',
                 description: 'ชำระล้างพลังงานลบ สร้างสมาธิและความโปร่งใสในจิตใจ',
                 colorHex: '#F0EFF4',
@@ -462,7 +462,7 @@
                 id: 'amethyst',
                 name: 'Amethyst',
                 thName: 'แอเมทิสต์',
-                image: './images/stones/amethyst.png',
+                image: './amethyst.png',
                 power: 'สติปัญญา',
                 description: 'ขจัดความเครียด ขยายสติปัญญาและลางสังหรณ์',
                 colorHex: '#7C5295',
@@ -474,7 +474,7 @@
                 id: 'amazonite',
                 name: 'Amazonite',
                 thName: 'อเมโซไนต์',
-                image: './images/stones/amazonite.png',
+                image: './amazonite.png',
                 power: 'ความหวัง การเริ่มต้นใหม่',
                 description: 'นำพาความหวัง สื่อสารราบรื่น เหมาะกับการเริ่มต้นสิ่งใหม่',
                 colorHex: '#93D9D9',
@@ -486,7 +486,7 @@
                 id: 'red-agate',
                 name: 'Red Agate',
                 thName: 'เรดอาเกต',
-                image: './images/stones/red-agate.png',
+                image: './red-agate.png',
                 power: 'การคุ้มครอง',
                 description: 'สร้างเกราะป้องกันสิ่งชั่วร้าย เสริมพละกำลังและความมั่นคง',
                 colorHex: '#C0392B',
@@ -498,7 +498,7 @@
                 id: 'moss-agate',
                 name: 'Moss Agate',
                 thName: 'มอสอาเกต',
-                image: './images/stones/moss-agate.png',
+                image: './moss-agate.png',
                 power: 'ความมั่งคั่ง',
                 description: 'หินแห่งความอุดมสมบูรณ์ ดึงดูดทรัพย์สินและการเติบโต',
                 colorHex: '#4A6B53',
@@ -510,7 +510,7 @@
                 id: 'unakite',
                 name: 'Unakite',
                 thName: 'ยูนาไคต์',
-                image: './images/stones/unakite.png',
+                image: './unakite.png',
                 power: 'โชคลาภ',
                 description: 'หินถูกหวย นำพาโชคลาภแบบไม่คาดฝัน และปล่อยวางความทุกข์',
                 colorHex: '#818E5E',
@@ -696,8 +696,8 @@
 
                 slotBtn.innerHTML = `
                     <span class="text-[10px] text-stone-400 font-medium">ตำแหน่งที่ ${idx + 1}</span>
-                    <div class="w-8 h-8 rounded-full shadow-inner flex items-center justify-center border border-white" style="background: radial-gradient(circle at 35% 35%, ${stone.colorHex}, ${stone.secondaryColor});">
-                    </div>
+                    <img src="${stone.image}" alt="${stone.name}" class="w-8 h-8 rounded-full shadow-inner object-cover border border-white" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="w-8 h-8 rounded-full shadow-inner flex items-center justify-center border border-white" style="display:none;background: radial-gradient(circle at 35% 35%, ${stone.colorHex}, ${stone.secondaryColor});"></div>
                     <span class="text-[10px] text-stone-700 font-medium truncate max-w-[60px]">${stone.name}</span>
                 `;
 
