@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>beloved. | Custom Gemstone Bracelet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Prompt:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            terracotta: '#C86D51',
+                            terracottaDark: '#9E4C33',
+                            cream: '#FAF7F2',
+                            warmBg: '#F5EFEE',
+                            charcoal: '#2D2825',
+                            sand: '#E6DDD4',
+                            beigeLight: '#F2ECE4',
+                            gold: '#D4AF37'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Prompt"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #FAF7F2;
+            color: #2D2825;
+            -webkit-font-smoothing: antialiased;
+        }
+        .font-brand {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        /* Custom subtle scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D8CEC4;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C86D51;
+        }
+        .stone-shadow {
+            box-shadow: 0 10px 25px -5px rgba(200, 109, 81, 0.15);
+        }
+        /* Pulse glow animation for selected slots */
+        @keyframes subtleGlow {
+            0%, 100% { border-color: rgba(200, 109, 81, 0.4); }
+            50% { border-color: rgba(200, 109, 81, 1); }
+        }
+        .active-slot {
+            animation: subtleGlow 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-terracotta selection:text-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-brand-cream/90 backdrop-blur-md border-b border-brand-sand/60 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <a href="#" class="text-3xl font-brand font-medium tracking-tight text-brand-terracotta hover:opacity-90 transition">
+                    beloved.
+                </a>
+                <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-stone-400 pl-3 border-l border-stone-300">Handcrafted Gemstones</span>
+            </div>
+
+            <nav class="flex items-center space-x-6 text-sm">
+                <button onclick="scrollToSection('customizer')" class="hover:text-brand-terracotta transition font-light hidden md:inline-block">
+                    ออกแบบกำไล
+                </button>
+                <button onclick="scrollToSection('preset-section')" class="hover:text-brand-terracotta transition font-light hidden md:inline-block">
+                    คอลเลกชันยอดนิยม
+                </button>
+                <button onclick="scrollToSection('stone-guide')" class="hover:text-brand-terracotta transition font-light hidden md:inline-block">
+                    ความหมายหินแท้
+                </button>
+                <button onclick="openCartModal()" class="relative bg-brand-terracotta text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-light shadow-sm hover:bg-brand-terracottaDark transition flex items-center gap-2">
+                    <i class="fa-solid fa-gem"></i>
+                    <span>สรุปแบบที่เลือก</span>
+                    <span id="badge-count" class="bg-white text-brand-terracotta text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">5</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="relative py-8 sm:py-12 bg-gradient-to-b from-brand-cream via-brand-beigeLight/40 to-brand-cream overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <span class="inline-block px-3 py-1 bg-brand-terracotta/10 text-brand-terracotta text-xs tracking-widest uppercase rounded-full mb-3 font-medium">
+                Custom Energy Jewelry
+            </span>
+            <h1 class="font-brand text-4xl sm:text-6xl text-brand-charcoal font-normal tracking-wide leading-tight mb-4">
+                ร้อยเรียงพลังแห่งธรรมชาติ ในแบบที่เป็นคุณ
+            </h1>
+            <p class="text-stone-600 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                เลือกหินมงคลแท้ธรรมชาติและสีสายถักไหมฝรั่งเศสที่คุณชอบ เสริมพลังชีวิตในด้านที่ต้องการ ทั้งความรัก ความมั่งคั่ง โชคลาภ และสติปัญญา
+            </p>
+        </div>
+    </section>
+
+    <!-- MAIN CUSTOMIZER SECTION -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow">
+        <div id="customizer" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- LEFT COLUMN: Canvas Preview & Energy Summary (Sticky on Desktop) -->
+            <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
+                <!-- Visualizer Card -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-sand/70 shadow-sm relative overflow-hidden text-center">
+                    <div class="absolute top-4 left-4 text-xs font-light tracking-wider text-stone-400">
+                        <i class="fa-solid fa-eye text-brand-terracotta mr-1"></i> ตัวอย่างสร้อยข้อมือ
+                    </div>
+
+                    <!-- Reset & Randomize Buttons -->
+                    <div class="absolute top-4 right-4 flex gap-2">
+                        <button onclick="randomizeDesign()" title="สุ่มแบบหิน" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 text-xs flex items-center justify-center transition">
+                            <i class="fa-solid fa-dice"></i>
+                        </button>
+                        <button onclick="resetDesign()" title="เริ่มต้นใหม่" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 text-xs flex items-center justify-center transition">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+
+                    <!-- Canvas Container -->
+                    <div class="relative w-full aspect-square max-w-[360px] mx-auto my-2 flex items-center justify-center">
+                        <canvas id="braceletCanvas" width="700" height="700" class="w-full h-full object-contain cursor-grab active:cursor-grabbing"></canvas>
+                    </div>
+
+                    <!-- Info Tag under canvas -->
+                    <p class="text-xs text-stone-400 font-light mb-4">
+                        *รูปภาพจำลองเพื่อความเข้าใจ สายไหมถักปรับขนาดได้ 14 - 20 ซม.
+                    </p>
+
+                    <!-- Quick Energy Badges -->
+                    <div class="border-t border-brand-sand/50 pt-4">
+                        <div class="text-xs uppercase tracking-widest text-stone-400 mb-2 font-medium">พลังที่ได้รับจากสายนี้</div>
+                        <div id="active-energies-list" class="flex flex-wrap gap-1.5 justify-center">
+                            <!-- Dynamic Badges Inserted Here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price & Action Box -->
+                <div class="bg-brand-beigeLight/60 rounded-2xl p-5 border border-brand-sand flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div>
+                        <div class="text-xs text-stone-500 font-light">ราคาประมาณการ (รวมตกแต่ง)</div>
+                        <div class="text-2xl font-brand font-semibold text-brand-terracotta">
+                            ฿<span id="total-price">890</span>
+                        </div>
+                    </div>
+                    <button onclick="openCartModal()" class="w-full sm:w-auto bg-brand-terracotta hover:bg-brand-terracottaDark text-white px-6 py-3 rounded-xl font-light text-sm shadow-md transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-regular fa-paper-plane mr-2"></i> สั่งทำสร้อยนี้
+                    </button>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Builder Options & Stone Selector -->
+            <div class="lg:col-span-7 space-y-8">
+                
+                <!-- STEP 1: Select Bead Count & Layout -->
+                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">1</span>
+                            <h2 class="text-base font-medium text-brand-charcoal">เลือกจังหวะหิน ( Bead Slots )</h2>
+                        </div>
+                        <span class="text-xs text-stone-400">คลิกที่เม็ดที่ต้องการเปลี่ยน</span>
+                    </div>
+
+                    <!-- Slot Layout Selector Buttons -->
+                    <div class="flex gap-2 mb-5 border-b border-stone-100 pb-4">
+                        <button onclick="setSlotCount(3)" id="btn-slot-3" class="px-4 py-1.5 text-xs rounded-full border border-stone-200 text-stone-600 hover:border-brand-terracotta transition">
+                            3 เม็ดเรียง
+                        </button>
+                        <button onclick="setSlotCount(5)" id="btn-slot-5" class="px-4 py-1.5 text-xs rounded-full bg-brand-terracotta text-white font-medium border border-brand-terracotta shadow-sm transition">
+                            5 เม็ดเน้นพลัง (ยอดนิยม)
+                        </button>
+                        <button onclick="setSlotCount(7)" id="btn-slot-7" class="px-4 py-1.5 text-xs rounded-full border border-stone-200 text-stone-600 hover:border-brand-terracotta transition">
+                            7 เม็ดเต็มวง
+                        </button>
+                    </div>
+
+                    <!-- Slot Selection Interactive Row -->
+                    <div id="slots-container" class="flex items-center justify-center gap-2 sm:gap-3 py-2 overflow-x-auto">
+                        <!-- Dynamic Slot Buttons generated via JS -->
+                    </div>
+                    <div class="text-center mt-3">
+                        <span id="active-slot-name" class="text-xs font-light text-brand-terracotta italic">กำลังเลือกหินตำแหน่งที่ 3</span>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Choose Gemstone -->
+                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">2</span>
+                            <h2 class="text-base font-medium text-brand-charcoal">เลือกชนิดหินมงคลแท้</h2>
+                        </div>
+
+                        <!-- Energy Filter Tabs -->
+                        <div class="flex flex-wrap gap-1 text-[11px]">
+                            <button onclick="filterStones('all')" class="filter-btn active px-2.5 py-1 rounded-md bg-brand-charcoal text-white transition">ทั้งหมด</button>
+                            <button onclick="filterStones('ความรัก')" class="filter-btn px-2.5 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition">ความรัก</button>
+                            <button onclick="filterStones('ความมั่งคั่ง')" class="filter-btn px-2.5 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition">โชคลาภ/เงิน</button>
+                            <button onclick="filterStones('ความหวัง')" class="filter-btn px-2.5 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition">การงาน/โอกาส</button>
+                        </div>
+                    </div>
+
+                    <!-- Gemstones Grid -->
+                    <div id="stones-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <!-- Dynamic Stone Cards rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- STEP 3: Cord Color & Style -->
+                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">3</span>
+                        <h2 class="text-base font-medium text-brand-charcoal">เลือกสีสายไหมถักฝรั่งเศส (Macramé Cord)</h2>
+                    </div>
+
+                    <div id="cords-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        <!-- Cord Cards Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- STEP 4: Spacers & Center Charm -->
+                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">4</span>
+                        <h2 class="text-base font-medium text-brand-charcoal">ตัวคั่น & จี้ตรงกลาง (Charm & Spacers)</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Spacers Selector -->
+                        <div>
+                            <label class="block text-xs text-stone-500 mb-2">เม็ดคั่นระหว่างหิน (Spacers)</label>
+                            <div class="grid grid-cols-3 gap-2" id="spacers-selector">
+                                <!-- Spacers rendered by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Center Charm Selector -->
+                        <div>
+                            <label class="block text-xs text-stone-500 mb-2">จี้ประดับตรงกลาง (Center Charm)</label>
+                            <div class="grid grid-cols-3 gap-2" id="charms-selector">
+                                <!-- Charms rendered by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- PRESETS SECTION -->
+        <section id="preset-section" class="mt-20 pt-10 border-t border-brand-sand/60">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase tracking-widest text-brand-terracotta font-medium">Curated Collections</span>
+                <h2 class="font-brand text-3xl sm:text-4xl text-brand-charcoal mt-1">คอลเลกชันยอดนิยม แนะนำโดย beloved.</h2>
+                <p class="text-stone-500 font-light text-xs sm:text-sm mt-2">จัดเซตลงตัวทั้งโทนสีและพลังมงคล คลิกเพื่อเลือกนำไปปรับแต่งต่อได้เลย</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="presets-grid">
+                <!-- Preset Cards Rendered via JS -->
+            </div>
+        </section>
+
+        <!-- GEMSTONE MEANING GUIDE SECTION -->
+        <section id="stone-guide" class="mt-20 pt-10 border-t border-brand-sand/60">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase tracking-widest text-brand-terracotta font-medium">Genuine Gemstone Meaning</span>
+                <h2 class="font-brand text-3xl sm:text-4xl text-brand-charcoal mt-1">คู่มือพลังหินแท้ธรรมชาติ</h2>
+                <p class="text-stone-500 font-light text-xs sm:text-sm mt-2">คัดสรรหินธรรมชาติเกรดพรีเมียม แต่ละเม็ดมีเอกลักษณ์เฉพาะตัว</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="guide-grid">
+                <!-- Detailed Stone Cards Rendered via JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- ORDER SUMMARY MODAL -->
+    <div id="cartModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="bg-brand-cream rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-brand-sand relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCartModal()" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700 text-lg w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="text-3xl font-brand text-brand-terracotta">beloved.</span>
+                <h3 class="text-lg font-medium text-brand-charcoal mt-1">สรุปแบบสร้อยข้อมือ Custom</h3>
+                <p class="text-xs text-stone-500 font-light">พร้อมส่งข้อมูลสั่งทำผ่าน LINE / IG</p>
+            </div>
+
+            <!-- Preview Image Snapshot & Details -->
+            <div class="bg-white rounded-2xl p-4 border border-brand-sand mb-5 flex items-center gap-4">
+                <img id="modal-bracelet-img" src="" alt="Bracelet Preview" class="w-24 h-24 object-contain rounded-lg bg-brand-cream border border-stone-100">
+                <div class="text-xs space-y-1 flex-1">
+                    <div class="font-medium text-sm text-brand-charcoal" id="modal-bracelet-title">สร้อยข้อมือ Custom 5 เม็ด</div>
+                    <div class="text-stone-500">สาย: <span id="modal-cord-name" class="font-normal text-stone-800">-</span></div>
+                    <div class="text-stone-500">เม็ดคั่น: <span id="modal-spacer-name" class="font-normal text-stone-800">-</span></div>
+                    <div class="text-stone-500">จี้ตรงกลาง: <span id="modal-charm-name" class="font-normal text-stone-800">-</span></div>
+                </div>
+            </div>
+
+            <!-- Selected Gems Breakdown -->
+            <div class="space-y-2 mb-5">
+                <label class="text-xs font-medium text-stone-600 block">รายละเอียดหินแท้ในเส้นนี้:</label>
+                <div id="modal-stones-list" class="space-y-1 text-xs">
+                    <!-- Stone items -->
+                </div>
+            </div>
+
+            <!-- Combined Blessings Summary -->
+            <div class="bg-brand-beigeLight p-3.5 rounded-xl border border-brand-sand/60 mb-5">
+                <div class="text-xs font-medium text-brand-terracotta mb-1">
+                    <i class="fa-solid fa-sparkles mr-1"></i> สรุปพลังรวมของกำไลเส้นนี้:
+                </div>
+                <p id="modal-blessings-summary" class="text-xs text-stone-700 leading-relaxed font-light">
+                    -
+                </p>
+            </div>
+
+            <!-- Wrist Size Input -->
+            <div class="mb-5">
+                <label class="block text-xs font-medium text-stone-700 mb-1">
+                    ขนาดข้อมือของคุณ (ซม.) <span class="text-brand-terracotta">*</span>
+                </label>
+                <div class="flex gap-2">
+                    <select id="wrist-size" class="w-full text-xs bg-white border border-stone-300 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-terracotta focus:outline-none">
+                        <option value="13-14 cm (ข้อมือเล็กมาก)">13-14 cm (ข้อมือเล็กพิเศษ)</option>
+                        <option value="14-15 cm (มาตรฐานผู้หญิง)" selected>14-15 cm (ขนาดมาตรฐานผู้หญิง)</option>
+                        <option value="15-16 cm (หลวมนิดๆ)">15-16 cm (ชอบใส่สบายๆ)</option>
+                        <option value="16-17 cm (ข้อมืออวบ)">16-17 cm (ข้อมืออวบ)</option>
+                        <option value="17-19 cm (ข้อมือผู้ชาย)">17-19 cm (ข้อมือผู้ชาย)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Total Price & Actions -->
+            <div class="pt-4 border-t border-brand-sand flex items-center justify-between mb-5">
+                <span class="text-sm font-light text-stone-600">ราคารวมสุทธิ</span>
+                <span class="text-2xl font-brand font-bold text-brand-terracotta">฿<span id="modal-total-price">890</span></span>
+            </div>
+
+            <div class="space-y-2">
+                <button onclick="copyOrderDetails()" class="w-full bg-brand-terracotta hover:bg-brand-terracottaDark text-white py-3 rounded-xl font-light text-sm shadow-md transition flex items-center justify-center gap-2">
+                    <i class="fa-regular fa-copy"></i> คัดลอกรายละเอียดเพื่อส่งสั่งซื้อทาง LINE / IG
+                </button>
+                <button onclick="closeCartModal()" class="w-full bg-transparent hover:bg-stone-100 text-stone-500 py-2 rounded-xl text-xs transition">
+                    กลับไปแก้ไขการออกแบบ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-charcoal text-brand-cream py-12 border-t border-stone-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <h2 class="text-3xl font-brand text-brand-terracotta tracking-wider">beloved.</h2>
+            <p class="text-xs font-light text-stone-400 max-w-md mx-auto">
+                กำไลหินแท้คัดเกรด ร้อยด้วยหัวใจ นำพาพลังบวกและความงดงามมาสู่ทุกวันของคุณ
+            </p>
+            <div class="flex justify-center space-x-6 text-stone-400 text-sm pt-2">
+                <a href="#" class="hover:text-brand-terracotta transition"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="#" class="hover:text-brand-terracotta transition"><i class="fa-brands fa-line text-lg"></i></a>
+                <a href="#" class="hover:text-brand-terracotta transition"><i class="fa-brands fa-facebook text-lg"></i></a>
+            </div>
+            <div class="text-[11px] text-stone-500 font-light pt-4 border-t border-stone-800/60">
+                © 2026 beloved. All rights reserved. Handcrafted Energy Bracelets.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Master Database of Stones based on exact items provided in prompt images
+        const GEMSTONES = [
+            {
+                id: 'rose-quartz',
+                name: 'Rose Quartz',
+                thName: 'โรสควอตซ์',
+                power: 'ความรัก',
+                description: 'เสริมเสน่ห์ นำพาความรักที่บริสุทธิ์ เมตตามหานิยม',
+                colorHex: '#FBB6CE',
+                secondaryColor: '#F48FB1',
+                price: 150,
+                tag: 'ความรัก'
+            },
+            {
+                id: 'peach-quartz',
+                name: 'Peach Quartz',
+                thName: 'พีชควอตซ์',
+                power: 'ความอ่อนโยน',
+                description: 'ปลอบประโลมจิตใจ เพิ่มเสน่ห์ความอ่อนหวาน นุ่มนวล',
+                colorHex: '#FFC0A9',
+                secondaryColor: '#E09F87',
+                price: 150,
+                tag: 'ความรัก'
+            },
+            {
+                id: 'sunstone',
+                name: 'Sunstone',
+                thName: 'ซันสโตน',
+                power: 'ความสุข',
+                description: 'ดึงดูดพลังบวก ความสดใส เพิ่มความมั่นใจในตัวเอง',
+                colorHex: '#DDA17E',
+                secondaryColor: '#B87251',
+                price: 180,
+                tag: 'ความมั่งคั่ง'
+            },
+            {
+                id: 'rhodonite',
+                name: 'Rhodonite',
+                thName: 'โรโดไนท์',
+                power: 'ความกล้าหาญ',
+                description: 'เยียวยาแผลใจ สร้างความเข้มแข็ง เสริมความเข้าใจในรัก',
+                colorHex: '#C56277',
+                secondaryColor: '#8C3B4E',
+                price: 160,
+                tag: 'ความรัก'
+            },
+            {
+                id: 'white-quartz',
+                name: 'White Quartz',
+                thName: 'ไวท์ควอตซ์',
+                power: 'ความบริสุทธิ์',
+                description: 'ชำระล้างพลังงานลบ สร้างสมาธิและความโปร่งใสในจิตใจ',
+                colorHex: '#F0EFF4',
+                secondaryColor: '#D8D6E2',
+                price: 140,
+                tag: 'สติปัญญา'
+            },
+            {
+                id: 'amethyst',
+                name: 'Amethyst',
+                thName: 'แอเมทิสต์',
+                power: 'สติปัญญา',
+                description: 'ขจัดความเครียด ขยายสติปัญญาและลางสังหรณ์',
+                colorHex: '#7C5295',
+                secondaryColor: '#53316B',
+                price: 170,
+                tag: 'สติปัญญา'
+            },
+            {
+                id: 'amazonite',
+                name: 'Amazonite',
+                thName: 'อเมโซไนต์',
+                power: 'ความหวัง การเริ่มต้นใหม่',
+                description: 'นำพาความหวัง สื่อสารราบรื่น เหมาะกับการเริ่มต้นสิ่งใหม่',
+                colorHex: '#93D9D9',
+                secondaryColor: '#53A8A8',
+                price: 160,
+                tag: 'ความหวัง'
+            },
+            {
+                id: 'red-agate',
+                name: 'Red Agate',
+                thName: 'เรดอาเกต',
+                power: 'การคุ้มครอง',
+                description: 'สร้างเกราะป้องกันสิ่งชั่วร้าย เสริมพละกำลังและความมั่นคง',
+                colorHex: '#C0392B',
+                secondaryColor: '#831C11',
+                price: 150,
+                tag: 'ความสงบ'
+            },
+            {
+                id: 'moss-agate',
+                name: 'Moss Agate',
+                thName: 'มอสอาเกต',
+                power: 'ความมั่งคั่ง',
+                description: 'หินแห่งความอุดมสมบูรณ์ ดึงดูดทรัพย์สินและการเติบโต',
+                colorHex: '#4A6B53',
+                secondaryColor: '#2C4433',
+                price: 180,
+                tag: 'ความมั่งคั่ง'
+            },
+            {
+                id: 'unakite',
+                name: 'Unakite',
+                thName: 'ยูนาไคต์',
+                power: 'โชคลาภ',
+                description: 'หินถูกหวย นำพาโชคลาภแบบไม่คาดฝัน และปล่อยวางความทุกข์',
+                colorHex: '#818E5E',
+                secondaryColor: '#A8686B',
+                price: 190,
+                tag: 'ความมั่งคั่ง'
+            }
+        ];
+
+        // Master Database of Macrame Cords
+        const CORDS = [
+            { id: 'nude-rose', name: 'Nude Rose', thName: 'ชมพูนู้ด', hex: '#E8C5B8', price: 100 },
+            { id: 'warm-beige', name: 'Warm Beige', thName: 'เบจอบอุ่น', hex: '#D9C5B2', price: 100 },
+            { id: 'slate-gray', name: 'Slate Gray', thName: 'เทาลาเวนเดอร์', hex: '#9FA9B3', price: 100 },
+            { id: 'soft-sage', name: 'Soft Sage', thName: 'เขียวเซจ', hex: '#B7C4B0', price: 100 },
+            { id: 'cream-white', name: 'Cream White', thName: 'ขาวครีม', hex: '#F0ECE1', price: 100 },
+            { id: 'midnight-black', name: 'Midnight Black', thName: 'ดำคลาสสิก', hex: '#383635', price: 100 }
+        ];
+
+        // Spacers Database
+        const SPACERS = [
+            { id: 'silver-bead', name: 'Silver 925', hex: '#E2E8F0', stroke: '#94A3B8', price: 50 },
+            { id: 'rose-gold-bead', name: 'Rose Gold', hex: '#E8B4A8', stroke: '#C87B6C', price: 60 },
+            { id: 'yellow-gold-bead', name: '18K Gold', hex: '#EAB308', stroke: '#CA8A04', price: 60 },
+            { id: 'none', name: 'ไม่ใส่เม็ดคั่น', hex: 'transparent', stroke: '#cbd5e1', price: 0 }
+        ];
+
+        // Charms Database
+        const CHARMS = [
+            { id: 'heart-silver', name: 'หัวใจเงา Silver', shape: 'heart', color: '#CBD5E1', border: '#64748B', price: 80 },
+            { id: 'heart-rosegold', name: 'หัวใจ Rose Gold', shape: 'heart', color: '#E8B4A8', border: '#B86B5A', price: 90 },
+            { id: 'star-silver', name: 'ดาวดวงน้อย Silver', shape: 'star', color: '#E2E8F0', border: '#94A3B8', price: 80 },
+            { id: 'none', name: 'ไม่ใส่จี้', shape: 'none', color: 'transparent', border: 'transparent', price: 0 }
+        ];
+
+        // Presets Collection
+        const PRESETS = [
+            {
+                title: 'Beloved Love & Harmony',
+                subtitle: 'เซตดึงดูดความรักละมุน เสน่ห์เมตตา',
+                cordId: 'nude-rose',
+                spacerId: 'silver-bead',
+                charmId: 'heart-silver',
+                stones: ['rose-quartz', 'peach-quartz', 'rhodonite', 'peach-quartz', 'rose-quartz']
+            },
+            {
+                title: 'Abundance & Wealth',
+                subtitle: 'เซตรับทรัพย์ โชคลาภ มั่งคั่ง',
+                cordId: 'slate-gray',
+                spacerId: 'yellow-gold-bead',
+                charmId: 'none',
+                stones: ['moss-agate', 'unakite', 'sunstone', 'unakite', 'moss-agate']
+            },
+            {
+                title: 'Serenity & Hope',
+                subtitle: 'เซตจุดประกายความหวัง สติปัญญา และความเรียบง่าย',
+                cordId: 'soft-sage',
+                spacerId: 'silver-bead',
+                charmId: 'star-silver',
+                stones: ['white-quartz', 'amazonite', 'amethyst', 'amazonite', 'white-quartz']
+            }
+        ];
+
+        // Current Customizer State
+        let state = {
+            slotCount: 5,
+            activeSlotIndex: 2, // middle stone active by default
+            selectedStones: ['rose-quartz', 'peach-quartz', 'sunstone', 'peach-quartz', 'rose-quartz'],
+            selectedCord: 'nude-rose',
+            selectedSpacer: 'silver-bead',
+            selectedCharm: 'heart-silver'
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderSlotsNav();
+            renderStonesGrid('all');
+            renderCordsGrid();
+            renderSpacersSelector();
+            renderCharmsSelector();
+            renderPresetsSection();
+            renderStoneGuideSection();
+            
+            // Draw visualizer canvas
+            initCanvas();
+            updateUI();
+        });
+
+        function setSlotCount(count) {
+            state.slotCount = count;
+            // Adjust stone array length
+            if (state.selectedStones.length < count) {
+                while (state.selectedStones.length < count) {
+                    state.selectedStones.push('rose-quartz');
+                }
+            } else if (state.selectedStones.length > count) {
+                state.selectedStones = state.selectedStones.slice(0, count);
+            }
+            state.activeSlotIndex = Math.floor(count / 2);
+
+            // Update slot count button styles
+            [3, 5, 7].forEach(num => {
+                const btn = document.getElementById(`btn-slot-${num}`);
+                if (num === count) {
+                    btn.className = "px-4 py-1.5 text-xs rounded-full bg-brand-terracotta text-white font-medium border border-brand-terracotta shadow-sm transition";
+                } else {
+                    btn.className = "px-4 py-1.5 text-xs rounded-full border border-stone-200 text-stone-600 hover:border-brand-terracotta transition";
+                }
+            });
+
+            renderSlotsNav();
+            updateUI();
+        }
+
+        function setActiveSlot(index) {
+            state.activeSlotIndex = index;
+            renderSlotsNav();
+            updateSlotActiveText();
+        }
+
+        function selectStoneForActiveSlot(stoneId) {
+            state.selectedStones[state.activeSlotIndex] = stoneId;
+            renderSlotsNav();
+            updateUI();
+        }
+
+        function filterStones(category) {
+            // Update filter buttons appearance
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-charcoal', 'text-white');
+                btn.classList.add('bg-stone-100', 'text-stone-600');
+            });
+            event.target.classList.remove('bg-stone-100', 'text-stone-600');
+            event.target.classList.add('bg-brand-charcoal', 'text-white');
+
+            renderStonesGrid(category);
+        }
+
+        function randomizeDesign() {
+            for (let i = 0; i < state.selectedStones.length; i++) {
+                const randIndex = Math.floor(Math.random() * GEMSTONES.length);
+                state.selectedStones[i] = GEMSTONES[randIndex].id;
+            }
+            state.selectedCord = CORDS[Math.floor(Math.random() * CORDS.length)].id;
+            state.selectedSpacer = SPACERS[Math.floor(Math.random() * SPACERS.length)].id;
+            state.selectedCharm = CHARMS[Math.floor(Math.random() * CHARMS.length)].id;
+            
+            renderCordsGrid();
+            renderSpacersSelector();
+            renderCharmsSelector();
+            renderSlotsNav();
+            updateUI();
+        }
+
+        function resetDesign() {
+            state.selectedStones = ['rose-quartz', 'peach-quartz', 'sunstone', 'peach-quartz', 'rose-quartz'];
+            state.slotCount = 5;
+            state.activeSlotIndex = 2;
+            state.selectedCord = 'nude-rose';
+            state.selectedSpacer = 'silver-bead';
+            state.selectedCharm = 'heart-silver';
+            
+            setSlotCount(5);
+            renderCordsGrid();
+            renderSpacersSelector();
+            renderCharmsSelector();
+            updateUI();
+        }
+
+        function renderSlotsNav() {
+            const container = document.getElementById('slots-container');
+            container.innerHTML = '';
+
+            state.selectedStones.forEach((stoneId, idx) => {
+                const stone = GEMSTONES.find(g => g.id === stoneId) || GEMSTONES[0];
+                const isActive = idx === state.activeSlotIndex;
+
+                const slotBtn = document.createElement('button');
+                slotBtn.onclick = () => setActiveSlot(idx);
+                slotBtn.className = `flex flex-col items-center gap-1.5 p-2 rounded-2xl transition-all ${
+                    isActive ? 'bg-brand-cream border-2 border-brand-terracotta active-slot scale-105' : 'bg-stone-50 border border-stone-200 hover:border-stone-300'
+                }`;
+
+                slotBtn.innerHTML = `
+                    <span class="text-[10px] text-stone-400 font-medium">ตำแหน่งที่ ${idx + 1}</span>
+                    <div class="w-8 h-8 rounded-full shadow-inner flex items-center justify-center border border-white" style="background: radial-gradient(circle at 35% 35%, ${stone.colorHex}, ${stone.secondaryColor});">
+                    </div>
+                    <span class="text-[10px] text-stone-700 font-medium truncate max-w-[60px]">${stone.name}</span>
+                `;
+
+                container.appendChild(slotBtn);
+            });
+
+            updateSlotActiveText();
+        }
+
+        function updateSlotActiveText() {
+            const currentStone = GEMSTONES.find(g => g.id === state.selectedStones[state.activeSlotIndex]);
+            document.getElementById('active-slot-name').innerText = `กำลังเปลี่ยนตำแหน่งที่ ${state.activeSlotIndex + 1}: ${currentStone ? currentStone.name + ' (' + currentStone.power + ')' : ''}`;
+        }
+
+        function renderStonesGrid(category) {
+            const grid = document.getElementById('stones-grid');
+            grid.innerHTML = '';
+
+            const filtered = category === 'all' 
+                ? GEMSTONES 
+                : GEMSTONES.filter(g => g.tag === category || g.power.includes(category));
+
+            filtered.forEach(stone => {
+                const card = document.createElement('div');
+                card.onclick = () => selectStoneForActiveSlot(stone.id);
+                card.className = `p-3 rounded-2xl bg-brand-cream/60 border hover:border-brand-terracotta hover:shadow-sm cursor-pointer transition flex items-center gap-3`;
+                
+                card.innerHTML = `
+                    <div class="w-10 h-10 rounded-full flex-shrink-0 border border-white shadow-sm" 
+                         style="background: radial-gradient(circle at 30% 30%, ${stone.colorHex}, ${stone.secondaryColor});">
+                    </div>
+                    <div class="overflow-hidden">
+                        <div class="text-xs font-medium text-brand-charcoal truncate">${stone.name}</div>
+                        <div class="text-[11px] text-brand-terracotta font-light truncate">${stone.power}</div>
+                        <div class="text-[10px] text-stone-400">฿${stone.price}</div>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function renderCordsGrid() {
+            const grid = document.getElementById('cords-grid');
+            grid.innerHTML = '';
+
+            CORDS.forEach(cord => {
+                const isSelected = cord.id === state.selectedCord;
+                const card = document.createElement('div');
+                card.onclick = () => {
+                    state.selectedCord = cord.id;
+                    renderCordsGrid();
+                    updateUI();
+                };
+                card.className = `p-3 rounded-2xl border cursor-pointer transition flex items-center gap-3 ${
+                    isSelected ? 'border-brand-terracotta bg-brand-cream ring-1 ring-brand-terracotta' : 'border-stone-200 bg-white hover:border-stone-300'
+                }`;
+
+                card.innerHTML = `
+                    <div class="w-7 h-7 rounded-full flex-shrink-0 border border-stone-200 shadow-inner" style="background-color: ${cord.hex}"></div>
+                    <div>
+                        <div class="text-xs font-medium text-stone-800">${cord.name}</div>
+                        <div class="text-[10px] text-stone-400">${cord.thName}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderSpacersSelector() {
+            const container = document.getElementById('spacers-selector');
+            container.innerHTML = '';
+
+            SPACERS.forEach(spacer => {
+                const isSelected = spacer.id === state.selectedSpacer;
+                const btn = document.createElement('button');
+                btn.onclick = () => {
+                    state.selectedSpacer = spacer.id;
+                    renderSpacersSelector();
+                    updateUI();
+                };
+                btn.className = `p-2 rounded-xl border text-center text-xs transition ${
+                    isSelected ? 'border-brand-terracotta bg-brand-cream font-medium text-brand-terracotta' : 'border-stone-200 text-stone-600 hover:border-stone-300'
+                }`;
+                btn.innerText = spacer.name;
+                container.appendChild(btn);
+            });
+        }
+
+        function renderCharmsSelector() {
+            const container = document.getElementById('charms-selector');
+            container.innerHTML = '';
+
+            CHARMS.forEach(charm => {
+                const isSelected = charm.id === state.selectedCharm;
+                const btn = document.createElement('button');
+                btn.onclick = () => {
+                    state.selectedCharm = charm.id;
+                    renderCharmsSelector();
+                    updateUI();
+                };
+                btn.className = `p-2 rounded-xl border text-center text-xs transition ${
+                    isSelected ? 'border-brand-terracotta bg-brand-cream font-medium text-brand-terracotta' : 'border-stone-200 text-stone-600 hover:border-stone-300'
+                }`;
+                btn.innerText = charm.name;
+                container.appendChild(btn);
+            });
+        }
+
+        function renderPresetsSection() {
+            const container = document.getElementById('presets-grid');
+            container.innerHTML = '';
+
+            PRESETS.forEach(preset => {
+                const cord = CORDS.find(c => c.id === preset.cordId);
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl p-6 border border-brand-sand/70 shadow-sm flex flex-col justify-between hover:shadow-md transition";
+
+                let gemsHTML = '<div class="flex gap-1.5 my-4 justify-center">';
+                preset.stones.forEach(sId => {
+                    const st = GEMSTONES.find(g => g.id === sId);
+                    gemsHTML += `<div class="w-7 h-7 rounded-full border border-white shadow-sm" style="background: radial-gradient(circle at 30% 30%, ${st.colorHex}, ${st.secondaryColor})" title="${st.name}"></div>`;
+                });
+                gemsHTML += '</div>';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="text-xs uppercase text-brand-terracotta font-medium tracking-wider">beloved set</div>
+                        <h3 class="font-brand text-2xl text-brand-charcoal mt-1">${preset.title}</h3>
+                        <p class="text-xs text-stone-500 font-light mt-1">${preset.subtitle}</p>
+                        ${gemsHTML}
+                    </div>
+                    <button onclick="applyPreset('${preset.title}')" class="w-full mt-2 py-2.5 rounded-xl border border-brand-terracotta text-brand-terracotta text-xs hover:bg-brand-terracotta hover:text-white transition">
+                        เลือกออกแบบเซตนี้
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function applyPreset(title) {
+            const preset = PRESETS.find(p => p.title === title);
+            if (!preset) return;
+
+            state.slotCount = preset.stones.length;
+            state.selectedStones = [...preset.stones];
+            state.selectedCord = preset.cordId;
+            state.selectedSpacer = preset.spacerId;
+            state.selectedCharm = preset.charmId;
+            state.activeSlotIndex = Math.floor(preset.stones.length / 2);
+
+            setSlotCount(preset.stones.length);
+            renderCordsGrid();
+            renderSpacersSelector();
+            renderCharmsSelector();
+            updateUI();
+
+            scrollToSection('customizer');
+        }
+
+        function renderStoneGuideSection() {
+            const container = document.getElementById('guide-grid');
+            container.innerHTML = '';
+
+            GEMSTONES.forEach(stone => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-4 border border-brand-sand/60 text-center flex flex-col items-center hover:border-brand-terracotta transition";
+                card.innerHTML = `
+                    <div class="w-14 h-14 rounded-full mb-3 shadow-md border-2 border-white" style="background: radial-gradient(circle at 30% 30%, ${stone.colorHex}, ${stone.secondaryColor})"></div>
+                    <h4 class="font-brand text-lg text-brand-charcoal font-medium">${stone.name}</h4>
+                    <span class="text-[11px] text-brand-terracotta font-medium mb-1">${stone.thName}</span>
+                    <span class="inline-block px-2 py-0.5 bg-brand-cream text-brand-terracotta text-[10px] rounded-full font-medium mb-2">${stone.power}</span>
+                    <p class="text-[11px] text-stone-500 font-light leading-snug">${stone.description}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateUI() {
+            // Calculate total price
+            let total = 200; // Base craft fee
+            
+            // Add cord price
+            const cordObj = CORDS.find(c => c.id === state.selectedCord);
+            if (cordObj) total += cordObj.price;
+
+            // Add stones price
+            state.selectedStones.forEach(sId => {
+                const st = GEMSTONES.find(g => g.id === sId);
+                if (st) total += st.price;
+            });
+
+            // Add spacers & charms
+            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer);
+            if (spacerObj) total += spacerObj.price * (state.selectedStones.length + 1);
+
+            const charmObj = CHARMS.find(c => c.id === state.selectedCharm);
+            if (charmObj) total += charmObj.price;
+
+            document.getElementById('total-price').innerText = total;
+            document.getElementById('modal-total-price').innerText = total;
+
+            // Render Active Energy Badges
+            const energyList = document.getElementById('active-energies-list');
+            energyList.innerHTML = '';
+
+            const uniquePowers = new Set();
+            state.selectedStones.forEach(sId => {
+                const st = GEMSTONES.find(g => g.id === sId);
+                if (st) uniquePowers.add(st.power);
+            });
+
+            uniquePowers.forEach(power => {
+                const badge = document.createElement('span');
+                badge.className = "px-2.5 py-1 bg-brand-terracotta/10 text-brand-terracotta text-[11px] rounded-full font-medium flex items-center gap-1";
+                badge.innerHTML = `<i class="fa-solid fa-sparkles text-[9px]"></i> ${power}`;
+                energyList.appendChild(badge);
+            });
+
+            // Re-draw Canvas
+            drawBraceletCanvas();
+        }
+
+        let canvas, ctx;
+
+        function initCanvas() {
+            canvas = document.getElementById('braceletCanvas');
+            ctx = canvas.getContext('2d');
+        }
+
+        function drawBraceletCanvas() {
+            if (!ctx) return;
+
+            const w = canvas.width;
+            const h = canvas.height;
+            const cx = w / 2;
+            const cy = h / 2 - 20;
+            const radius = 210;
+
+            ctx.clearRect(0, 0, w, h);
+
+            const cordObj = CORDS.find(c => c.id === state.selectedCord) || CORDS[0];
+            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer) || SPACERS[0];
+            const charmObj = CHARMS.find(c => c.id === state.selectedCharm) || CHARMS[0];
+
+            // 1. Draw Macrame Sliding Strings at bottom (like image_ebae90)
+            drawSlidingStrings(ctx, cx, cy + radius - 20, cordObj.hex);
+
+            // 2. Draw Braided Bracelet Cord (Curved Oval/Circle)
+            drawBraidedCord(ctx, cx, cy, radius, cordObj.hex);
+
+            // 3. Draw Stones, Spacers & Center Charm layout
+            const totalStones = state.selectedStones.length;
+            const isOdd = totalStones % 2 !== 0;
+
+            // Calculate angle spacing for stones array (centered around top arc)
+            const angleStep = 0.22; // radian spacing between beads
+            const startAngle = -Math.PI / 2 - ((totalStones - 1) / 2) * angleStep;
+
+            state.selectedStones.forEach((stoneId, i) => {
+                const stoneAngle = startAngle + (i * angleStep);
+                const bx = cx + Math.cos(stoneAngle) * radius;
+                const by = cy + Math.sin(stoneAngle) * radius;
+
+                const stoneObj = GEMSTONES.find(g => g.id === stoneId) || GEMSTONES[0];
+
+                // Draw Spacer before bead if applicable
+                if (spacerObj.id !== 'none' && i === 0) {
+                    const prevAngle = stoneAngle - angleStep * 0.55;
+                    drawSpacerBead(ctx, cx + Math.cos(prevAngle) * radius, cy + Math.sin(prevAngle) * radius, spacerObj);
+                }
+
+                // Draw Gemstone Bead
+                drawGemstoneBead(ctx, bx, by, 28, stoneObj, i === state.activeSlotIndex);
+
+                // Draw Spacer after each bead
+                if (spacerObj.id !== 'none') {
+                    const nextAngle = stoneAngle + angleStep * 0.55;
+                    drawSpacerBead(ctx, cx + Math.cos(nextAngle) * radius, cy + Math.sin(nextAngle) * radius, spacerObj);
+                }
+            });
+
+            // 4. Draw Center Charm (hangs below middle stone or center)
+            if (charmObj.id !== 'none') {
+                const centerAngle = -Math.PI / 2;
+                const charmX = cx + Math.cos(centerAngle) * (radius + 28);
+                const charmY = cy + Math.sin(centerAngle) * (radius + 28);
+                drawCharm(ctx, charmX, charmY, charmObj);
+            }
+        }
+
+        // Helper: Draw Macrame Rope Effect
+        function drawBraidedCord(ctx, cx, cy, radius, cordHex) {
+            ctx.save();
+            ctx.strokeStyle = cordHex;
+            ctx.lineWidth = 14;
+            ctx.lineCap = 'round';
+
+            // Base cord curve
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Braided Texture overlay
+            ctx.strokeStyle = 'rgba(0,0,0,0.12)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([4, 6]);
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([2, 8]);
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius - 3, 0, Math.PI * 2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        // Helper: Draw Sliding Knot Tassels at bottom
+        function drawSlidingStrings(ctx, cx, startY, cordHex) {
+            ctx.save();
+            // Square Knot Center Piece
+            ctx.fillStyle = cordHex;
+            ctx.beginPath();
+            ctx.roundRect(cx - 18, startY - 8, 36, 16, 6);
+            ctx.fill();
+
+            // Strings dangling down
+            ctx.strokeStyle = cordHex;
+            ctx.lineWidth = 5;
+
+            // Left String
+            ctx.beginPath();
+            ctx.moveTo(cx - 8, startY + 8);
+            ctx.bezierCurveTo(cx - 20, startY + 60, cx - 40, startY + 110, cx - 60, startY + 140);
+            ctx.stroke();
+
+            // Right String
+            ctx.beginPath();
+            ctx.moveTo(cx + 8, startY + 8);
+            ctx.bezierCurveTo(cx + 20, startY + 60, cx + 50, startY + 110, cx + 70, startY + 135);
+            ctx.stroke();
+
+            // End Beads on Tassels
+            drawSpacerBead(ctx, cx - 60, startY + 140, SPACERS[0]);
+            drawSpacerBead(ctx, cx + 70, startY + 135, SPACERS[0]);
+
+            ctx.restore();
+        }
+
+        // Helper: Draw 3D Gemstone Bead
+        function drawGemstoneBead(ctx, x, y, r, stone, isActive) {
+            ctx.save();
+
+            // Shadow
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.18)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 4;
+
+            // Active selection ring glow
+            if (isActive) {
+                ctx.strokeStyle = '#C86D51';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.arc(x, y, r + 6, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Radial gradient for 3D sphere look
+            const grad = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r);
+            grad.addColorStop(0, '#FFFFFF');
+            grad.addColorStop(0.2, stone.colorHex);
+            grad.addColorStop(0.85, stone.secondaryColor);
+            grad.addColorStop(1, '#2D2825');
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Glossy Shine Highlight
+            ctx.shadowColor = 'transparent';
+            const shineGrad = ctx.createRadialGradient(x - r * 0.35, y - r * 0.35, 1, x - r * 0.35, y - r * 0.35, r * 0.45);
+            shineGrad.addColorStop(0, 'rgba(255, 255, 255, 0.85)');
+            shineGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+            ctx.fillStyle = shineGrad;
+            ctx.beginPath();
+            ctx.arc(x - r * 0.35, y - r * 0.35, r * 0.45, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Helper: Draw Metallic Spacer Beads
+        function drawSpacerBead(ctx, x, y, spacer) {
+            ctx.save();
+            const r = 8;
+            const grad = ctx.createRadialGradient(x - 2, y - 2, 1, x, y, r);
+            grad.addColorStop(0, '#FFFFFF');
+            grad.addColorStop(0.4, spacer.hex);
+            grad.addColorStop(1, spacer.stroke);
+
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        // Helper: Draw Center Charm (Heart / Star)
+        function drawCharm(ctx, x, y, charm) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            if (charm.shape === 'heart') {
+                ctx.fillStyle = charm.color;
+                ctx.strokeStyle = charm.border;
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(0, 4);
+                ctx.bezierCurveTo(-12, -12, -22, 2, 0, 18);
+                ctx.bezierCurveTo(22, 2, 12, -12, 0, 4);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            } else if (charm.shape === 'star') {
+                ctx.fillStyle = charm.color;
+                ctx.strokeStyle = charm.border;
+                ctx.lineWidth = 1.5;
+
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * 12, -Math.sin((18 + i * 72) * Math.PI / 180) * 12);
+                    ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * 5, -Math.sin((54 + i * 72) * Math.PI / 180) * 5);
+                }
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        function openCartModal() {
+            // Update preview canvas snapshot in modal
+            const dataUrl = canvas.toDataURL();
+            document.getElementById('modal-bracelet-img').src = dataUrl;
+
+            // Details
+            document.getElementById('modal-bracelet-title').innerText = `สร้อยข้อมือ Custom (${state.selectedStones.length} เม็ด)`;
+            
+            const cordObj = CORDS.find(c => c.id === state.selectedCord);
+            document.getElementById('modal-cord-name').innerText = cordObj ? `${cordObj.name} (${cordObj.thName})` : '-';
+
+            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer);
+            document.getElementById('modal-spacer-name').innerText = spacerObj ? spacerObj.name : '-';
+
+            const charmObj = CHARMS.find(c => c.id === state.selectedCharm);
+            document.getElementById('modal-charm-name').innerText = charmObj ? charmObj.name : '-';
+
+            // Selected Stones Breakdown
+            const stonesContainer = document.getElementById('modal-stones-list');
+            stonesContainer.innerHTML = '';
+
+            const blessingsList = [];
+
+            state.selectedStones.forEach((sId, index) => {
+                const st = GEMSTONES.find(g => g.id === sId);
+                if (!st) return;
+
+                blessingsList.push(st.power);
+
+                const item = document.createElement('div');
+                item.className = "flex items-center justify-between py-1 border-b border-stone-100";
+                item.innerHTML = `
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${st.colorHex}"></span>
+                        <span class="font-medium text-stone-800">เม็ดที่ ${index + 1}: ${st.name} (${st.thName})</span>
+                    </div>
+                    <span class="text-stone-500 font-light">${st.power}</span>
+                `;
+                stonesContainer.appendChild(item);
+            });
+
+            // Combined Blessing text
+            const uniqueBlessings = [...new Set(blessingsList)].join(' + ');
+            document.getElementById('modal-blessings-summary').innerText = `สร้อยเส้นนี้ร้อยเรียงพลังเสริมด้าน: ${uniqueBlessings} เพื่อเปิดรับพลังงานดีๆ ในทุกช่วงเวลาของชีวิต`;
+
+            // Open Modal
+            const modal = document.getElementById('cartModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeCartModal() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function copyOrderDetails() {
+            const wristSize = document.getElementById('wrist-size').value;
+            const cordObj = CORDS.find(c => c.id === state.selectedCord);
+            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer);
+            const charmObj = CHARMS.find(c => c.id === state.selectedCharm);
+            const totalPrice = document.getElementById('modal-total-price').innerText;
+
+            const stonesStr = state.selectedStones.map((sId, i) => {
+                const st = GEMSTONES.find(g => g.id === sId);
+                return `  ${i + 1}. ${st.name} (${st.power})`;
+            }).join('\n');
+
+            const orderText = `✨ สั่งทำสร้อยข้อมือ Custom หินแท้จาก beloved. ✨
+--------------------------------
+[ รายละเอียดหิน ]:
+${stonesStr}
+
+[ สายถักไหม ]: ${cordObj.name} (${cordObj.thName})
+[ เม็ดคั่น ]: ${spacerObj.name}
+[ จี้ประดับ ]: ${charmObj.name}
+[ ขนาดข้อมือ ]: ${wristSize}
+--------------------------------
+💰 ราคารวม: ฿${totalPrice}
+(ส่งภาพหน้านี้ให้แอดมินเพื่อยืนยันการสั่งทำ)`;
+
+            // Clipboard copy fallbacks
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = orderText;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            alert('คัดลอกรายละเอียดการสั่งซื้อเรียบร้อยแล้ว! สามารถนำไปวางส่งในแชท LINE หรือ IG ของร้าน beloved. ได้เลยค่ะ ✨');
+        }
+
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
