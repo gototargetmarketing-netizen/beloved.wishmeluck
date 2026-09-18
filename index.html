@@ -73,6 +73,20 @@
         .active-slot {
             animation: subtleGlow 2s infinite ease-in-out;
         }
+
+        /* Mobile layout fix for gemstone highlights */
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 639px) {
+            .mobile-safe-text {
+                overflow-wrap: anywhere;
+                word-break: break-word;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-brand-terracotta selection:text-white">
@@ -112,188 +126,115 @@
             <span class="inline-block px-3 py-1 bg-brand-terracotta/10 text-brand-terracotta text-xs tracking-widest uppercase rounded-full mb-3 font-medium">
                 Custom Energy Jewelry
             </span>
-            <h1 class="font-brand text-4xl sm:text-6xl text-brand-charcoal font-normal tracking-wide leading-tight mb-4">
+            <h1 class="font-brand text-3xl sm:text-6xl text-brand-charcoal font-normal tracking-wide leading-tight mb-4 mobile-safe-text">
                 ร้อยเรียงพลังแห่งธรรมชาติ ในแบบที่เป็นคุณ
             </h1>
-            <p class="text-stone-600 font-light text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            <p class="text-stone-600 font-light text-xs sm:text-base max-w-2xl mx-auto leading-relaxed mobile-safe-text">
                 เลือกหินมงคลแท้ธรรมชาติและสีสายถักไหมฝรั่งเศสที่คุณชอบ เสริมพลังชีวิตในด้านที่ต้องการ ทั้งความรัก ความมั่งคั่ง โชคลาภ และสติปัญญา
             </p>
         </div>
     </section>
 
-<!-- GEMSTONE HIGHLIGHTS -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-2 pb-8">
-    <div class="text-center mb-5">
-        <span class="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-brand-terracotta font-medium">
-            Our Genuine Gemstones
-        </span>
 
-        <h2 class="font-brand text-2xl sm:text-3xl text-brand-charcoal mt-1">
-            หินมงคลที่เราเลือกสรร
-        </h2>
-
-        <p class="text-[11px] sm:text-xs text-stone-400 font-light mt-1">
-            เลือกหินแท้ที่ใช่สำหรับคุณ
-        </p>
-    </div>
-
-    <!-- Mobile: horizontal scroll / Desktop: 10 columns -->
-    <div class="flex sm:grid sm:grid-cols-5 lg:grid-cols-10 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible pb-3 sm:pb-0 snap-x snap-mandatory scrollbar-hide">
-
-        <!-- Rose Quartz -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./rose-quartz.png"
-                     alt="Rose Quartz"
-                     class="w-full h-full rounded-full object-cover">
-            </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Rose Quartz
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                โรสควอตซ์
+    <!-- GEMSTONE HIGHLIGHTS -->
+    <section id="gemstone-highlights" class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-5 overflow-hidden">
+        <div class="text-center mb-5">
+            <span class="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-brand-terracotta font-medium">
+                Our Genuine Gemstones
+            </span>
+            <h2 class="font-brand text-2xl sm:text-3xl text-brand-charcoal mt-1">
+                หินมงคลที่เราเลือกสรร
+            </h2>
+            <p class="text-[11px] sm:text-xs text-stone-400 font-light mt-1">
+                เลือกหินแท้ที่ใช่สำหรับคุณ
             </p>
         </div>
 
-        <!-- Peach Quartz -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./peach-quartz.png"
-                     alt="Peach Quartz"
-                     class="w-full h-full rounded-full object-cover">
+        <!-- 5 columns on mobile / 10 columns on desktop -->
+        <div class="w-full grid grid-cols-5 gap-x-2 gap-y-5 sm:gap-x-4 sm:gap-y-6">
+
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./rose-quartz.png" alt="Rose Quartz" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Rose Quartz</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">โรสควอตซ์</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Peach Quartz
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                พีชควอตซ์
-            </p>
-        </div>
 
-        <!-- Sunstone -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./sunstone.png"
-                     alt="Sunstone"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./peach-quartz.png" alt="Peach Quartz" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Peach Quartz</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">พีชควอตซ์</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Sunstone
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                ซันสโตน
-            </p>
-        </div>
 
-        <!-- Rhodonite -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./rhodonite.png"
-                     alt="Rhodonite"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./sunstone.png" alt="Sunstone" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Sunstone</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ซันสโตน</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Rhodonite
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                โรโดไนท์
-            </p>
-        </div>
 
-        <!-- White Quartz -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./white-quartz.png"
-                     alt="White Quartz"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./rhodonite.png" alt="Rhodonite" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Rhodonite</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">โรโดไนท์</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                White Quartz
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                ไวท์ควอตซ์
-            </p>
-        </div>
 
-        <!-- Amethyst -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./amethyst.png"
-                     alt="Amethyst"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./white-quartz.png" alt="White Quartz" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">White Quartz</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ไวท์ควอตซ์</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Amethyst
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                แอเมทิสต์
-            </p>
-        </div>
 
-        <!-- Amazonite -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./amazonite.png"
-                     alt="Amazonite"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./amethyst.png" alt="Amethyst" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Amethyst</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">แอเมทิสต์</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Amazonite
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                อเมโซไนต์
-            </p>
-        </div>
 
-        <!-- Red Agate -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./red-agate.png"
-                     alt="Red Agate"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./amazonite.png" alt="Amazonite" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Amazonite</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">อเมโซไนต์</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Red Agate
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                เรดอาเกต
-            </p>
-        </div>
 
-        <!-- Moss Agate -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./moss-agate.png"
-                     alt="Moss Agate"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./red-agate.png" alt="Red Agate" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Red Agate</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">เรดอาเกต</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Moss Agate
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                มอสอาเกต
-            </p>
-        </div>
 
-        <!-- Unakite -->
-        <div class="min-w-[72px] sm:min-w-0 snap-start text-center group">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                <img src="./unakite.png"
-                     alt="Unakite"
-                     class="w-full h-full rounded-full object-cover">
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./moss-agate.png" alt="Moss Agate" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Moss Agate</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">มอสอาเกต</p>
             </div>
-            <p class="font-brand text-sm sm:text-base text-brand-charcoal mt-2 whitespace-nowrap">
-                Unakite
-            </p>
-            <p class="text-[9px] sm:text-[10px] text-brand-terracotta">
-                ยูนาไคต์
-            </p>
+
+            <div class="text-center min-w-0 group">
+                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
+                    <img src="./unakite.png" alt="Unakite" class="w-full h-full rounded-full object-cover">
+                </div>
+                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Unakite</p>
+                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ยูนาไคต์</p>
+            </div>
+
         </div>
-
-    </div>
-</section>
-
-    
+    </section>
 
     <!-- MAIN CUSTOMIZER SECTION -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow">
