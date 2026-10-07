@@ -300,11 +300,30 @@ async function initLIFF(){
 /* ---------- Backend adapter ---------- */
 async function gasGet(action, extra={}){
   if(!CONFIG.gasUrl) throw new Error("GAS URL is not configured");
-  const params = new URLSearchParams({action,...extra});
-  const res = await fetch(CONFIG.gasUrl + (CONFIG.gasUrl.includes("?")?"&":"?") + params.toString(), {method:"GET"});
+
+  // ทุก request ที่ต้องผ่าน Backend ต้องส่ง LINE ID Token ไปด้วย
+  // เพราะ Code.gs ตรวจสอบ Token ในทุก action ไม่ใช่เฉพาะ getMember
+  const idToken = (window.liff && state.liffReady && liff.isLoggedIn())
+    ? liff.getIDToken()
+    : "";
+
+  const params = new URLSearchParams({
+    action,
+    ...extra,
+    idToken: idToken || ""
+  });
+
+  const res = await fetch(
+    CONFIG.gasUrl + (CONFIG.gasUrl.includes("?")?"&":"?") + params.toString(),
+    {method:"GET"}
+  );
+
   if(!res.ok) throw new Error("Backend HTTP " + res.status);
+
   const data = await res.json();
+
   if(data && data.error) throw new Error(data.error);
+
   return data;
 }
 
@@ -322,11 +341,21 @@ and determine the member from the verified token. Do not trust
 memberId/points supplied by the browser.
 */
 async function getMemberReal(){
-  const idToken = (window.liff && state.liffReady && liff.isLoggedIn()) ? liff.getIDToken() : "";
-  return gasGet("getMember", {
-    idToken: idToken || "",
+  const data = await gasGet("getMember", {
     lineUserId: state.lineId || ""
   });
+
+  // Code.gs ส่งกลับ { ok:true, member:{...} }
+  // Frontend ต้องใช้เฉพาะ data.member
+  if(data && data.member){
+    return data.member;
+  }
+
+  if(data && data.memberId){
+    return data;
+  }
+
+  throw new Error("Backend ไม่ส่งข้อมูลสมาชิกกลับมา");
 }
 
 async function loadData(){
@@ -549,8 +578,7 @@ async function redeem(id){
   closeModal();
   if(CONFIG.env==="production" && CONFIG.gasUrl){
     try{
-      const idToken=(window.liff&&state.liffReady&&liff.isLoggedIn())?liff.getIDToken():"";
-      const result=await gasGet("redeemReward",{rewardId:r.id,idToken,memberId:state.member.memberId});
+      const result=await gasGet("redeemReward",{rewardId:r.id,memberId:state.member.memberId});
       if(result.member) state.member=result.member;
       else state.member.points=result.points;
       const h=await gasGet("getPointHistory",{memberId:state.member.memberId});
@@ -577,8 +605,7 @@ async function confirmUseCoupon(id){
   closeModal();
   if(CONFIG.env==="production" && CONFIG.gasUrl){
     try{
-      const idToken=(window.liff&&state.liffReady&&liff.isLoggedIn())?liff.getIDToken():"";
-      await gasGet("useCoupon",{couponId:id,idToken,memberId:state.member.memberId});
+      await gasGet("useCoupon",{couponId:id,memberId:state.member.memberId});
       const c=state.coupons.find(x=>x.id===id); if(c)c.status="USED";
       showToast("ใช้งานคูปองสำเร็จ"); render(); return;
     }catch(e){showToast("ใช้งานคูปองไม่สำเร็จ");return;}
