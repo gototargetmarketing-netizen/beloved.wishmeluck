@@ -263,34 +263,35 @@ function saveDemo(){
   localStorage.setItem("KW_COUPONS",JSON.stringify(state.coupons));
 }
 
-/* ---------- Optional LIFF ---------- */
 async function initLIFF(){
-  if(!CONFIG.liffId || !window.liff) {
+  if(!CONFIG.liffId || !window.liff){
     throw new Error("ไม่พบ LIFF SDK หรือ LIFF ID");
   }
 
   try{
-    await liff.init({ liffId: CONFIG.liffId });
+    await liff.init({
+      liffId: CONFIG.liffId,
+      withLoginOnExternalBrowser: true
+    });
+
     state.liffReady = true;
 
-    // ถ้ายังไม่ได้ Login ให้ LIFF เปิดหน้า Login ของ LINE ทันที
-    // เพื่อให้สามารถรับ ID Token สำหรับตรวจสอบสมาชิกที่ Backend ได้
+    // ใน LIFF Browser ของ LINE จะถือว่า Login อยู่แล้ว
+    // ใน External Browser ระบบจะพาไป LINE Login ให้อัตโนมัติ
     if(!liff.isLoggedIn()){
-      liff.login({ redirectUri: window.location.href });
       return false;
     }
 
-    // ID Token คือข้อมูลหลักที่ส่งให้ Apps Script ตรวจสอบกับ LINE
     const idToken = liff.getIDToken();
+
     if(!idToken){
-      throw new Error("ไม่สามารถรับ LINE ID Token ได้ กรุณาเปิดผ่าน LIFF ใน LINE");
+      throw new Error(
+        "ไม่สามารถรับ LINE ID Token ได้ กรุณาเปิดผ่าน LIFF ใน LINE"
+      );
     }
 
-    // ไม่เรียก liff.getProfile() ตรงนี้
-    // เพราะ Backend ตรวจสอบ ID Token และดึงชื่อ/รูปจาก LINE ให้แล้ว
-    // ตัด 1 network request ออกจากช่วงเปิดระบบ เพื่อให้โหลดเร็วขึ้น
-
     return true;
+
   }catch(e){
     console.error("LIFF init failed:", e);
     throw e;
