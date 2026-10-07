@@ -166,11 +166,24 @@ button{cursor:pointer}
      for points, coupons and redemption.
 ========================================================= */
 
+/* =========================================================
+   BACK-OFFICE CONFIG — แก้เฉพาะ 3 บรรทัดนี้เมื่อเปลี่ยนระบบ
+   ลูกค้าจะไม่เห็นส่วนนี้ในหน้าเว็บ
+   ========================================================= */
 const CONFIG = {
   appName: "คำหวาน CUISINE",
-  env: localStorage.getItem("KW_ENV") || "demo",
-  gasUrl: localStorage.getItem("KW_GAS_URL") || "",
-  liffId: localStorage.getItem("KW_LIFF_ID") || "",
+
+  // เปลี่ยนเป็น "production" เพื่อใช้ LINE LIFF + Google Apps Script จริง
+  env: "production",
+
+  // LIFF ID ของคำหวาน Member
+  liffId: "2011913909-NcxFMTsN",
+
+  // Google Apps Script Web App URL
+  // ใส่ URL ที่ลงท้ายด้วย /exec ตรงนี้
+  // ตัวอย่าง: https://script.google.com/macros/s/XXXXXXXXXXXX/exec
+  gasUrl: "https://script.google.com/macros/s/AKfycbzpBFia2pACWDVTgQ1ckJc0aw3JejiiuhbFG3GHLN4yuysx0QyMMM_jyOQ8XRMF2pS6RA/exec",
+
   qrProvider: "https://api.qrserver.com/v1/create-qr-code/"
 };
 
@@ -314,9 +327,10 @@ async function loadData(){
       state.rewards = Array.isArray(r)?r:(r.rewards||REWARDS);
     }catch(e){
       console.error(e);
-      showToast("เชื่อมต่อระบบจริงไม่สำเร็จ — เปลี่ยนเป็น Demo Mode");
-      CONFIG.env="demo";
-      loadDemo();
+      state.member = null;
+      state.history = [];
+      state.coupons = [];
+      showToast("เชื่อมต่อระบบสมาชิกไม่สำเร็จ");
     }
   }else{
     loadDemo();
@@ -367,7 +381,7 @@ function header(){
           <div class="phone">${escapeHtml(m.phone)}</div>
         </div>
       </div>
-      <button class="icon-btn" onclick="openSettings()" title="ตั้งค่า">${icon("settings",18)}</button>
+      <span></span>
     </div>
   </header>`;
 }
@@ -546,30 +560,6 @@ async function confirmUseCoupon(id){
   saveDemo(); showToast("ใช้งานคูปองสำเร็จ"); render();
 }
 
-/* ---------- Settings ---------- */
-function openSettings(){
-  modal(`<div class="modal-head"><div class="modal-title">${icon("settings",17)} ตั้งค่าระบบ</div><button class="close" onclick="closeModal()">${icon("x",18)}</button></div>
-    <div class="notice"><b>Demo Mode:</b> เปิดไฟล์นี้แล้วทดลองสะสม/แลก/ใช้คูปองได้ทันที ข้อมูลเก็บใน localStorage ของ Browser<br><br><b>Production:</b> ใส่ LIFF ID และ Google Apps Script Web App URL ที่คุณสร้างไว้</div>
-    <div class="field"><label>MODE</label><select id="setEnv" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:11px"><option value="demo" ${CONFIG.env==="demo"?"selected":""}>Demo Mode — ทดลองในเครื่อง</option><option value="production" ${CONFIG.env==="production"?"selected":""}>Production — ใช้ Backend จริง</option></select></div>
-    <div class="field"><label>LIFF ID</label><input id="setLiff" value="${escapeHtml(CONFIG.liffId)}" placeholder="1234567890-AbcdEfgh"></div>
-    <div class="field"><label>GOOGLE APPS SCRIPT WEB APP URL</label><input id="setGas" value="${escapeHtml(CONFIG.gasUrl)}" placeholder="https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbzpBFia2pACWDVTgQ1ckJc0aw3JejiiuhbFG3GHLN4yuysx0QyMMM_jyOQ8XRMF2pS6RA/exec/exec"></div>
-    <div class="notice">Production Backend ต้องตรวจสอบ LINE ID Token และห้ามเชื่อค่า points/memberId ที่ส่งมาจาก Browser โดยตรง</div>
-    <div class="modal-actions"><button class="secondary" onclick="resetDemo()">รีเซ็ต Demo</button><button class="primary" onclick="saveSettings()">บันทึก</button></div>`);
-}
-function saveSettings(){
-  CONFIG.env=document.getElementById("setEnv").value;
-  CONFIG.liffId=document.getElementById("setLiff").value.trim();
-  CONFIG.gasUrl=document.getElementById("setGas").value.trim();
-  localStorage.setItem("KW_ENV",CONFIG.env);
-  localStorage.setItem("KW_LIFF_ID",CONFIG.liffId);
-  localStorage.setItem("KW_GAS_URL",CONFIG.gasUrl);
-  closeModal(); showToast("บันทึกการตั้งค่าแล้ว"); loadData();
-}
-function resetDemo(){
-  localStorage.removeItem("KW_MEMBER");localStorage.removeItem("KW_HISTORY");localStorage.removeItem("KW_COUPONS");
-  CONFIG.env="demo";localStorage.setItem("KW_ENV","demo");closeModal();loadData();showToast("รีเซ็ตข้อมูล Demo แล้ว");
-}
-
 /* ---------- Modal ---------- */
 function modal(html){
   document.getElementById("modalRoot").innerHTML=`<div class="modal" id="activeModal"><div class="modal-box">${html}</div></div>`;
@@ -577,7 +567,12 @@ function modal(html){
 }
 function closeModal(){document.getElementById("modalRoot").innerHTML="";}
 
-/* Start */
+/* Start
+   ล้างค่าตั้งค่าจากเวอร์ชันเก่า เพื่อไม่ให้ localStorage ของลูกค้า
+   override ค่า CONFIG ที่กำหนดไว้ด้านบน */
+localStorage.removeItem("KW_ENV");
+localStorage.removeItem("KW_LIFF_ID");
+localStorage.removeItem("KW_GAS_URL");
 loadData();
 </script>
 </body>
