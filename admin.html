@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+  />
+
+  <title>คำหวาน CUISINE — Admin</title>
+
+  <!-- LINE LIFF -->
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    *{
+      box-sizing:border-box;
+    }
+
+    :root{
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --text:#171717;
+      --muted:#777;
+      --line:#e8e8e8;
+      --primary:#111111;
+      --success:#16803c;
+      --success-bg:#eaf8ef;
+      --danger:#c62828;
+      --danger-bg:#fff0f0;
+      --gold:#b8860b;
+    }
+
+    body{
+      margin:0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    button,
+    input{
+      font:inherit;
+    }
+
+    .app{
+      width:100%;
+      max-width:520px;
+      margin:0 auto;
+      min-height:100vh;
+      padding-bottom:40px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .header{
+      background:#111;
+      color:#fff;
+      padding:24px 20px 22px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      box-shadow:0 3px 15px rgba(0,0,0,.12);
+    }
+
+    .header-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{
+      font-size:20px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+
+    .admin-badge{
+      font-size:11px;
+      font-weight:800;
+      background:#fff;
+      color:#111;
+      padding:6px 10px;
+      border-radius:999px;
+    }
+
+    .header-sub{
+      margin-top:7px;
+      font-size:13px;
+      color:#cfcfcf;
+    }
+
+    /* =========================
+       CONTENT
+    ========================= */
+
+    .content{
+      padding:18px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      margin-bottom:15px;
+      box-shadow:0 4px 18px rgba(0,0,0,.04);
+    }
+
+    .section-title{
+      font-size:15px;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+
+    .search-row{
+      display:flex;
+      gap:9px;
+    }
+
+    .input{
+      width:100%;
+      height:48px;
+      border:1px solid #ddd;
+      border-radius:13px;
+      padding:0 14px;
+      outline:none;
+      background:#fff;
+      color:#111;
+      font-size:15px;
+    }
+
+    .input:focus{
+      border-color:#111;
+      box-shadow:0 0 0 3px rgba(0,0,0,.06);
+    }
+
+    .btn{
+      height:48px;
+      border:0;
+      border-radius:13px;
+      padding:0 18px;
+      font-weight:900;
+      cursor:pointer;
+      white-space:nowrap;
+      transition:.15s;
+    }
+
+    .btn:active{
+      transform:scale(.98);
+    }
+
+    .btn-primary{
+      background:#111;
+      color:#fff;
+    }
+
+    .btn-success{
+      background:#16803c;
+      color:#fff;
+      width:100%;
+      height:54px;
+      font-size:16px;
+    }
+
+    .btn:disabled{
+      opacity:.45;
+      cursor:not-allowed;
+    }
+
+    /* =========================
+       MEMBER
+    ========================= */
+
+    .member-card{
+      display:none;
+    }
+
+    .member-head{
+      display:flex;
+      align-items:center;
+      gap:13px;
+    }
+
+    .avatar{
+      width:58px;
+      height:58px;
+      border-radius:50%;
+      object-fit:cover;
+      background:#eee;
+      flex:none;
+    }
+
+    .member-name{
+      font-size:19px;
+      font-weight:900;
+    }
+
+    .member-id{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:3px;
+    }
+
+    .member-level{
+      display:inline-block;
+      margin-top:6px;
+      font-size:11px;
+      font-weight:800;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#f4f4f4;
+    }
+
+    .points-box{
+      margin-top:18px;
+      background:#fafafa;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      text-align:center;
+    }
+
+    .points-label{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .points-value{
+      font-size:42px;
+      line-height:1.1;
+      font-weight:950;
+      margin-top:5px;
+    }
+
+    .points-unit{
+      font-size:14px;
+      color:var(--gold);
+      font-weight:900;
+    }
+
+    /* =========================
+       PURCHASE
+    ========================= */
+
+    .purchase-box{
+      display:none;
+    }
+
+    .purchase-label{
+      display:block;
+      font-size:13px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .purchase-input{
+      width:100%;
+      height:58px;
+      border:1px solid #ddd;
+      border-radius:14px;
+      padding:0 16px;
+      font-size:22px;
+      font-weight:900;
+      outline:none;
+    }
+
+    .purchase-input:focus{
+      border-color:#111;
+    }
+
+    .calc{
+      margin-top:12px;
+      background:var(--success-bg);
+      border-radius:14px;
+      padding:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .calc-label{
+      font-size:13px;
+      color:#386447;
+      font-weight:700;
+    }
+
+    .calc-value{
+      font-size:24px;
+      font-weight:950;
+      color:var(--success);
+    }
+
+    .rule{
+      margin-top:8px;
+      font-size:11px;
+      color:#888;
+    }
+
+    .description{
+      margin-top:13px;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .message{
+      display:none;
+      padding:13px 14px;
+      border-radius:13px;
+      margin-bottom:15px;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .message.error{
+      background:var(--danger-bg);
+      color:var(--danger);
+    }
+
+    .message.success{
+      background:var(--success-bg);
+      color:var(--success);
+    }
+
+    /* =========================
+       LOADING
+    ========================= */
+
+    .loading{
+      position:fixed;
+      inset:0;
+      background:rgba(255,255,255,.92);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:100;
+    }
+
+    .loading-box{
+      text-align:center;
+    }
+
+    .spinner{
+      width:38px;
+      height:38px;
+      border:4px solid #ddd;
+      border-top-color:#111;
+      border-radius:50%;
+      animation:spin .8s linear infinite;
+      margin:0 auto 12px;
+    }
+
+    @keyframes spin{
+      to{
+        transform:rotate(360deg);
+      }
+    }
+
+    .loading-text{
+      font-size:13px;
+      font-weight:800;
+    }
+
+    /* =========================
+       UNAUTHORIZED
+    ========================= */
+
+    .access-denied{
+      display:none;
+      text-align:center;
+      padding:60px 20px;
+    }
+
+    .denied-icon{
+      font-size:50px;
+      margin-bottom:15px;
+    }
+
+    .denied-title{
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .denied-text{
+      margin-top:8px;
+      color:#777;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width:420px){
+
+      .content{
+        padding:14px;
+      }
+
+      .header{
+        padding:20px 16px;
+      }
+
+      .search-row{
+        flex-direction:column;
+      }
+
+      .search-row .btn{
+        width:100%;
+      }
+
+      .points-value{
+        font-size:38px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loadingText">
+        กำลังตรวจสอบสิทธิ์ Admin...
+      </div>
+    </div>
+  </div>
+
+
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+      <div class="header-top">
+
+        <div class="brand">
+          คำหวาน CUISINE
+        </div>
+
+        <div class="admin-badge">
+          ADMIN
+        </div>
+
+      </div>
+
+      <div class="header-sub">
+        ระบบจัดการสมาชิกและคะแนน
+      </div>
+
+    </header>
+
+
+    <main class="content">
+
+      <!-- MESSAGE -->
+      <div id="message" class="message"></div>
+
+
+      <!-- ACCESS DENIED -->
+      <section id="accessDenied" class="access-denied">
+
+        <div class="denied-icon">
+          🔒
+        </div>
+
+        <div class="denied-title">
+          ไม่มีสิทธิ์ใช้งาน
+        </div>
+
+        <div class="denied-text">
+          บัญชี LINE นี้ไม่ได้รับสิทธิ์<br>
+          สำหรับระบบ Admin
+        </div>
+
+      </section>
+
+
+      <!-- ADMIN CONTENT -->
+      <div id="adminContent" style="display:none;">
+
+
+        <!-- SEARCH -->
+        <section class="card">
+
+          <div class="section-title">
+            🔍 ค้นหาสมาชิก
+          </div>
+
+          <div class="search-row">
+
+            <input
+              id="memberIdInput"
+              class="input"
+              type="text"
+              placeholder="เช่น KW-79BB04A4"
+              autocomplete="off"
+            />
+
+            <button
+              id="searchBtn"
+              class="btn btn-primary"
+              onclick="searchMember()"
+            >
+              ค้นหา
+            </button>
+
+          </div>
+
+        </section>
+
+
+        <!-- MEMBER -->
+        <section id="memberCard" class="card member-card">
+
+          <div class="section-title">
+            สมาชิก
+          </div>
+
+          <div class="member-head">
+
+            <img
+              id="memberAvatar"
+              class="avatar"
+              src=""
+              alt=""
+            />
+
+            <div>
+
+              <div
+                id="memberName"
+                class="member-name"
+              >
+                -
+              </div>
+
+              <div
+                id="memberId"
+                class="member-id"
+              >
+                -
+              </div>
+
+              <div
+                id="memberLevel"
+                class="member-level"
+              >
+                Member
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="points-box">
+
+            <div class="points-label">
+              คะแนนปัจจุบัน
+            </div>
+
+            <div
+              id="memberPoints"
+              class="points-value"
+            >
+              0
+            </div>
+
+            <div class="points-unit">
+              POINTS
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- PURCHASE -->
+        <section
+          id="purchaseBox"
+          class="card purchase-box"
+        >
+
+          <div class="section-title">
+            💰 เพิ่มคะแนนจากยอดซื้อ
+          </div>
+
+          <label class="purchase-label">
+            ยอดซื้อ
+          </label>
+
+          <input
+            id="purchaseAmount"
+            class="purchase-input"
+            type="number"
+            min="0"
+            step="1"
+            placeholder="0"
+            oninput="calculatePoints()"
+          />
+
+          <div class="calc">
+
+            <div class="calc-label">
+              คะแนนที่จะได้รับ
+            </div>
+
+            <div
+              id="calculatedPoints"
+              class="calc-value"
+            >
+              +0
+            </div>
+
+          </div>
+
+          <div class="rule">
+            ทุก 20 บาท = 1 Point
+          </div>
+
+
+          <div class="description">
+
+            <label class="purchase-label">
+              รายละเอียดรายการ
+            </label>
+
+            <input
+              id="description"
+              class="input"
+              type="text"
+              placeholder="เช่น ซื้ออาหาร"
+            />
+
+          </div>
+
+
+          <div style="margin-top:16px;">
+
+            <button
+              id="addPointsBtn"
+              class="btn btn-success"
+              onclick="addPoints()"
+              disabled
+            >
+              + เพิ่มคะแนน
+            </button>
+
+          </div>
+
+        </section>
+
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+<script>
+
+  /* =====================================================
+     CONFIG
+  ===================================================== */
+
+  const CONFIG = {
+
+    liffId:
+      "2011913909-NcxFMTsN",
+
+    gasUrl:
+      "https://script.google.com/macros/s/AKfycbzpBFia2pACWDVTgQ1ckJc0aw3JejiiuhbFG3GHLN4yuysx0QyMMM_jyOQ8XRMF2pS6RA/exec",
+
+    pointsPerBaht:
+      1 / 20
+
+  };
+
+
+  /* =====================================================
+     STATE
+  ===================================================== */
+
+  const state = {
+
+    liffReady: false,
+
+    lineUserId: "",
+
+    isAdmin: false,
+
+    member: null
+
+  };
+
+
+  /* =====================================================
+     ELEMENTS
+  ===================================================== */
+
+  const $ = id =>
+    document.getElementById(id);
+
+
+  /* =====================================================
+     UI
+  ===================================================== */
+
+  function setLoading(show, text){
+
+    $("loading").style.display =
+      show ? "flex" : "none";
+
+    if(text){
+      $("loadingText").textContent = text;
+    }
+
+  }
+
+
+  function showMessage(text, type = "error"){
+
+    const el = $("message");
+
+    el.textContent = text;
+
+    el.className =
+      "message " + type;
+
+    el.style.display = "block";
+
+  }
+
+
+  function hideMessage(){
+
+    $("message").style.display = "none";
+
+  }
+
+
+  /* =====================================================
+     LIFF
+  ===================================================== */
+
+  async function initLIFF(){
+
+    if(
+      !CONFIG.liffId ||
+      !window.liff
+    ){
+      throw new Error(
+        "ไม่พบ LIFF SDK หรือ LIFF ID"
+      );
+    }
+
+
+    await liff.init({
+
+      liffId:
+        CONFIG.liffId,
+
+      withLoginOnExternalBrowser:
+        true
+
+    });
+
+
+    state.liffReady = true;
+
+
+    if(!liff.isLoggedIn()){
+
+      throw new Error(
+        "กรุณาเข้าสู่ระบบ LINE ก่อนใช้งาน"
+      );
+
+    }
+
+
+    const idToken =
+      liff.getIDToken();
+
+
+    if(!idToken){
+
+      throw new Error(
+        "ไม่สามารถรับ LINE ID Token ได้"
+      );
+
+    }
+
+
+    try{
+
+      const profile =
+        await liff.getProfile();
+
+      state.lineUserId =
+        profile.userId || "";
+
+    }catch(e){
+
+      console.warn(
+        "getProfile failed",
+        e
+      );
+
+    }
+
+
+    return idToken;
+
+  }
+
+
+  /* =====================================================
+     GAS API
+  ===================================================== */
+
+  async function gasGet(
+    action,
+    extra = {}
+  ){
+
+    if(
+      !window.liff ||
+      !liff.isLoggedIn()
+    ){
+      throw new Error(
+        "ยังไม่ได้เข้าสู่ระบบ LINE"
+      );
+    }
+
+
+    const idToken =
+      liff.getIDToken();
+
+
+    if(!idToken){
+
+      throw new Error(
+        "ไม่พบ LINE ID Token"
+      );
+
+    }
+
+
+    const params =
+      new URLSearchParams({
+
+        action,
+
+        ...extra,
+
+        idToken
+
+      });
+
+
+    const url =
+      CONFIG.gasUrl +
+      (
+        CONFIG.gasUrl.includes("?")
+          ? "&"
+          : "?"
+      ) +
+      params.toString();
+
+
+    const response =
+      await fetch(url, {
+        method: "GET"
+      });
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Backend HTTP " +
+        response.status
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if(
+      data &&
+      data.error
+    ){
+
+      throw new Error(
+        data.error
+      );
+
+    }
+
+
+    return data;
+
+  }
+
+
+  /* =====================================================
+     CHECK ADMIN
+  ===================================================== */
+
+  async function checkAdmin(){
+
+    /*
+      เราจะใช้ getAdminMember
+      เพื่อให้ Backend เป็นคนตรวจสิทธิ์
+
+      จะไม่เชื่อ Admin จาก Frontend
+    */
+
+    try{
+
+      await gasGet(
+        "getAdminMember",
+        {
+          memberId:
+            "__CHECK_ADMIN__"
+        }
+      );
+
+    }catch(error){
+
+      /*
+        ถ้าเป็น Admin จริง
+        แต่ Member ID ไม่มี
+        Backend จะตอบ "ไม่พบสมาชิก"
+
+        ถ้าไม่ใช่ Admin
+        Backend จะตอบ "ไม่มีสิทธิ์ใช้งานระบบ Admin"
+      */
+
+      const msg =
+        String(error.message || "");
+
+
+      if(
+        msg.includes(
+          "ไม่พบสมาชิก"
+        )
+      ){
+
+        state.isAdmin = true;
+
+        return true;
+
+      }
+
+
+      state.isAdmin = false;
+
+      return false;
+
+    }
+
+
+    return true;
+
+  }
+
+
+  /* =====================================================
+     SEARCH MEMBER
+  ===================================================== */
+
+  async function searchMember(){
+
+    hideMessage();
+
+
+    const memberId =
+      $("memberIdInput")
+        .value
+        .trim();
+
+
+    if(!memberId){
+
+      showMessage(
+        "กรุณาใส่ Member ID"
+      );
+
+      return;
+
+    }
+
+
+    $("searchBtn").disabled = true;
+
+    setLoading(
+      true,
+      "กำลังค้นหาสมาชิก..."
+    );
+
+
+    try{
+
+      const data =
+        await gasGet(
+          "getAdminMember",
+          {
+            memberId
+          }
+        );
+
+
+      if(
+        !data ||
+        !data.member
+      ){
+
+        throw new Error(
+          "ไม่พบข้อมูลสมาชิก"
+        );
+
+      }
+
+
+      state.member =
+        data.member;
+
+
+      renderMember();
+
+
+      showMessage(
+        "พบสมาชิกแล้ว",
+        "success"
+      );
+
+
+    }catch(error){
+
+      console.error(error);
+
+      state.member = null;
+
+      $("memberCard")
+        .style.display = "none";
+
+      $("purchaseBox")
+        .style.display = "none";
+
+      showMessage(
+        error.message ||
+        "ค้นหาสมาชิกไม่สำเร็จ"
+      );
+
+    }finally{
+
+      $("searchBtn").disabled = false;
+
+      setLoading(false);
+
+    }
+
+  }
+
+
+  /* =====================================================
+     RENDER MEMBER
+  ===================================================== */
+
+  function renderMember(){
+
+    const m =
+      state.member;
+
+
+    if(!m){
+
+      $("memberCard")
+        .style.display = "none";
+
+      $("purchaseBox")
+        .style.display = "none";
+
+      return;
+
+    }
+
+
+    $("memberName")
+      .textContent =
+        m.name || "สมาชิก";
+
+
+    $("memberId")
+      .textContent =
+        m.memberId || "-";
+
+
+    $("memberLevel")
+      .textContent =
+        m.memberLevel || "Member";
+
+
+    $("memberPoints")
+      .textContent =
+        Number(m.points || 0)
+          .toLocaleString("th-TH");
+
+
+    const avatar =
+      $("memberAvatar");
+
+
+    if(m.profileImage){
+
+      avatar.src =
+        m.profileImage;
+
+    }else{
+
+      avatar.src =
+        "https://placehold.co/120x120?text=USER";
+
+    }
+
+
+    $("memberCard")
+      .style.display = "block";
+
+
+    $("purchaseBox")
+      .style.display = "block";
+
+
+    $("purchaseAmount")
+      .value = "";
+
+
+    $("description")
+      .value = "";
+
+
+    $("calculatedPoints")
+      .textContent = "+0";
+
+
+    $("addPointsBtn")
+      .disabled = true;
+
+  }
+
+
+  /* =====================================================
+     CALCULATE POINTS
+  ===================================================== */
+
+  function calculatePoints(){
+
+    const amount =
+      Number(
+        $("purchaseAmount").value
+      );
+
+
+    if(
+      !isFinite(amount) ||
+      amount <= 0
+    ){
+
+      $("calculatedPoints")
+        .textContent = "+0";
+
+      $("addPointsBtn")
+        .disabled = true;
+
+      return;
+
+    }
+
+
+    const points =
+      Math.floor(
+        amount / 20
+      );
+
+
+    $("calculatedPoints")
+      .textContent =
+        "+" +
+        points.toLocaleString(
+          "th-TH"
+        );
+
+
+    $("addPointsBtn")
+      .disabled =
+        points <= 0;
+
+  }
+
+
+  /* =====================================================
+     ADD POINTS
+  ===================================================== */
+
+  async function addPoints(){
+
+    hideMessage();
+
+
+    if(!state.member){
+
+      showMessage(
+        "กรุณาเลือกสมาชิกก่อน"
+      );
+
+      return;
+
+    }
+
+
+    const amount =
+      Number(
+        $("purchaseAmount").value
+      );
+
+
+    const points =
+      Math.floor(
+        amount / 20
+      );
+
+
+    if(
+      !isFinite(amount) ||
+      amount <= 0
+    ){
+
+      showMessage(
+        "กรุณาใส่ยอดซื้อ"
+      );
+
+      return;
+
+    }
+
+
+    if(points <= 0){
+
+      showMessage(
+        "ยอดซื้อน้อยกว่า 20 บาท"
+      );
+
+      return;
+
+    }
+
+
+    const description =
+      $("description")
+        .value
+        .trim() ||
+      "ซื้อสินค้า " +
+      amount +
+      " บาท";
+
+
+    const confirmed =
+      confirm(
+        "ยืนยันเพิ่มคะแนน?\n\n" +
+
+        "สมาชิก: " +
+        (
+          state.member.name ||
+          "-"
+        ) +
+
+        "\nยอดซื้อ: " +
+        amount.toLocaleString(
+          "th-TH"
+        ) +
+        " บาท" +
+
+        "\nคะแนนที่จะเพิ่ม: +" +
+        points +
+
+        " Point"
+      );
+
+
+    if(!confirmed){
+
+      return;
+
+    }
+
+
+    const button =
+      $("addPointsBtn");
+
+
+    button.disabled = true;
+
+    setLoading(
+      true,
+      "กำลังบันทึกคะแนน..."
+    );
+
+
+    try{
+
+      const result =
+        await gasGet(
+          "addPoints",
+          {
+
+            memberId:
+              state.member.memberId,
+
+            purchaseAmount:
+              amount,
+
+            description
+
+          }
+        );
+
+
+      if(
+        !result ||
+        !result.ok
+      ){
+
+        throw new Error(
+          result?.message ||
+          "เพิ่มคะแนนไม่สำเร็จ"
+        );
+
+      }
+
+
+      /*
+        Backend เป็นตัวกำหนดคะแนนจริง
+      */
+
+      state.member.points =
+        Number(
+          result.newBalance
+        );
+
+
+      renderMember();
+
+
+      showMessage(
+        "เพิ่มคะแนนสำเร็จ +" +
+        result.pointsAdded +
+        " Point",
+        "success"
+      );
+
+
+      /*
+        ล้างยอดซื้อหลังสำเร็จ
+      */
+
+      $("purchaseAmount")
+        .value = "";
+
+
+      $("description")
+        .value = "";
+
+
+      calculatePoints();
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showMessage(
+        error.message ||
+        "เพิ่มคะแนนไม่สำเร็จ"
+      );
+
+    }finally{
+
+      button.disabled = false;
+
+      setLoading(false);
+
+    }
+
+  }
+
+
+  /* =====================================================
+     ENTER TO SEARCH
+  ===================================================== */
+
+  $("memberIdInput")
+    .addEventListener(
+      "keydown",
+      function(event){
+
+        if(
+          event.key === "Enter"
+        ){
+
+          searchMember();
+
+        }
+
+      }
+    );
+
+
+  /* =====================================================
+     INIT
+  ===================================================== */
+
+  async function init(){
+
+    try{
+
+      setLoading(
+        true,
+        "กำลังตรวจสอบ LINE..."
+      );
+
+
+      await initLIFF();
+
+
+      setLoading(
+        true,
+        "กำลังตรวจสอบสิทธิ์ Admin..."
+      );
+
+
+      /*
+        ตรวจ Admin ผ่าน Backend
+      */
+
+      const admin =
+        await checkAdmin();
+
+
+      if(!admin){
+
+        $("accessDenied")
+          .style.display = "block";
+
+        $("adminContent")
+          .style.display = "none";
+
+        setLoading(false);
+
+        return;
+
+      }
+
+
+      state.isAdmin = true;
+
+
+      $("accessDenied")
+        .style.display = "none";
+
+
+      $("adminContent")
+        .style.display = "block";
+
+
+      setLoading(false);
+
+
+    }catch(error){
+
+      console.error(error);
+
+
+      setLoading(false);
+
+
+      $("accessDenied")
+        .style.display = "block";
+
+
+      $("adminContent")
+        .style.display = "none";
+
+
+      showMessage(
+        error.message ||
+        "ไม่สามารถเข้าสู่ระบบ Admin ได้"
+      );
+
+    }
+
+  }
+
+
+  init();
+
+</script>
+
+</body>
+</html>
