@@ -1,1391 +1,584 @@
 <!DOCTYPE html>
-<html lang="th" class="scroll-smooth">
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>beloved. | Custom Gemstone Bracelet</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Prompt:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1F1914">
+<title>คำหวาน CUISINE — Member</title>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            terracotta: '#C86D51',
-                            terracottaDark: '#9E4C33',
-                            cream: '#FAF7F2',
-                            warmBg: '#F5EFEE',
-                            charcoal: '#2D2825',
-                            sand: '#E6DDD4',
-                            beigeLight: '#F2ECE4',
-                            gold: '#D4AF37'
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['"Cormorant Garamond"', 'serif'],
-                        sans: ['"Prompt"', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Prompt', sans-serif;
-            background-color: #FAF7F2;
-            color: #2D2825;
-            -webkit-font-smoothing: antialiased;
-        }
-        .font-brand {
-            font-family: 'Cormorant Garamond', serif;
-        }
-        /* Custom subtle scrollbars */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FAF7F2;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D8CEC4;
-            border-radius: 9999px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #C86D51;
-        }
-        .stone-shadow {
-            box-shadow: 0 10px 25px -5px rgba(200, 109, 81, 0.15);
-        }
-        /* Pulse glow animation for selected slots */
-        @keyframes subtleGlow {
-            0%, 100% { border-color: rgba(200, 109, 81, 0.4); }
-            50% { border-color: rgba(200, 109, 81, 1); }
-        }
-        .active-slot {
-            animation: subtleGlow 2s infinite ease-in-out;
-        }
+<!-- Optional: LINE LIFF. The page still works in Demo Mode without LIFF. -->
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
-        /* Mobile layout fix for gemstone highlights */
-        html, body {
-            width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
+<style>
+:root{
+  --brown:#1F1914; --brown2:#2B2520; --gold:#D4AF37; --gold2:#E8D099;
+  --accent:#8B5E34; --cream:#FAF6F0; --paper:#FAFAF8; --muted:#8A837D;
+  --line:#ECE8E3; --green:#1E9B62; --red:#C84646;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#eee;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans Thai",Arial,sans-serif;color:var(--brown2)}
+body{min-height:100vh}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:520px;margin:0 auto;min-height:100vh;background:var(--paper);box-shadow:0 0 35px rgba(0,0,0,.08);position:relative;overflow-x:hidden}
+.screen{min-height:100vh;padding-bottom:100px}
+.hidden{display:none!important}
+.loading{min-height:100vh;background:var(--brown);color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+.loader{width:76px;height:76px;border-radius:50%;border:2px solid rgba(212,175,55,.25);border-top-color:var(--gold);animation:spin 1s linear infinite;margin-bottom:18px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fade{animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 
-        @media (max-width: 639px) {
-            .mobile-safe-text {
-                overflow-wrap: anywhere;
-                word-break: break-word;
-            }
-        }
-    </style>
+.header{background:var(--brown);color:#fff;padding:42px 20px 24px;border-bottom-left-radius:30px;border-bottom-right-radius:30px;position:relative;overflow:hidden}
+.header:after{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(212,175,55,.18);border-radius:50%;right:-70px;top:-90px;box-shadow:0 0 0 24px rgba(212,175,55,.03),0 0 0 48px rgba(212,175,55,.02)}
+.header-row{display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.profile{display:flex;gap:12px;align-items:center}
+.avatar{width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#5d4027,#241a13);font-size:21px;color:var(--gold2);overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.hello{font-size:11px;color:#aaa19a;margin-bottom:2px}
+.name{font-size:17px;font-weight:800;line-height:1.2}
+.phone{font-size:11px;color:var(--gold2);font-family:monospace;margin-top:3px}
+.icon-btn{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.08);color:var(--gold2);width:42px;height:42px;border-radius:15px;display:flex;align-items:center;justify-content:center}
+.icon-btn:hover{background:rgba(255,255,255,.14)}
+
+.member-card{margin:-8px 16px 0;position:relative;z-index:2;background:linear-gradient(145deg,#30231a,#17120e);border:1px solid rgba(232,208,153,.28);border-radius:25px;padding:18px;color:#fff;box-shadow:0 16px 35px rgba(31,25,20,.20);overflow:hidden}
+.member-card:before{content:"";position:absolute;inset:0;opacity:.12;background:radial-gradient(circle at 10% 20%,#D4AF37 0 2px,transparent 3px),radial-gradient(circle at 80% 70%,#D4AF37 0 1px,transparent 2px);background-size:42px 42px}
+.card-top,.card-bottom,.point-row{position:relative;z-index:1}
+.card-top{display:flex;justify-content:space-between;align-items:center}
+.member-label{font-size:9px;letter-spacing:1.6px;color:#aaa19a;text-transform:uppercase}
+.member-id{font-family:monospace;font-size:11px;color:var(--gold2);margin-top:3px}
+.level{font-size:10px;font-weight:800;color:var(--brown);background:var(--gold);padding:6px 9px;border-radius:99px}
+.point-row{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.points-label{font-size:10px;color:#aaa19a}
+.points{font-size:38px;font-weight:900;color:var(--gold2);line-height:1}
+.points small{font-size:13px;font-weight:700}
+.qr-btn{background:linear-gradient(135deg,var(--gold),#9c6d2e);border:0;color:var(--brown);padding:10px 13px;border-radius:14px;font-weight:800;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 7px 16px rgba(0,0,0,.22)}
+.card-bottom{border-top:1px solid rgba(255,255,255,.10);margin-top:17px;padding-top:11px;display:flex;justify-content:space-between;font-size:10px}
+.card-bottom .muted{color:#8e8780}
+.card-bottom strong{color:#f7f1e5}
+
+.section{padding:20px 16px 0}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}
+.section-title{font-size:14px;font-weight:900}
+.link{font-size:10px;color:var(--accent);font-weight:800;background:none;border:0;padding:0}
+
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.quick button{background:#fff;border:1px solid var(--line);border-radius:17px;padding:13px 4px 11px;min-height:86px;color:var(--accent);box-shadow:0 3px 12px rgba(0,0,0,.025)}
+.quick .qicon{width:34px;height:34px;margin:0 auto 6px;background:var(--cream);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.quick span{display:block;font-size:9px;font-weight:800;color:#4d4640;line-height:1.25}
+
+.promo{display:flex;gap:11px;overflow:auto;padding-bottom:4px;scrollbar-width:none}
+.promo::-webkit-scrollbar{display:none}
+.promo-card{min-width:88%;height:132px;border-radius:20px;overflow:hidden;position:relative;background:#38291f;flex-shrink:0}
+.promo-card img{width:100%;height:100%;object-fit:cover;opacity:.7}
+.promo-card:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(25,18,13,.88),rgba(25,18,13,.08))}
+.promo-text{position:absolute;z-index:1;left:16px;right:16px;top:15px;color:#fff}
+.tag{display:inline-block;background:var(--gold);color:var(--brown);font-size:8px;font-weight:900;padding:4px 7px;border-radius:99px;margin-bottom:9px}
+.promo-title{font-size:14px;font-weight:900;max-width:75%}
+.promo-sub{font-size:9px;color:#e2d9d0;max-width:80%;margin-top:5px;line-height:1.4}
+
+.rewards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.reward{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 3px 12px rgba(0,0,0,.025)}
+.reward-img{height:120px;background:var(--cream);position:relative}
+.reward-img img{width:100%;height:100%;object-fit:cover}
+.reward-cost{position:absolute;right:7px;top:7px;background:rgba(31,25,20,.9);color:var(--gold2);font-size:9px;font-weight:900;padding:5px 7px;border-radius:99px}
+.reward-body{padding:11px;display:flex;flex-direction:column;flex:1}
+.reward-title{font-size:11px;font-weight:900;line-height:1.35}
+.reward-desc{font-size:9px;color:#777;margin-top:5px;line-height:1.4;min-height:25px}
+.reward-actions{margin-top:auto;padding-top:10px}
+.primary{width:100%;border:0;border-radius:11px;background:var(--accent);color:#fff;padding:9px 10px;font-size:10px;font-weight:900}
+.primary:disabled{background:#eee;color:#aaa;cursor:not-allowed}
+.secondary{border:1px solid var(--line);background:#fff;color:var(--accent);border-radius:11px;padding:9px 12px;font-size:10px;font-weight:900}
+
+.page-head{background:#fff;padding:42px 20px 16px;position:sticky;top:0;z-index:10;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.page-head.dark{background:var(--brown);color:#fff;border:0}
+.page-title{font-size:20px;font-weight:900}
+.back{border:0;background:transparent;color:inherit;display:flex;align-items:center;gap:4px;font-size:11px;font-weight:800;padding:0}
+
+.balance{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.10);border-radius:17px;padding:13px;margin-top:14px;display:flex;justify-content:space-between;align-items:center}
+.balance-num{font-size:27px;font-weight:900;color:var(--gold2)}
+.filter{display:flex;gap:7px;overflow:auto;padding:13px 16px;background:var(--paper);position:sticky;top:99px;z-index:9;border-bottom:1px solid var(--line)}
+.filter button{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 11px;font-size:9px;font-weight:800;color:#777}
+.filter button.active{background:var(--brown);color:var(--gold2);border-color:var(--brown)}
+.history{padding:5px 16px 20px}
+.tx{background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tx-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--cream);color:var(--accent);flex-shrink:0}
+.tx-main{flex:1;min-width:0}.tx-title{font-size:10px;font-weight:900}.tx-date{font-size:8px;color:#999;margin-top:3px}
+.tx-points{font-size:12px;font-weight:900}.earn{color:var(--green)}.use{color:var(--red)}
+
+.coupon{background:#fff;border:1px solid var(--line);border-radius:18px;margin:12px 16px;overflow:hidden;display:flex;min-height:118px}
+.coupon-left{width:82px;background:var(--brown);color:var(--gold2);display:flex;align-items:center;justify-content:center;flex-direction:column}
+.coupon-left b{font-size:20px}.coupon-left span{font-size:8px}
+.coupon-body{padding:13px;flex:1}.coupon-title{font-size:12px;font-weight:900}.coupon-desc{font-size:9px;color:#777;line-height:1.4;margin-top:5px}.coupon-exp{font-size:8px;color:#999;margin-top:7px}
+.coupon-action{margin-top:9px}.coupon.used{opacity:.55}.coupon.used .coupon-left{background:#777}
+
+.collect-hero{margin:16px;background:linear-gradient(145deg,var(--brown),#34271d);border-radius:23px;color:#fff;padding:21px;text-align:center}
+.collect-hero h2{font-size:18px;margin:0;color:var(--gold2)}.collect-hero p{font-size:10px;color:#c9c0b8;line-height:1.5}
+.steps{padding:0 16px}.step{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;display:flex;gap:12px;margin-bottom:9px}.step-icon{width:43px;height:43px;border-radius:13px;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:20px}.step h3{font-size:11px;margin:0}.step p{font-size:9px;color:#777;line-height:1.45;margin:5px 0 0}
+
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);background:rgba(255,255,255,.96);backdrop-filter:blur(15px);border-top:1px solid var(--line);border-radius:25px 25px 0 0;display:grid;grid-template-columns:repeat(4,1fr);padding:8px 10px max(10px,env(safe-area-inset-bottom));z-index:30;box-shadow:0 -12px 30px rgba(0,0,0,.06)}
+.nav-btn{border:0;background:transparent;color:#aaa;padding:4px 1px;font-size:8px;font-weight:700}.nav-btn .nav-icon{width:30px;height:30px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 2px}.nav-btn.active{color:var(--accent)}.nav-btn.active .nav-icon{background:var(--cream)}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:100;display:flex;align-items:flex-end;justify-content:center;padding:0}
+.modal-box{width:min(520px,100%);background:#fff;border-radius:28px 28px 0 0;padding:22px;max-height:90vh;overflow:auto;animation:up .25s ease}
+@keyframes up{from{transform:translateY(30px);opacity:.7}to{transform:none;opacity:1}}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.modal-title{font-weight:900;font-size:16px}.close{border:0;background:#f3f1ef;border-radius:50%;width:35px;height:35px;display:flex;align-items:center;justify-content:center}
+.qr-wrap{background:var(--cream);border:1px solid #eadfce;border-radius:20px;padding:18px;text-align:center}.qr-wrap img{width:220px;height:220px;background:#fff;padding:10px;border-radius:15px}.code{font-family:monospace;font-size:11px;color:#777;margin-top:10px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:#f2f1ef;padding:4px;border-radius:14px;margin-bottom:14px}.tabs button{border:0;background:transparent;border-radius:11px;padding:9px;font-size:10px;font-weight:900;color:#888}.tabs button.active{background:#fff;color:var(--brown);box-shadow:0 2px 7px rgba(0,0,0,.06)}
+.field{margin-bottom:13px}.field label{display:block;font-size:9px;font-weight:900;margin-bottom:6px}.field input{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:11px;outline:none}.field input:focus{border-color:var(--gold)}
+.notice{background:var(--cream);border:1px solid #eadfce;color:var(--accent);border-radius:13px;padding:11px;font-size:9px;line-height:1.5;margin-bottom:13px}
+.modal-actions{display:flex;gap:8px}.modal-actions button{flex:1}
+.confirm-cost{background:var(--cream);border-radius:16px;padding:15px;margin:12px 0;text-align:center}.confirm-cost strong{font-size:30px;color:var(--accent);display:block}.confirm-cost span{font-size:9px;color:#777}
+
+.toast{position:fixed;left:50%;bottom:94px;transform:translateX(-50%) translateY(15px);background:var(--brown);color:#fff;border:1px solid rgba(232,208,153,.25);border-radius:99px;padding:10px 15px;font-size:10px;font-weight:800;z-index:200;opacity:0;pointer-events:none;transition:.25s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.empty{text-align:center;padding:40px 20px;color:#999;font-size:11px}
+.error-box{text-align:center;padding:70px 25px}.error-icon{font-size:40px;color:var(--red);margin-bottom:10px}.error-box h3{font-size:17px;margin:0 0 6px}.error-box p{font-size:10px;color:#777;line-height:1.5}
+
+@media(min-width:700px){
+  .app{margin-top:20px;margin-bottom:20px;border-radius:28px;overflow:hidden}
+  .bottom{bottom:20px;border-radius:25px}
+  .modal{align-items:center;padding:20px}.modal-box{border-radius:28px}
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-brand-terracotta selection:text-white pt-20">
 
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 w-full bg-brand-cream/95 backdrop-blur-md border-b border-brand-sand/60 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <a href="#" class="text-3xl font-brand font-medium tracking-tight text-brand-terracotta hover:opacity-90 transition">
-                    beloved.
-                </a>
-                <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-stone-400 pl-3 border-l border-stone-300">Handcrafted Gemstones</span>
-            </div>
+<body>
+<div class="app" id="app">
+  <div id="loading" class="loading">
+    <div class="loader"></div>
+    <div style="font-size:20px;font-weight:900;color:#E8D099">คำหวาน CUISINE</div>
+    <div style="font-size:10px;color:#C48A42;margin-top:5px">กำลังโหลดข้อมูลสมาชิก...</div>
+  </div>
+  <div id="content" class="hidden"></div>
+</div>
 
-            <nav class="flex items-center space-x-6 text-sm">
-                <button onclick="scrollToSection('customizer')" class="hover:text-brand-terracotta transition font-light hidden md:inline-block">
-                    ออกแบบกำไล
-                </button>
-                <button onclick="scrollToSection('preset-section')" class="hover:text-brand-terracotta transition font-light hidden md:inline-block">
-                    คอลเลกชันยอดนิยม
-                </button>
-                <button onclick="scrollToSection('stone-guide')" class="hover:text-brand-terracotta transition font-light hidden md:inline-block">
-                    ความหมายหินแท้
-                </button>
-                <button onclick="openCartModal()" class="relative bg-brand-terracotta text-white px-5 py-2.5 rounded-full text-xs sm:text-sm font-light shadow-sm hover:bg-brand-terracottaDark transition flex items-center gap-2">
-                    <i class="fa-solid fa-gem"></i>
-                    <span>สรุปแบบที่เลือก</span>
-                    <span id="badge-count" class="bg-white text-brand-terracotta text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">5</span>
-                </button>
-            </nav>
+<div id="modalRoot"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+/* =========================================================
+   คำหวาน CUISINE — Standalone HTML
+   - Works immediately in DEMO MODE.
+   - Optional LIFF + Google Apps Script integration.
+   - Production rule: backend must be the source of truth
+     for points, coupons and redemption.
+========================================================= */
+
+const CONFIG = {
+  appName: "คำหวาน CUISINE",
+  env: localStorage.getItem("KW_ENV") || "demo",
+  gasUrl: localStorage.getItem("KW_GAS_URL") || "",
+  liffId: localStorage.getItem("KW_LIFF_ID") || "",
+  qrProvider: "https://api.qrserver.com/v1/create-qr-code/"
+};
+
+const DEFAULT_MEMBER = {
+  memberId:"KW-88902",
+  lineUserId:"U1234567890abcdef",
+  name:"คุณเฉลิมฤทธิ์ ริกสาสเน",
+  phone:"082-529-6442",
+  profileImage:"",
+  memberLevel:"GOLD",
+  points:147,
+  nextLevelPoints:300,
+  qrCodeValue:"KW-88902",
+  joinedDate:"07 ต.ค. 2026",
+  birthDate:"10 ต.ค. 2536"
+};
+
+const PROMOS = [
+  {id:"p1",title:"รับพอยท์ X2 ทุกออเดอร์ขนมหวาน",subtitle:"เฉพาะสาขาคำหวาน Cuisine ช่วงเวลา 14:00 - 17:00 น.",tag:"โปรเด็ดประจำเดือน",image:"https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=900"},
+  {id:"p2",title:"ฉลองเดือนเกิด รับเมนูพิเศษฟรี!",subtitle:"รับโทสต์สังขยาใบเตยสด 1 จาน เมื่อมาทานตรงเดือนเกิด",tag:"Birthday Special",image:"https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=900"}
+];
+
+const REWARDS = [
+  {id:"R001",points:80,title:"สังขยาใบเตยปังปิ้งเตาถ่าน",description:"ขนมปังหอมกรอบนอกนุ่มใน เสิร์ฟพร้อมสังขยาใบเตยเข้มข้นสดใหม่",image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=500"},
+  {id:"R002",points:120,title:"บิงซูชาไทยคำหวาน Signature",description:"เกล็ดหิมะรสชาไทยเข้มข้น ท็อปปิ้งเฉาก๊วยและขนมปังกรอบ",image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&q=80&w=500"},
+  {id:"R003",points:150,title:"เครื่องดื่มเย็นฟรี 1 แก้ว",description:"เลือกรับชาไทยเข้มข้น นมสดฮอกไกโด หรือกาแฟสดโบราณ",image:"https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=500"},
+  {id:"R004",points:300,title:"ชุดเซ็ตคำหวาน Premium Gift Box",description:"แลกรับเซ็ตของขวัญพิเศษประจำเทศกาล",image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=500"}
+];
+
+const DEFAULT_HISTORY = [
+  {id:"TX001",date:"07 ต.ค. 2026",type:"EARN",description:"ซื้อสินค้า สาขาเมกาบางนา",points:25,time:"14:30"},
+  {id:"TX002",date:"06 ต.ค. 2026",type:"EARN",description:"ร่วมกิจกรรมเช็กอินหน้าร้าน",points:10,time:"10:15"},
+  {id:"TX003",date:"05 ต.ค. 2026",type:"USE",description:"แลกส่วนลดคูปองเครื่องดื่ม",points:-50,time:"18:45"},
+  {id:"TX004",date:"02 ต.ค. 2026",type:"EARN",description:"ซื้อสินค้า สาขาสยามพารากอน",points:40,time:"12:00"}
+];
+
+const DEFAULT_COUPONS = [
+  {id:"C001",title:"ส่วนลด 100 บาท",description:"ใช้เป็นส่วนลดทานอาหารครบ 500 บาทขึ้นไป",expiry:"31 ต.ค. 2026",status:"ACTIVE",type:"DISCOUNT"},
+  {id:"C002",title:"รับฟรี ขนมหวาน Signature 1 ที่",description:"คูปองของขวัญต้อนรับสมาชิกคำหวาน",expiry:"31 ต.ค. 2026",status:"ACTIVE",type:"FREEBIE"},
+  {id:"C003",title:"ส่วนลด 10% ทุกเมนู",description:"ไม่มีขั้นต่ำในการใช้งาน",expiry:"15 ต.ค. 2026",status:"USED",type:"DISCOUNT"}
+];
+
+let state = {
+  page:"HOME",
+  member:null,
+  history:[],
+  coupons:[],
+  rewards:REWARDS,
+  filter:"ALL",
+  liffReady:false,
+  lineId:"",
+  loading:true
+};
+
+function clone(x){ return JSON.parse(JSON.stringify(x)); }
+function escapeHtml(s){
+  return String(s ?? "").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+function moneyDate(){ return new Date().toLocaleDateString("th-TH",{day:"2-digit",month:"short",year:"numeric"}); }
+function nowTime(){ return new Date().toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"}); }
+
+function loadDemo(){
+  const m = JSON.parse(localStorage.getItem("KW_MEMBER") || "null");
+  const h = JSON.parse(localStorage.getItem("KW_HISTORY") || "null");
+  const c = JSON.parse(localStorage.getItem("KW_COUPONS") || "null");
+  state.member = m || clone(DEFAULT_MEMBER);
+  state.history = h || clone(DEFAULT_HISTORY);
+  state.coupons = c || clone(DEFAULT_COUPONS);
+}
+function saveDemo(){
+  localStorage.setItem("KW_MEMBER",JSON.stringify(state.member));
+  localStorage.setItem("KW_HISTORY",JSON.stringify(state.history));
+  localStorage.setItem("KW_COUPONS",JSON.stringify(state.coupons));
+}
+
+/* ---------- Optional LIFF ---------- */
+async function initLIFF(){
+  if(!CONFIG.liffId || !window.liff) return false;
+  try{
+    await liff.init({liffId:CONFIG.liffId});
+    state.liffReady = true;
+    if(liff.isLoggedIn()){
+      const profile = await liff.getProfile();
+      state.lineId = profile.userId || "";
+      return true;
+    }
+    return true;
+  }catch(e){
+    console.warn("LIFF init failed:",e);
+    return false;
+  }
+}
+
+/* ---------- Backend adapter ---------- */
+async function gasGet(action, extra={}){
+  if(!CONFIG.gasUrl) throw new Error("GAS URL is not configured");
+  const params = new URLSearchParams({action,...extra});
+  const res = await fetch(CONFIG.gasUrl + (CONFIG.gasUrl.includes("?")?"&":"?") + params.toString(), {method:"GET"});
+  if(!res.ok) throw new Error("Backend HTTP " + res.status);
+  const data = await res.json();
+  if(data && data.error) throw new Error(data.error);
+  return data;
+}
+
+/*
+Expected backend actions:
+  getMember
+  getPointHistory
+  getCoupons
+  getRewards
+  redeemReward
+  useCoupon
+
+For real production, the backend MUST verify the LINE ID token
+and determine the member from the verified token. Do not trust
+memberId/points supplied by the browser.
+*/
+async function getMemberReal(){
+  const idToken = (window.liff && state.liffReady && liff.isLoggedIn()) ? liff.getIDToken() : "";
+  return gasGet("getMember", {
+    idToken: idToken || "",
+    lineUserId: state.lineId || ""
+  });
+}
+
+async function loadData(){
+  state.loading=true;
+  render();
+  await initLIFF();
+
+  if(CONFIG.env === "production" && CONFIG.gasUrl){
+    try{
+      state.member = await getMemberReal();
+      const [h,c,r] = await Promise.all([
+        gasGet("getPointHistory",{memberId:state.member.memberId}),
+        gasGet("getCoupons",{memberId:state.member.memberId}),
+        gasGet("getRewards")
+      ]);
+      state.history = Array.isArray(h)?h:(h.history||[]);
+      state.coupons = Array.isArray(c)?c:(c.coupons||[]);
+      state.rewards = Array.isArray(r)?r:(r.rewards||REWARDS);
+    }catch(e){
+      console.error(e);
+      showToast("เชื่อมต่อระบบจริงไม่สำเร็จ — เปลี่ยนเป็น Demo Mode");
+      CONFIG.env="demo";
+      loadDemo();
+    }
+  }else{
+    loadDemo();
+  }
+
+  state.loading=false;
+  render();
+}
+
+/* ---------- Rendering ---------- */
+function icon(name,size=18){
+  return `<i data-lucide="${name}" width="${size}" height="${size}"></i>`;
+}
+function render(){
+  const root=document.getElementById("content");
+  const loading=document.getElementById("loading");
+  if(state.loading){
+    loading.classList.remove("hidden"); root.classList.add("hidden"); return;
+  }
+  loading.classList.add("hidden"); root.classList.remove("hidden");
+  root.innerHTML = pageHtml();
+  if(window.lucide) lucide.createIcons();
+}
+function nav(){
+  const items=[
+    ["HOME","credit-card","บัตรสมาชิก"],
+    ["COLLECT","trending-up","สะสมแต้ม"],
+    ["REWARDS","gift","แลกพอยท์"],
+    ["COUPONS","ticket","คูปอง"]
+  ];
+  return `<nav class="bottom">${items.map(([id,ic,label])=>`
+    <button class="nav-btn ${state.page===id?"active":""}" onclick="go('${id}')">
+      <div class="nav-icon">${icon(ic,18)}</div>${label}
+    </button>`).join("")}</nav>`;
+}
+function header(){
+  const m=state.member;
+  const avatar=m.profileImage
+    ? `<img src="${escapeHtml(m.profileImage)}" onerror="this.style.display='none'">`
+    : `${icon("user-round",22)}`;
+  return `<header class="header">
+    <div class="header-row">
+      <div class="profile">
+        <div class="avatar">${avatar}</div>
+        <div>
+          <div class="hello">สวัสดีสมาชิกคำหวาน</div>
+          <div class="name">${escapeHtml(m.name)}</div>
+          <div class="phone">${escapeHtml(m.phone)}</div>
         </div>
-    </header>
-
-    <!-- Hero Banner -->
-    <section class="relative py-8 sm:py-12 bg-gradient-to-b from-brand-cream via-brand-beigeLight/40 to-brand-cream overflow-hidden">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <span class="inline-block px-3 py-1 bg-brand-terracotta/10 text-brand-terracotta text-xs tracking-widest uppercase rounded-full mb-3 font-medium">
-                Custom Energy Jewelry
-            </span>
-            <h1 class="font-brand text-3xl sm:text-6xl text-brand-charcoal font-normal tracking-wide leading-tight mb-4 mobile-safe-text">
-                ร้อยเรียงพลังแห่งธรรมชาติ ในแบบที่เป็นคุณ
-            </h1>
-            <p class="text-stone-600 font-light text-xs sm:text-base max-w-2xl mx-auto leading-relaxed mobile-safe-text">
-                เลือกหินมงคลแท้ธรรมชาติและสีสายถักไหมฝรั่งเศสที่คุณชอบ เสริมพลังชีวิตในด้านที่ต้องการ ทั้งความรัก ความมั่งคั่ง โชคลาภ และสติปัญญา
-            </p>
-        </div>
-    </section>
-
-
-    <!-- GEMSTONE HIGHLIGHTS -->
-    <section id="gemstone-highlights" class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-7 pb-5 overflow-hidden">
-        <div class="text-center mb-5">
-            <span class="text-[10px] sm:text-xs uppercase tracking-[0.25em] text-brand-terracotta font-medium">
-                Our Genuine Gemstones
-            </span>
-            <h2 class="font-brand text-2xl sm:text-3xl text-brand-charcoal mt-1">
-                หินมงคลที่เราเลือกสรร
-            </h2>
-            <p class="text-[11px] sm:text-xs text-stone-400 font-light mt-1">
-                เลือกหินแท้ที่ใช่สำหรับคุณ
-            </p>
-        </div>
-
-        <!-- 5 columns on mobile / 10 columns on desktop -->
-        <div class="w-full grid grid-cols-5 gap-x-2 gap-y-5 sm:gap-x-4 sm:gap-y-6">
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./rose-quartz.png" alt="Rose Quartz" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Rose Quartz</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความรัก</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./peach-quartz.png" alt="Peach Quartz" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Peach Quartz</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความอ่อนโยน</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./sunstone.png" alt="Sunstone" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Sunstone</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความสุข</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./rhodonite.png" alt="Rhodonite" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Rhodonite</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความกล้าหาญ</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./white-quartz.png" alt="White Quartz" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">White Quartz</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความบริสุทธิ์</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./amethyst.png" alt="Amethyst" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Amethyst</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">สติปัญญา</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./amazonite.png" alt="Amazonite" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Amazonite</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความหวัง</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./red-agate.png" alt="Red Agate" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Red Agate</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">การคุ้มครอง</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./moss-agate.png" alt="Moss Agate" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Moss Agate</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">ความมั่นคง</p>
-            </div>
-
-            <div class="text-center min-w-0 group">
-                <div class="w-12 h-12 sm:w-20 sm:h-20 mx-auto rounded-full bg-white p-1 shadow-sm border border-brand-sand/60 group-hover:scale-105 transition-transform duration-300">
-                    <img src="./unakite.png" alt="Unakite" class="w-full h-full rounded-full object-cover">
-                </div>
-                <p class="font-brand text-[11px] sm:text-base text-brand-charcoal mt-2 leading-tight truncate">Unakite</p>
-                <p class="text-[8px] sm:text-[10px] text-brand-terracotta mt-0.5 truncate">โชคลาภ</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- MAIN CUSTOMIZER SECTION -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow">
-        <div id="customizer" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- LEFT COLUMN: Canvas Preview & Energy Summary (Sticky on Desktop) -->
-            <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
-                <!-- Visualizer Card -->
-                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-sand/70 shadow-sm relative overflow-hidden text-center">
-                    <div class="absolute top-4 left-4 text-xs font-light tracking-wider text-stone-400">
-                        <i class="fa-solid fa-eye text-brand-terracotta mr-1"></i> ตัวอย่างสร้อยข้อมือ
-                    </div>
-
-                    <!-- Reset & Randomize Buttons -->
-                    <div class="absolute top-4 right-4 flex gap-2">
-                        <button onclick="randomizeDesign()" title="สุ่มแบบหิน" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 text-xs flex items-center justify-center transition">
-                            <i class="fa-solid fa-dice"></i>
-                        </button>
-                        <button onclick="resetDesign()" title="เริ่มต้นใหม่" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 text-xs flex items-center justify-center transition">
-                            <i class="fa-solid fa-rotate-left"></i>
-                        </button>
-                    </div>
-
-                    <!-- Canvas Container -->
-                    <div class="relative w-full aspect-square max-w-[360px] mx-auto my-2 flex items-center justify-center">
-                        <canvas id="braceletCanvas" width="700" height="700" class="w-full h-full object-contain cursor-grab active:cursor-grabbing"></canvas>
-                    </div>
-
-                    <!-- Info Tag under canvas -->
-                    <p class="text-xs text-stone-400 font-light mb-4">
-                        *รูปภาพจำลองเพื่อความเข้าใจ สายไหมถักปรับขนาดได้ 14 - 20 ซม.
-                    </p>
-
-                    <!-- Quick Energy Badges -->
-                    <div class="border-t border-brand-sand/50 pt-4">
-                        <div class="text-xs uppercase tracking-widest text-stone-400 mb-2 font-medium">พลังที่ได้รับจากสายนี้</div>
-                        <div id="active-energies-list" class="flex flex-wrap gap-1.5 justify-center">
-                            <!-- Dynamic Badges Inserted Here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Price & Action Box -->
-                <div class="bg-brand-beigeLight/60 rounded-2xl p-5 border border-brand-sand flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div>
-                        <div class="text-xs text-stone-500 font-light">ราคาประมาณการ (รวมตกแต่ง)</div>
-                        <div class="text-2xl font-brand font-semibold text-brand-terracotta">
-                            ฿<span id="total-price">890</span>
-                        </div>
-                    </div>
-                    <button onclick="openCartModal()" class="w-full sm:w-auto bg-brand-terracotta hover:bg-brand-terracottaDark text-white px-6 py-3 rounded-xl font-light text-sm shadow-md transition-all transform hover:-translate-y-0.5">
-                        <i class="fa-regular fa-paper-plane mr-2"></i> สั่งทำสร้อยนี้
-                    </button>
-                </div>
-            </div>
-
-            <!-- RIGHT COLUMN: Builder Options & Stone Selector -->
-            <div class="lg:col-span-7 space-y-8">
-                
-                <!-- STEP 1: Select Bead Count & Layout -->
-                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">1</span>
-                            <h2 class="text-base font-medium text-brand-charcoal">เลือกจังหวะหิน ( Bead Slots )</h2>
-                        </div>
-                        <span class="text-xs text-stone-400">คลิกที่เม็ดที่ต้องการเปลี่ยน</span>
-                    </div>
-
-                    <!-- Slot Layout Selector Buttons -->
-                    <div class="flex gap-2 mb-5 border-b border-stone-100 pb-4">
-                        <button onclick="setSlotCount(3)" id="btn-slot-3" class="px-4 py-1.5 text-xs rounded-full border border-stone-200 text-stone-600 hover:border-brand-terracotta transition">
-                            3 เม็ดเรียง
-                        </button>
-                        <button onclick="setSlotCount(5)" id="btn-slot-5" class="px-4 py-1.5 text-xs rounded-full bg-brand-terracotta text-white font-medium border border-brand-terracotta shadow-sm transition">
-                            5 เม็ดเน้นพลัง (ยอดนิยม)
-                        </button>
-                        <button onclick="setSlotCount(7)" id="btn-slot-7" class="px-4 py-1.5 text-xs rounded-full border border-stone-200 text-stone-600 hover:border-brand-terracotta transition">
-                            7 เม็ดเต็มวง
-                        </button>
-                    </div>
-
-                    <!-- Slot Selection Interactive Row -->
-                    <div id="slots-container" class="flex items-center justify-center gap-2 sm:gap-3 py-2 overflow-x-auto">
-                        <!-- Dynamic Slot Buttons generated via JS -->
-                    </div>
-                    <div class="text-center mt-3">
-                        <span id="active-slot-name" class="text-xs font-light text-brand-terracotta italic">กำลังเลือกหินตำแหน่งที่ 3</span>
-                    </div>
-                </div>
-
-                <!-- STEP 2: Choose Gemstone -->
-                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">2</span>
-                            <h2 class="text-base font-medium text-brand-charcoal">เลือกชนิดหินมงคลแท้</h2>
-                        </div>
-
-                        <!-- Energy Filter Tabs -->
-                        <div class="flex flex-wrap gap-1 text-[11px]">
-                            <button onclick="filterStones('all')" class="filter-btn active px-2.5 py-1 rounded-md bg-brand-charcoal text-white transition">ทั้งหมด</button>
-                            <button onclick="filterStones('ความรัก')" class="filter-btn px-2.5 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition">ความรัก</button>
-                            <button onclick="filterStones('ความมั่งคั่ง')" class="filter-btn px-2.5 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition">โชคลาภ/เงิน</button>
-                            <button onclick="filterStones('ความหวัง')" class="filter-btn px-2.5 py-1 rounded-md bg-stone-100 text-stone-600 hover:bg-stone-200 transition">การงาน/โอกาส</button>
-                        </div>
-                    </div>
-
-                    <!-- Gemstones Grid -->
-                    <div id="stones-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <!-- Dynamic Stone Cards rendered via JS -->
-                    </div>
-                </div>
-
-                <!-- STEP 3: Cord Color & Style -->
-                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">3</span>
-                        <h2 class="text-base font-medium text-brand-charcoal">เลือกสีสายไหมถักฝรั่งเศส (Macramé Cord)</h2>
-                    </div>
-
-                    <div id="cords-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        <!-- Cord Cards Rendered via JS -->
-                    </div>
-                </div>
-
-                <!-- STEP 4: Spacers & Center Charm -->
-                <div class="bg-white rounded-3xl p-6 border border-brand-sand/60 shadow-sm">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="w-6 h-6 rounded-full bg-brand-terracotta text-white text-xs flex items-center justify-center font-medium">4</span>
-                        <h2 class="text-base font-medium text-brand-charcoal">ตัวคั่น & จี้ตรงกลาง (Charm & Spacers)</h2>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <!-- Spacers Selector -->
-                        <div>
-                            <label class="block text-xs text-stone-500 mb-2">เม็ดคั่นระหว่างหิน (Spacers)</label>
-                            <div class="grid grid-cols-3 gap-2" id="spacers-selector">
-                                <!-- Spacers rendered by JS -->
-                            </div>
-                        </div>
-
-                        <!-- Center Charm Selector -->
-                        <div>
-                            <label class="block text-xs text-stone-500 mb-2">จี้ประดับตรงกลาง (Center Charm)</label>
-                            <div class="grid grid-cols-3 gap-2" id="charms-selector">
-                                <!-- Charms rendered by JS -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- PRESETS SECTION -->
-        <section id="preset-section" class="mt-20 pt-10 border-t border-brand-sand/60">
-            <div class="text-center mb-10">
-                <span class="text-xs uppercase tracking-widest text-brand-terracotta font-medium">Curated Collections</span>
-                <h2 class="font-brand text-3xl sm:text-4xl text-brand-charcoal mt-1">คอลเลกชันยอดนิยม แนะนำโดย beloved.</h2>
-                <p class="text-stone-500 font-light text-xs sm:text-sm mt-2">จัดเซตลงตัวทั้งโทนสีและพลังมงคล คลิกเพื่อเลือกนำไปปรับแต่งต่อได้เลย</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="presets-grid">
-                <!-- Preset Cards Rendered via JS -->
-            </div>
-        </section>
-
-        <!-- GEMSTONE MEANING GUIDE SECTION -->
-        <section id="stone-guide" class="mt-20 pt-10 border-t border-brand-sand/60">
-            <div class="text-center mb-10">
-                <span class="text-xs uppercase tracking-widest text-brand-terracotta font-medium">Genuine Gemstone Meaning</span>
-                <h2 class="font-brand text-3xl sm:text-4xl text-brand-charcoal mt-1">คู่มือพลังหินแท้ธรรมชาติ</h2>
-                <p class="text-stone-500 font-light text-xs sm:text-sm mt-2">คัดสรรหินธรรมชาติเกรดพรีเมียม แต่ละเม็ดมีเอกลักษณ์เฉพาะตัว</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" id="guide-grid">
-                <!-- Detailed Stone Cards Rendered via JS -->
-            </div>
-        </section>
-    </main>
-
-    <!-- ORDER SUMMARY MODAL -->
-    <div id="cartModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
-        <div class="bg-brand-cream rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-brand-sand relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeCartModal()" class="absolute top-5 right-5 text-stone-400 hover:text-stone-700 text-lg w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="text-center mb-6">
-                <span class="text-3xl font-brand text-brand-terracotta">beloved.</span>
-                <h3 class="text-lg font-medium text-brand-charcoal mt-1">สรุปแบบสร้อยข้อมือ Custom</h3>
-                <p class="text-xs text-stone-500 font-light">พร้อมส่งข้อมูลสั่งทำผ่าน LINE / IG</p>
-            </div>
-
-            <!-- Preview Image Snapshot & Details -->
-            <div class="bg-white rounded-2xl p-4 border border-brand-sand mb-5 flex items-center gap-4">
-                <img id="modal-bracelet-img" src="" alt="Bracelet Preview" class="w-24 h-24 object-contain rounded-lg bg-brand-cream border border-stone-100">
-                <div class="text-xs space-y-1 flex-1">
-                    <div class="font-medium text-sm text-brand-charcoal" id="modal-bracelet-title">สร้อยข้อมือ Custom 5 เม็ด</div>
-                    <div class="text-stone-500">สาย: <span id="modal-cord-name" class="font-normal text-stone-800">-</span></div>
-                    <div class="text-stone-500">เม็ดคั่น: <span id="modal-spacer-name" class="font-normal text-stone-800">-</span></div>
-                    <div class="text-stone-500">จี้ตรงกลาง: <span id="modal-charm-name" class="font-normal text-stone-800">-</span></div>
-                </div>
-            </div>
-
-            <!-- Selected Gems Breakdown -->
-            <div class="space-y-2 mb-5">
-                <label class="text-xs font-medium text-stone-600 block">รายละเอียดหินแท้ในเส้นนี้:</label>
-                <div id="modal-stones-list" class="space-y-1 text-xs">
-                    <!-- Stone items -->
-                </div>
-            </div>
-
-            <!-- Combined Blessings Summary -->
-            <div class="bg-brand-beigeLight p-3.5 rounded-xl border border-brand-sand/60 mb-5">
-                <div class="text-xs font-medium text-brand-terracotta mb-1">
-                    <i class="fa-solid fa-sparkles mr-1"></i> สรุปพลังรวมของกำไลเส้นนี้:
-                </div>
-                <p id="modal-blessings-summary" class="text-xs text-stone-700 leading-relaxed font-light">
-                    -
-                </p>
-            </div>
-
-            <!-- Wrist Size Input -->
-            <div class="mb-5">
-                <label class="block text-xs font-medium text-stone-700 mb-1">
-                    ขนาดข้อมือของคุณ (ซม.) <span class="text-brand-terracotta">*</span>
-                </label>
-                <div class="flex gap-2">
-                    <select id="wrist-size" class="w-full text-xs bg-white border border-stone-300 rounded-xl p-2.5 focus:ring-1 focus:ring-brand-terracotta focus:outline-none">
-                        <option value="13-14 cm (ข้อมือเล็กมาก)">13-14 cm (ข้อมือเล็กพิเศษ)</option>
-                        <option value="14-15 cm (มาตรฐานผู้หญิง)" selected>14-15 cm (ขนาดมาตรฐานผู้หญิง)</option>
-                        <option value="15-16 cm (หลวมนิดๆ)">15-16 cm (ชอบใส่สบายๆ)</option>
-                        <option value="16-17 cm (ข้อมืออวบ)">16-17 cm (ข้อมืออวบ)</option>
-                        <option value="17-19 cm (ข้อมือผู้ชาย)">17-19 cm (ข้อมือผู้ชาย)</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Total Price & Actions -->
-            <div class="pt-4 border-t border-brand-sand flex items-center justify-between mb-5">
-                <span class="text-sm font-light text-stone-600">ราคารวมสุทธิ</span>
-                <span class="text-2xl font-brand font-bold text-brand-terracotta">฿<span id="modal-total-price">890</span></span>
-            </div>
-
-            <div class="space-y-2">
-                <button onclick="copyOrderDetails()" class="w-full bg-brand-terracotta hover:bg-brand-terracottaDark text-white py-3 rounded-xl font-light text-sm shadow-md transition flex items-center justify-center gap-2">
-                    <i class="fa-regular fa-copy"></i> คัดลอกรายละเอียดเพื่อส่งสั่งซื้อทาง LINE / IG
-                </button>
-                <button onclick="closeCartModal()" class="w-full bg-transparent hover:bg-stone-100 text-stone-500 py-2 rounded-xl text-xs transition">
-                    กลับไปแก้ไขการออกแบบ
-                </button>
-            </div>
-        </div>
+      </div>
+      <button class="icon-btn" onclick="openSettings()" title="ตั้งค่า">${icon("settings",18)}</button>
     </div>
-
-    <!-- FOOTER -->
-    <footer class="bg-brand-charcoal text-brand-cream py-12 border-t border-stone-800 mt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-            <h2 class="text-3xl font-brand text-brand-terracotta tracking-wider">beloved.</h2>
-            <p class="text-xs font-light text-stone-400 max-w-md mx-auto">
-                กำไลหินแท้คัดเกรด ร้อยด้วยหัวใจ นำพาพลังบวกและความงดงามมาสู่ทุกวันของคุณ
-            </p>
-            <div class="flex justify-center space-x-6 text-stone-400 text-sm pt-2">
-                <a href="#" class="hover:text-brand-terracotta transition"><i class="fa-brands fa-instagram text-lg"></i></a>
-                <a href="#" class="hover:text-brand-terracotta transition"><i class="fa-brands fa-line text-lg"></i></a>
-                <a href="#" class="hover:text-brand-terracotta transition"><i class="fa-brands fa-facebook text-lg"></i></a>
-            </div>
-            <div class="text-[11px] text-stone-500 font-light pt-4 border-t border-stone-800/60">
-                © 2026 beloved. All rights reserved. Handcrafted Energy Bracelets.
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Master Database of Stones based on exact items provided in prompt images
-        const GEMSTONES = [
-            {
-                id: 'rose-quartz',
-                name: 'Rose Quartz',
-                thName: 'โรสควอตซ์',
-                image: './rose-quartz.png',
-                power: 'ความรัก',
-                description: 'เสริมเสน่ห์ นำพาความรักที่บริสุทธิ์ เมตตามหานิยม',
-                colorHex: '#FBB6CE',
-                secondaryColor: '#F48FB1',
-                price: 150,
-                tag: 'ความรัก'
-            },
-            {
-                id: 'peach-quartz',
-                name: 'Peach Quartz',
-                thName: 'พีชควอตซ์',
-                image: './peach-quartz.png',
-                power: 'ความอ่อนโยน',
-                description: 'ปลอบประโลมจิตใจ เพิ่มเสน่ห์ความอ่อนหวาน นุ่มนวล',
-                colorHex: '#FFC0A9',
-                secondaryColor: '#E09F87',
-                price: 150,
-                tag: 'ความรัก'
-            },
-            {
-                id: 'sunstone',
-                name: 'Sunstone',
-                thName: 'ซันสโตน',
-                image: './sunstone.png',
-                power: 'ความสุข',
-                description: 'ดึงดูดพลังบวก ความสดใส เพิ่มความมั่นใจในตัวเอง',
-                colorHex: '#DDA17E',
-                secondaryColor: '#B87251',
-                price: 180,
-                tag: 'ความมั่งคั่ง'
-            },
-            {
-                id: 'rhodonite',
-                name: 'Rhodonite',
-                thName: 'โรโดไนท์',
-                image: './rhodonite.png',
-                power: 'ความกล้าหาญ',
-                description: 'เยียวยาแผลใจ สร้างความเข้มแข็ง เสริมความเข้าใจในรัก',
-                colorHex: '#C56277',
-                secondaryColor: '#8C3B4E',
-                price: 160,
-                tag: 'ความรัก'
-            },
-            {
-                id: 'white-quartz',
-                name: 'White Quartz',
-                thName: 'ไวท์ควอตซ์',
-                image: './white-quartz.png',
-                power: 'ความบริสุทธิ์',
-                description: 'ชำระล้างพลังงานลบ สร้างสมาธิและความโปร่งใสในจิตใจ',
-                colorHex: '#F0EFF4',
-                secondaryColor: '#D8D6E2',
-                price: 140,
-                tag: 'สติปัญญา'
-            },
-            {
-                id: 'amethyst',
-                name: 'Amethyst',
-                thName: 'แอเมทิสต์',
-                image: './amethyst.png',
-                power: 'สติปัญญา',
-                description: 'ขจัดความเครียด ขยายสติปัญญาและลางสังหรณ์',
-                colorHex: '#7C5295',
-                secondaryColor: '#53316B',
-                price: 170,
-                tag: 'สติปัญญา'
-            },
-            {
-                id: 'amazonite',
-                name: 'Amazonite',
-                thName: 'อเมโซไนต์',
-                image: './amazonite.png',
-                power: 'ความหวัง การเริ่มต้นใหม่',
-                description: 'นำพาความหวัง สื่อสารราบรื่น เหมาะกับการเริ่มต้นสิ่งใหม่',
-                colorHex: '#93D9D9',
-                secondaryColor: '#53A8A8',
-                price: 160,
-                tag: 'ความหวัง'
-            },
-            {
-                id: 'red-agate',
-                name: 'Red Agate',
-                thName: 'เรดอาเกต',
-                image: './red-agate.png',
-                power: 'การคุ้มครอง',
-                description: 'สร้างเกราะป้องกันสิ่งชั่วร้าย เสริมพละกำลังและความมั่นคง',
-                colorHex: '#C0392B',
-                secondaryColor: '#831C11',
-                price: 150,
-                tag: 'ความสงบ'
-            },
-            {
-                id: 'moss-agate',
-                name: 'Moss Agate',
-                thName: 'มอสอาเกต',
-                image: './moss-agate.png',
-                power: 'ความมั่งคั่ง',
-                description: 'หินแห่งความอุดมสมบูรณ์ ดึงดูดทรัพย์สินและการเติบโต',
-                colorHex: '#4A6B53',
-                secondaryColor: '#2C4433',
-                price: 180,
-                tag: 'ความมั่งคั่ง'
-            },
-            {
-                id: 'unakite',
-                name: 'Unakite',
-                thName: 'ยูนาไคต์',
-                image: './unakite.png',
-                power: 'โชคลาภ',
-                description: 'หินถูกหวย นำพาโชคลาภแบบไม่คาดฝัน และปล่อยวางความทุกข์',
-                colorHex: '#818E5E',
-                secondaryColor: '#A8686B',
-                price: 190,
-                tag: 'ความมั่งคั่ง'
-            }
-        ];
-
-        // Master Database of Macrame Cords
-        const CORDS = [
-            { id: 'nude-rose', name: 'Nude Rose', thName: 'ชมพูนู้ด', hex: '#E8C5B8', price: 100 },
-            { id: 'warm-beige', name: 'Warm Beige', thName: 'เบจอบอุ่น', hex: '#D9C5B2', price: 100 },
-            { id: 'slate-gray', name: 'Slate Gray', thName: 'เทาลาเวนเดอร์', hex: '#9FA9B3', price: 100 },
-            { id: 'soft-sage', name: 'Soft Sage', thName: 'เขียวเซจ', hex: '#B7C4B0', price: 100 },
-            { id: 'cream-white', name: 'Cream White', thName: 'ขาวครีม', hex: '#F0ECE1', price: 100 },
-            { id: 'midnight-black', name: 'Midnight Black', thName: 'ดำคลาสสิก', hex: '#383635', price: 100 }
-        ];
-
-        // Spacers Database
-        const SPACERS = [
-            { id: 'silver-bead', name: 'Silver 925', hex: '#E2E8F0', stroke: '#94A3B8', price: 50 },
-            { id: 'rose-gold-bead', name: 'Rose Gold', hex: '#E8B4A8', stroke: '#C87B6C', price: 60 },
-            { id: 'yellow-gold-bead', name: '18K Gold', hex: '#EAB308', stroke: '#CA8A04', price: 60 },
-            { id: 'none', name: 'ไม่ใส่เม็ดคั่น', hex: 'transparent', stroke: '#cbd5e1', price: 0 }
-        ];
-
-        // Charms Database
-        const CHARMS = [
-            { id: 'heart-silver', name: 'หัวใจเงา Silver', shape: 'heart', color: '#CBD5E1', border: '#64748B', price: 80 },
-            { id: 'heart-rosegold', name: 'หัวใจ Rose Gold', shape: 'heart', color: '#E8B4A8', border: '#B86B5A', price: 90 },
-            { id: 'star-silver', name: 'ดาวดวงน้อย Silver', shape: 'star', color: '#E2E8F0', border: '#94A3B8', price: 80 },
-            { id: 'none', name: 'ไม่ใส่จี้', shape: 'none', color: 'transparent', border: 'transparent', price: 0 }
-        ];
-
-        // Presets Collection
-        const PRESETS = [
-            {
-                title: 'Beloved Love & Harmony',
-                subtitle: 'เซตดึงดูดความรักละมุน เสน่ห์เมตตา',
-                cordId: 'nude-rose',
-                spacerId: 'silver-bead',
-                charmId: 'heart-silver',
-                stones: ['rose-quartz', 'peach-quartz', 'rhodonite', 'peach-quartz', 'rose-quartz']
-            },
-            {
-                title: 'Abundance & Wealth',
-                subtitle: 'เซตรับทรัพย์ โชคลาภ มั่งคั่ง',
-                cordId: 'slate-gray',
-                spacerId: 'yellow-gold-bead',
-                charmId: 'none',
-                stones: ['moss-agate', 'unakite', 'sunstone', 'unakite', 'moss-agate']
-            },
-            {
-                title: 'Serenity & Hope',
-                subtitle: 'เซตจุดประกายความหวัง สติปัญญา และความเรียบง่าย',
-                cordId: 'soft-sage',
-                spacerId: 'silver-bead',
-                charmId: 'star-silver',
-                stones: ['white-quartz', 'amazonite', 'amethyst', 'amazonite', 'white-quartz']
-            }
-        ];
-
-        // Current Customizer State
-        let state = {
-            slotCount: 5,
-            activeSlotIndex: 2, // middle stone active by default
-            selectedStones: ['rose-quartz', 'peach-quartz', 'sunstone', 'peach-quartz', 'rose-quartz'],
-            selectedCord: 'nude-rose',
-            selectedSpacer: 'silver-bead',
-            selectedCharm: 'heart-silver'
-        };
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderSlotsNav();
-            renderStonesGrid('all');
-            renderCordsGrid();
-            renderSpacersSelector();
-            renderCharmsSelector();
-            renderPresetsSection();
-            renderStoneGuideSection();
-            
-            // Draw visualizer canvas
-            initCanvas();
-            preloadStoneImages();
-            updateUI();
-        });
-
-        function setSlotCount(count) {
-            state.slotCount = count;
-            // Adjust stone array length
-            if (state.selectedStones.length < count) {
-                while (state.selectedStones.length < count) {
-                    state.selectedStones.push('rose-quartz');
-                }
-            } else if (state.selectedStones.length > count) {
-                state.selectedStones = state.selectedStones.slice(0, count);
-            }
-            state.activeSlotIndex = Math.floor(count / 2);
-
-            // Update slot count button styles
-            [3, 5, 7].forEach(num => {
-                const btn = document.getElementById(`btn-slot-${num}`);
-                if (num === count) {
-                    btn.className = "px-4 py-1.5 text-xs rounded-full bg-brand-terracotta text-white font-medium border border-brand-terracotta shadow-sm transition";
-                } else {
-                    btn.className = "px-4 py-1.5 text-xs rounded-full border border-stone-200 text-stone-600 hover:border-brand-terracotta transition";
-                }
-            });
-
-            renderSlotsNav();
-            updateUI();
-        }
-
-        function setActiveSlot(index) {
-            state.activeSlotIndex = index;
-            renderSlotsNav();
-            updateSlotActiveText();
-        }
-
-        function selectStoneForActiveSlot(stoneId) {
-            state.selectedStones[state.activeSlotIndex] = stoneId;
-            renderSlotsNav();
-            updateUI();
-        }
-
-        function filterStones(category) {
-            // Update filter buttons appearance
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('bg-brand-charcoal', 'text-white');
-                btn.classList.add('bg-stone-100', 'text-stone-600');
-            });
-            event.target.classList.remove('bg-stone-100', 'text-stone-600');
-            event.target.classList.add('bg-brand-charcoal', 'text-white');
-
-            renderStonesGrid(category);
-        }
-
-        function randomizeDesign() {
-            for (let i = 0; i < state.selectedStones.length; i++) {
-                const randIndex = Math.floor(Math.random() * GEMSTONES.length);
-                state.selectedStones[i] = GEMSTONES[randIndex].id;
-            }
-            state.selectedCord = CORDS[Math.floor(Math.random() * CORDS.length)].id;
-            state.selectedSpacer = SPACERS[Math.floor(Math.random() * SPACERS.length)].id;
-            state.selectedCharm = CHARMS[Math.floor(Math.random() * CHARMS.length)].id;
-            
-            renderCordsGrid();
-            renderSpacersSelector();
-            renderCharmsSelector();
-            renderSlotsNav();
-            updateUI();
-        }
-
-        function resetDesign() {
-            state.selectedStones = ['rose-quartz', 'peach-quartz', 'sunstone', 'peach-quartz', 'rose-quartz'];
-            state.slotCount = 5;
-            state.activeSlotIndex = 2;
-            state.selectedCord = 'nude-rose';
-            state.selectedSpacer = 'silver-bead';
-            state.selectedCharm = 'heart-silver';
-            
-            setSlotCount(5);
-            renderCordsGrid();
-            renderSpacersSelector();
-            renderCharmsSelector();
-            updateUI();
-        }
-
-        function renderSlotsNav() {
-            const container = document.getElementById('slots-container');
-            container.innerHTML = '';
-
-            state.selectedStones.forEach((stoneId, idx) => {
-                const stone = GEMSTONES.find(g => g.id === stoneId) || GEMSTONES[0];
-                const isActive = idx === state.activeSlotIndex;
-
-                const slotBtn = document.createElement('button');
-                slotBtn.onclick = () => setActiveSlot(idx);
-                slotBtn.className = `flex flex-col items-center gap-1.5 p-2 rounded-2xl transition-all ${
-                    isActive ? 'bg-brand-cream border-2 border-brand-terracotta active-slot scale-105' : 'bg-stone-50 border border-stone-200 hover:border-stone-300'
-                }`;
-
-                slotBtn.innerHTML = `
-                    <span class="text-[10px] text-stone-400 font-medium">ตำแหน่งที่ ${idx + 1}</span>
-                    <img src="${stone.image}" alt="${stone.name}" class="w-8 h-8 rounded-full shadow-inner object-cover border border-white" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="w-8 h-8 rounded-full shadow-inner flex items-center justify-center border border-white" style="display:none;background: radial-gradient(circle at 35% 35%, ${stone.colorHex}, ${stone.secondaryColor});"></div>
-                    <span class="text-[10px] text-stone-700 font-medium truncate max-w-[60px]">${stone.name}</span>
-                `;
-
-                container.appendChild(slotBtn);
-            });
-
-            updateSlotActiveText();
-        }
-
-        function updateSlotActiveText() {
-            const currentStone = GEMSTONES.find(g => g.id === state.selectedStones[state.activeSlotIndex]);
-            document.getElementById('active-slot-name').innerText = `กำลังเปลี่ยนตำแหน่งที่ ${state.activeSlotIndex + 1}: ${currentStone ? currentStone.name + ' (' + currentStone.power + ')' : ''}`;
-        }
-
-        function renderStonesGrid(category) {
-            const grid = document.getElementById('stones-grid');
-            grid.innerHTML = '';
-
-            const filtered = category === 'all' 
-                ? GEMSTONES 
-                : GEMSTONES.filter(g => g.tag === category || g.power.includes(category));
-
-            filtered.forEach(stone => {
-                const card = document.createElement('div');
-                card.onclick = () => selectStoneForActiveSlot(stone.id);
-                card.className = `p-3 rounded-2xl bg-brand-cream/60 border hover:border-brand-terracotta hover:shadow-sm cursor-pointer transition flex items-center gap-3`;
-                
-                card.innerHTML = `
-                    <img src="${stone.image}" alt="${stone.name}" class="w-10 h-10 rounded-full flex-shrink-0 border border-white shadow-sm object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="w-10 h-10 rounded-full flex-shrink-0 border border-white shadow-sm" style="display:none;background:radial-gradient(circle at 30% 30%, ${stone.colorHex}, ${stone.secondaryColor});"></div>
-                    <div class="overflow-hidden">
-                        <div class="text-xs font-medium text-brand-charcoal truncate">${stone.name}</div>
-                        <div class="text-[11px] text-brand-terracotta font-light truncate">${stone.power}</div>
-                        <div class="text-[10px] text-stone-400">฿${stone.price}</div>
-                    </div>
-                `;
-
-                grid.appendChild(card);
-            });
-        }
-
-        function renderCordsGrid() {
-            const grid = document.getElementById('cords-grid');
-            grid.innerHTML = '';
-
-            CORDS.forEach(cord => {
-                const isSelected = cord.id === state.selectedCord;
-                const card = document.createElement('div');
-                card.onclick = () => {
-                    state.selectedCord = cord.id;
-                    renderCordsGrid();
-                    updateUI();
-                };
-                card.className = `p-3 rounded-2xl border cursor-pointer transition flex items-center gap-3 ${
-                    isSelected ? 'border-brand-terracotta bg-brand-cream ring-1 ring-brand-terracotta' : 'border-stone-200 bg-white hover:border-stone-300'
-                }`;
-
-                card.innerHTML = `
-                    <div class="w-7 h-7 rounded-full flex-shrink-0 border border-stone-200 shadow-inner" style="background-color: ${cord.hex}"></div>
-                    <div>
-                        <div class="text-xs font-medium text-stone-800">${cord.name}</div>
-                        <div class="text-[10px] text-stone-400">${cord.thName}</div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function renderSpacersSelector() {
-            const container = document.getElementById('spacers-selector');
-            container.innerHTML = '';
-
-            SPACERS.forEach(spacer => {
-                const isSelected = spacer.id === state.selectedSpacer;
-                const btn = document.createElement('button');
-                btn.onclick = () => {
-                    state.selectedSpacer = spacer.id;
-                    renderSpacersSelector();
-                    updateUI();
-                };
-                btn.className = `p-2 rounded-xl border text-center text-xs transition ${
-                    isSelected ? 'border-brand-terracotta bg-brand-cream font-medium text-brand-terracotta' : 'border-stone-200 text-stone-600 hover:border-stone-300'
-                }`;
-                btn.innerText = spacer.name;
-                container.appendChild(btn);
-            });
-        }
-
-        function renderCharmsSelector() {
-            const container = document.getElementById('charms-selector');
-            container.innerHTML = '';
-
-            CHARMS.forEach(charm => {
-                const isSelected = charm.id === state.selectedCharm;
-                const btn = document.createElement('button');
-                btn.onclick = () => {
-                    state.selectedCharm = charm.id;
-                    renderCharmsSelector();
-                    updateUI();
-                };
-                btn.className = `p-2 rounded-xl border text-center text-xs transition ${
-                    isSelected ? 'border-brand-terracotta bg-brand-cream font-medium text-brand-terracotta' : 'border-stone-200 text-stone-600 hover:border-stone-300'
-                }`;
-                btn.innerText = charm.name;
-                container.appendChild(btn);
-            });
-        }
-
-        function renderPresetsSection() {
-            const container = document.getElementById('presets-grid');
-            container.innerHTML = '';
-
-            PRESETS.forEach(preset => {
-                const cord = CORDS.find(c => c.id === preset.cordId);
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-3xl p-6 border border-brand-sand/70 shadow-sm flex flex-col justify-between hover:shadow-md transition";
-
-                let gemsHTML = '<div class="flex gap-1.5 my-4 justify-center">';
-                preset.stones.forEach(sId => {
-                    const st = GEMSTONES.find(g => g.id === sId);
-                    gemsHTML += `<img src="${st.image}" alt="${st.name}" class="w-7 h-7 rounded-full border border-white shadow-sm object-cover" title="${st.name}" onerror="this.style.display='none'">`;
-                });
-                gemsHTML += '</div>';
-
-                card.innerHTML = `
-                    <div>
-                        <div class="text-xs uppercase text-brand-terracotta font-medium tracking-wider">beloved set</div>
-                        <h3 class="font-brand text-2xl text-brand-charcoal mt-1">${preset.title}</h3>
-                        <p class="text-xs text-stone-500 font-light mt-1">${preset.subtitle}</p>
-                        ${gemsHTML}
-                    </div>
-                    <button onclick="applyPreset('${preset.title}')" class="w-full mt-2 py-2.5 rounded-xl border border-brand-terracotta text-brand-terracotta text-xs hover:bg-brand-terracotta hover:text-white transition">
-                        เลือกออกแบบเซตนี้
-                    </button>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function applyPreset(title) {
-            const preset = PRESETS.find(p => p.title === title);
-            if (!preset) return;
-
-            state.slotCount = preset.stones.length;
-            state.selectedStones = [...preset.stones];
-            state.selectedCord = preset.cordId;
-            state.selectedSpacer = preset.spacerId;
-            state.selectedCharm = preset.charmId;
-            state.activeSlotIndex = Math.floor(preset.stones.length / 2);
-
-            setSlotCount(preset.stones.length);
-            renderCordsGrid();
-            renderSpacersSelector();
-            renderCharmsSelector();
-            updateUI();
-
-            scrollToSection('customizer');
-        }
-
-        function renderStoneGuideSection() {
-            const container = document.getElementById('guide-grid');
-            container.innerHTML = '';
-
-            GEMSTONES.forEach(stone => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl p-4 border border-brand-sand/60 text-center flex flex-col items-center hover:border-brand-terracotta transition";
-                card.innerHTML = `
-                    <img src="${stone.image}" alt="${stone.name}" class="w-14 h-14 rounded-full mb-3 shadow-md border-2 border-white object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="w-14 h-14 rounded-full mb-3 shadow-md border-2 border-white" style="display:none;background:radial-gradient(circle at 30% 30%, ${stone.colorHex}, ${stone.secondaryColor});"></div>
-                    <h4 class="font-brand text-lg text-brand-charcoal font-medium">${stone.name}</h4>
-                    <span class="text-[11px] text-brand-terracotta font-medium mb-1">${stone.thName}</span>
-                    <span class="inline-block px-2 py-0.5 bg-brand-cream text-brand-terracotta text-[10px] rounded-full font-medium mb-2">${stone.power}</span>
-                    <p class="text-[11px] text-stone-500 font-light leading-snug">${stone.description}</p>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function updateUI() {
-            // Calculate total price
-            let total = 200; // Base craft fee
-            
-            // Add cord price
-            const cordObj = CORDS.find(c => c.id === state.selectedCord);
-            if (cordObj) total += cordObj.price;
-
-            // Add stones price
-            state.selectedStones.forEach(sId => {
-                const st = GEMSTONES.find(g => g.id === sId);
-                if (st) total += st.price;
-            });
-
-            // Add spacers & charms
-            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer);
-            if (spacerObj) total += spacerObj.price * (state.selectedStones.length + 1);
-
-            const charmObj = CHARMS.find(c => c.id === state.selectedCharm);
-            if (charmObj) total += charmObj.price;
-
-            document.getElementById('total-price').innerText = total;
-            document.getElementById('modal-total-price').innerText = total;
-
-            // Render Active Energy Badges
-            const energyList = document.getElementById('active-energies-list');
-            energyList.innerHTML = '';
-
-            const uniquePowers = new Set();
-            state.selectedStones.forEach(sId => {
-                const st = GEMSTONES.find(g => g.id === sId);
-                if (st) uniquePowers.add(st.power);
-            });
-
-            uniquePowers.forEach(power => {
-                const badge = document.createElement('span');
-                badge.className = "px-2.5 py-1 bg-brand-terracotta/10 text-brand-terracotta text-[11px] rounded-full font-medium flex items-center gap-1";
-                badge.innerHTML = `<i class="fa-solid fa-sparkles text-[9px]"></i> ${power}`;
-                energyList.appendChild(badge);
-            });
-
-            // Re-draw Canvas
-            drawBraceletCanvas();
-        }
-
-        let canvas, ctx;
-        const stoneImages = {};
-
-        function preloadStoneImages() {
-            GEMSTONES.forEach(stone => {
-                const img = new Image();
-                img.onload = () => {
-                    stoneImages[stone.id] = img;
-                    drawBraceletCanvas();
-                };
-                img.src = stone.image;
-            });
-        }
-
-        function initCanvas() {
-            canvas = document.getElementById('braceletCanvas');
-            ctx = canvas.getContext('2d');
-        }
-
-        function drawBraceletCanvas() {
-            if (!ctx) return;
-
-            const w = canvas.width;
-            const h = canvas.height;
-            const cx = w / 2;
-            const cy = h / 2 - 20;
-            const radius = 210;
-
-            ctx.clearRect(0, 0, w, h);
-
-            const cordObj = CORDS.find(c => c.id === state.selectedCord) || CORDS[0];
-            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer) || SPACERS[0];
-            const charmObj = CHARMS.find(c => c.id === state.selectedCharm) || CHARMS[0];
-
-            // 1. Draw Macrame Sliding Strings at bottom (like image_ebae90)
-            drawSlidingStrings(ctx, cx, cy + radius - 20, cordObj.hex);
-
-            // 2. Draw Braided Bracelet Cord (Curved Oval/Circle)
-            drawBraidedCord(ctx, cx, cy, radius, cordObj.hex);
-
-            // 3. Draw Stones, Spacers & Center Charm layout
-            const totalStones = state.selectedStones.length;
-            const isOdd = totalStones % 2 !== 0;
-
-            // Calculate angle spacing for stones array (centered around top arc)
-            const angleStep = 0.22; // radian spacing between beads
-            const startAngle = -Math.PI / 2 - ((totalStones - 1) / 2) * angleStep;
-
-            state.selectedStones.forEach((stoneId, i) => {
-                const stoneAngle = startAngle + (i * angleStep);
-                const bx = cx + Math.cos(stoneAngle) * radius;
-                const by = cy + Math.sin(stoneAngle) * radius;
-
-                const stoneObj = GEMSTONES.find(g => g.id === stoneId) || GEMSTONES[0];
-
-                // Draw Spacer before bead if applicable
-                if (spacerObj.id !== 'none' && i === 0) {
-                    const prevAngle = stoneAngle - angleStep * 0.55;
-                    drawSpacerBead(ctx, cx + Math.cos(prevAngle) * radius, cy + Math.sin(prevAngle) * radius, spacerObj);
-                }
-
-                // Draw Gemstone Bead
-                drawGemstoneBead(ctx, bx, by, 34, stoneObj, i === state.activeSlotIndex);
-
-                // Draw Spacer after each bead
-                if (spacerObj.id !== 'none') {
-                    const nextAngle = stoneAngle + angleStep * 0.55;
-                    drawSpacerBead(ctx, cx + Math.cos(nextAngle) * radius, cy + Math.sin(nextAngle) * radius, spacerObj);
-                }
-            });
-
-            // 4. Draw Center Charm (hangs below middle stone or center)
-            if (charmObj.id !== 'none') {
-                const centerAngle = -Math.PI / 2;
-                const charmX = cx + Math.cos(centerAngle) * (radius + 28);
-                const charmY = cy + Math.sin(centerAngle) * (radius + 28);
-                drawCharm(ctx, charmX, charmY, charmObj);
-            }
-        }
-
-        // Helper: Draw Macrame Rope Effect
-        function drawBraidedCord(ctx, cx, cy, radius, cordHex) {
-            ctx.save();
-            ctx.strokeStyle = cordHex;
-            ctx.lineWidth = 14;
-            ctx.lineCap = 'round';
-
-            // Base cord curve
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-            ctx.stroke();
-
-            // Braided Texture overlay
-            ctx.strokeStyle = 'rgba(0,0,0,0.12)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([4, 6]);
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-            ctx.lineWidth = 2;
-            ctx.setLineDash([2, 8]);
-            ctx.beginPath();
-            ctx.arc(cx, cy, radius - 3, 0, Math.PI * 2);
-            ctx.stroke();
-
-            ctx.restore();
-        }
-
-        // Helper: Draw Sliding Knot Tassels at bottom
-        function drawSlidingStrings(ctx, cx, startY, cordHex) {
-            ctx.save();
-            // Square Knot Center Piece
-            ctx.fillStyle = cordHex;
-            ctx.beginPath();
-            ctx.roundRect(cx - 18, startY - 8, 36, 16, 6);
-            ctx.fill();
-
-            // Strings dangling down
-            ctx.strokeStyle = cordHex;
-            ctx.lineWidth = 5;
-
-            // Left String
-            ctx.beginPath();
-            ctx.moveTo(cx - 8, startY + 8);
-            ctx.bezierCurveTo(cx - 20, startY + 60, cx - 40, startY + 110, cx - 60, startY + 140);
-            ctx.stroke();
-
-            // Right String
-            ctx.beginPath();
-            ctx.moveTo(cx + 8, startY + 8);
-            ctx.bezierCurveTo(cx + 20, startY + 60, cx + 50, startY + 110, cx + 70, startY + 135);
-            ctx.stroke();
-
-            // End Beads on Tassels
-            drawSpacerBead(ctx, cx - 60, startY + 140, SPACERS[0]);
-            drawSpacerBead(ctx, cx + 70, startY + 135, SPACERS[0]);
-
-            ctx.restore();
-        }
-
-        // Helper: Draw Real Gemstone Bead
-        function drawGemstoneBead(ctx, x, y, r, stone, isActive) {
-            ctx.save();
-
-            // Soft shadow
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.20)';
-            ctx.shadowBlur = 10;
-            ctx.shadowOffsetY = 4;
-
-            // Clip image into a perfect circle
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.clip();
-
-            const img = stoneImages[stone.id];
-
-            if (img) {
-                // Cover the whole bead with the real gemstone photo
-                ctx.drawImage(img, x - r, y - r, r * 2, r * 2);
-            } else {
-                // Fallback if the image has not loaded yet
-                const grad = ctx.createRadialGradient(
-                    x - r * 0.35, y - r * 0.35, r * 0.1,
-                    x, y, r
-                );
-                grad.addColorStop(0, '#FFFFFF');
-                grad.addColorStop(0.2, stone.colorHex);
-                grad.addColorStop(0.85, stone.secondaryColor);
-                grad.addColorStop(1, '#2D2825');
-                ctx.fillStyle = grad;
-                ctx.beginPath();
-                ctx.arc(x, y, r, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            ctx.restore();
-
-            // Subtle glass edge + selected ring
-            ctx.save();
-            ctx.strokeStyle = isActive ? '#C86D51' : 'rgba(255,255,255,0.75)';
-            ctx.lineWidth = isActive ? 3 : 1.5;
-            ctx.shadowColor = 'transparent';
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.stroke();
-
-            if (isActive) {
-                ctx.strokeStyle = 'rgba(200,109,81,0.35)';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                ctx.arc(x, y, r + 6, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-            ctx.restore();
-        }
-
-        // Helper: Draw Metallic Spacer Beads
-        function drawSpacerBead(ctx, x, y, spacer) {
-            ctx.save();
-            const r = 8;
-            const grad = ctx.createRadialGradient(x - 2, y - 2, 1, x, y, r);
-            grad.addColorStop(0, '#FFFFFF');
-            grad.addColorStop(0.4, spacer.hex);
-            grad.addColorStop(1, spacer.stroke);
-
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(x, y, r, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.strokeStyle = 'rgba(0,0,0,0.2)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-            ctx.restore();
-        }
-
-        // Helper: Draw Center Charm (Heart / Star)
-        function drawCharm(ctx, x, y, charm) {
-            ctx.save();
-            ctx.translate(x, y);
-
-            if (charm.shape === 'heart') {
-                ctx.fillStyle = charm.color;
-                ctx.strokeStyle = charm.border;
-                ctx.lineWidth = 2;
-
-                ctx.beginPath();
-                ctx.moveTo(0, 4);
-                ctx.bezierCurveTo(-12, -12, -22, 2, 0, 18);
-                ctx.bezierCurveTo(22, 2, 12, -12, 0, 4);
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-            } else if (charm.shape === 'star') {
-                ctx.fillStyle = charm.color;
-                ctx.strokeStyle = charm.border;
-                ctx.lineWidth = 1.5;
-
-                ctx.beginPath();
-                for (let i = 0; i < 5; i++) {
-                    ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * 12, -Math.sin((18 + i * 72) * Math.PI / 180) * 12);
-                    ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * 5, -Math.sin((54 + i * 72) * Math.PI / 180) * 5);
-                }
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-            }
-
-            ctx.restore();
-        }
-
-        function openCartModal() {
-            // Update preview canvas snapshot in modal
-            const dataUrl = canvas.toDataURL();
-            document.getElementById('modal-bracelet-img').src = dataUrl;
-
-            // Details
-            document.getElementById('modal-bracelet-title').innerText = `สร้อยข้อมือ Custom (${state.selectedStones.length} เม็ด)`;
-            
-            const cordObj = CORDS.find(c => c.id === state.selectedCord);
-            document.getElementById('modal-cord-name').innerText = cordObj ? `${cordObj.name} (${cordObj.thName})` : '-';
-
-            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer);
-            document.getElementById('modal-spacer-name').innerText = spacerObj ? spacerObj.name : '-';
-
-            const charmObj = CHARMS.find(c => c.id === state.selectedCharm);
-            document.getElementById('modal-charm-name').innerText = charmObj ? charmObj.name : '-';
-
-            // Selected Stones Breakdown
-            const stonesContainer = document.getElementById('modal-stones-list');
-            stonesContainer.innerHTML = '';
-
-            const blessingsList = [];
-
-            state.selectedStones.forEach((sId, index) => {
-                const st = GEMSTONES.find(g => g.id === sId);
-                if (!st) return;
-
-                blessingsList.push(st.power);
-
-                const item = document.createElement('div');
-                item.className = "flex items-center justify-between py-1 border-b border-stone-100";
-                item.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background-color: ${st.colorHex}"></span>
-                        <span class="font-medium text-stone-800">เม็ดที่ ${index + 1}: ${st.name} (${st.thName})</span>
-                    </div>
-                    <span class="text-stone-500 font-light">${st.power}</span>
-                `;
-                stonesContainer.appendChild(item);
-            });
-
-            // Combined Blessing text
-            const uniqueBlessings = [...new Set(blessingsList)].join(' + ');
-            document.getElementById('modal-blessings-summary').innerText = `สร้อยเส้นนี้ร้อยเรียงพลังเสริมด้าน: ${uniqueBlessings} เพื่อเปิดรับพลังงานดีๆ ในทุกช่วงเวลาของชีวิต`;
-
-            // Open Modal
-            const modal = document.getElementById('cartModal');
-            modal.classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeCartModal() {
-            const modal = document.getElementById('cartModal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function copyOrderDetails() {
-            const wristSize = document.getElementById('wrist-size').value;
-            const cordObj = CORDS.find(c => c.id === state.selectedCord);
-            const spacerObj = SPACERS.find(s => s.id === state.selectedSpacer);
-            const charmObj = CHARMS.find(c => c.id === state.selectedCharm);
-            const totalPrice = document.getElementById('modal-total-price').innerText;
-
-            const stonesStr = state.selectedStones.map((sId, i) => {
-                const st = GEMSTONES.find(g => g.id === sId);
-                return `  ${i + 1}. ${st.name} (${st.power})`;
-            }).join('\n');
-
-            const orderText = `✨ สั่งทำสร้อยข้อมือ Custom หินแท้จาก beloved. ✨
---------------------------------
-[ รายละเอียดหิน ]:
-${stonesStr}
-
-[ สายถักไหม ]: ${cordObj.name} (${cordObj.thName})
-[ เม็ดคั่น ]: ${spacerObj.name}
-[ จี้ประดับ ]: ${charmObj.name}
-[ ขนาดข้อมือ ]: ${wristSize}
---------------------------------
-💰 ราคารวม: ฿${totalPrice}
-(ส่งภาพหน้านี้ให้แอดมินเพื่อยืนยันการสั่งทำ)`;
-
-            // Clipboard copy fallbacks
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = orderText;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-
-            alert('คัดลอกรายละเอียดการสั่งซื้อเรียบร้อยแล้ว! สามารถนำไปวางส่งในแชท LINE หรือ IG ของร้าน beloved. ได้เลยค่ะ ✨');
-        }
-
-        function scrollToSection(id) {
-            const element = document.getElementById(id);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
-    </script>
+  </header>`;
+}
+function memberCard(){
+  const m=state.member;
+  const progress=Math.min(100,Math.round((m.points/Math.max(1,m.nextLevelPoints||300))*100));
+  return `<section class="member-card">
+    <div class="card-top">
+      <div><div class="member-label">Member ID</div><div class="member-id">${escapeHtml(m.memberId)}</div></div>
+      <div class="level">${escapeHtml(m.memberLevel||"MEMBER")}</div>
+    </div>
+    <div class="point-row">
+      <div><div class="points-label">คะแนนสะสม</div><div class="points">${Number(m.points||0)} <small>พอยท์</small></div></div>
+      <button class="qr-btn" onclick="openQR()">${icon("qr-code",22)}<span>แสดง QR</span></button>
+    </div>
+    <div style="position:relative;z-index:1;margin-top:13px">
+      <div style="display:flex;justify-content:space-between;font-size:8px;color:#aaa19a"><span>ความคืบหน้าสู่ระดับถัดไป</span><span>${m.points}/${m.nextLevelPoints||300}</span></div>
+      <div style="height:5px;background:rgba(255,255,255,.10);border-radius:99px;margin-top:5px;overflow:hidden"><div style="width:${progress}%;height:100%;background:linear-gradient(90deg,#8B5E34,#D4AF37);border-radius:99px"></div></div>
+    </div>
+    <div class="card-bottom">
+      <div><span class="muted">ชื่อสมาชิก</span><br><strong>${escapeHtml(m.name)}</strong></div>
+      <div style="text-align:right"><span class="muted">วันที่สมัคร</span><br><strong>${escapeHtml(m.joinedDate||"-")}</strong></div>
+    </div>
+  </section>`;
+}
+function quick(){
+  const a=[
+    ["COLLECT","trending-up","วิธีสะสมแต้ม"],
+    ["REWARDS","gift","แลกของรางวัล"],
+    ["COUPONS","ticket","คูปองของฉัน"],
+    ["HISTORY","history","ประวัติคะแนน"]
+  ];
+  return `<section class="section"><div class="section-head"><div class="section-title">เมนูสมาชิก</div></div>
+  <div class="quick">${a.map(x=>`<button onclick="go('${x[0]}')"><div class="qicon">${icon(x[1],18)}</div><span>${x[2]}</span></button>`).join("")}</div></section>`;
+}
+function promos(){
+  return `<section class="section"><div class="section-head"><div class="section-title">สิทธิพิเศษสำหรับคุณ</div></div>
+  <div class="promo">${PROMOS.map(p=>`<div class="promo-card"><img src="${p.image}" alt=""><div class="promo-text"><div class="tag">${p.tag}</div><div class="promo-title">${p.title}</div><div class="promo-sub">${p.subtitle}</div></div></div>`).join("")}</div></section>`;
+}
+function featured(){
+  return `<section class="section"><div class="section-head"><div class="section-title">ของรางวัลยอดนิยม</div><button class="link" onclick="go('REWARDS')">ดูทั้งหมด ${icon("chevron-right",12)}</button></div>
+  <div class="rewards-grid">${state.rewards.slice(0,3).map(rewardCard).join("")}</div></section>`;
+}
+function rewardCard(r){
+  const can=Number(state.member.points)>=Number(r.points);
+  return `<article class="reward">
+    <div class="reward-img"><img src="${escapeHtml(r.image||"")}" alt="" onerror="this.style.display='none'"><div class="reward-cost">${r.points} พอยท์</div></div>
+    <div class="reward-body"><div class="reward-title">${escapeHtml(r.title)}</div><div class="reward-desc">${escapeHtml(r.description||"")}</div>
+      <div class="reward-actions"><button class="primary" ${can?"":"disabled"} onclick="confirmRedeem('${escapeHtml(r.id)}')">${can?"แลกพอยท์":"คะแนนไม่พอ"}</button></div>
+    </div>
+  </article>`;
+}
+function home(){
+  return `<div class="screen fade">${header()}${memberCard()}${quick()}${promos()}${featured()}</div>${nav()}`;
+}
+function collect(){
+  return `<div class="screen fade">
+    <div class="page-head"><button class="back" onclick="go('HOME')">${icon("chevron-left",15)} กลับ</button><div class="page-title">วิธีสะสมแต้ม</div><span></span></div>
+    <div class="collect-hero"><h2>สะสมพอยท์ง่าย ๆ ทุกครั้ง</h2><p>สะสมพอยท์กับคำหวาน CUISINE และใช้แลกสิทธิพิเศษสำหรับสมาชิก</p><div style="font-size:31px;font-weight:900;color:#E8D099;margin-top:7px">1 พอยท์</div><div style="font-size:9px;color:#c9c0b8">ทุกยอดใช้จ่ายครบ 20 บาท*</div></div>
+    <div class="steps">
+      <div class="step"><div class="step-icon">🛒</div><div><h3>ซื้อสินค้า หรืออาหารหน้าร้าน</h3><p>รับ 1 พอยท์ ทุกการใช้จ่ายครบ 20 บาท ที่สาขาที่ร่วมรายการ</p></div></div>
+      <div class="step"><div class="step-icon">📍</div><div><h3>เช็กอินร่วมกิจกรรม</h3><p>แสดง QR Code สมาชิกเมื่อมาเช็กอินหน้าร้าน รับพอยท์พิเศษทันที</p></div></div>
+      <div class="step"><div class="step-icon">🎂</div><div><h3>โบนัสสิทธิ์วันเกิด</h3><p>รับพอยท์โบนัสพิเศษและคูปองของขวัญตามเงื่อนไขของร้าน</p></div></div>
+    </div>
+  </div>${nav()}`;
+}
+function historyPage(){
+  const h=state.history.filter(x=>state.filter==="ALL"||x.type===state.filter);
+  return `<div class="screen fade">
+    <div class="page-head dark"><button class="back" onclick="go('HOME')">${icon("chevron-left",15)} กลับ</button><div class="page-title">ประวัติคะแนน</div><span></span>
+      <div style="grid-column:1/-1" class="balance"><div><div style="font-size:9px;color:#bbb">คะแนนสะสมปัจจุบัน</div><div class="balance-num">${Number(state.member.points||0)}</div></div>${icon("star",30)}</div>
+    </div>
+    <div class="filter">${[["ALL","ทั้งหมด"],["EARN","ได้รับ (+)"],["USE","ใช้ไป (-)"]].map(x=>`<button class="${state.filter===x[0]?"active":""}" onclick="setFilter('${x[0]}')">${x[1]}</button>`).join("")}</div>
+    <div class="history">${h.length?h.map(t=>`<div class="tx"><div class="tx-icon">${icon(t.type==="EARN"?"trending-up":"gift",17)}</div><div class="tx-main"><div class="tx-title">${escapeHtml(t.description)}</div><div class="tx-date">${escapeHtml(t.date)} · ${escapeHtml(t.time||"")}</div></div><div class="tx-points ${t.points>=0?"earn":"use"}">${t.points>0?"+":""}${t.points}</div></div>`).join(""):`<div class="empty">ยังไม่มีประวัติคะแนน</div>`}</div>
+  </div>${nav()}`;
+}
+function coupons(){
+  return `<div class="screen fade">
+    <div class="page-head"><button class="back" onclick="go('HOME')">${icon("chevron-left",15)} กลับ</button><div class="page-title">คูปองของฉัน</div><span></span></div>
+    ${state.coupons.map(c=>`<div class="coupon ${c.status==="USED"?"used":""}">
+      <div class="coupon-left">${icon(c.type==="FREEBIE"?"gift":"ticket",24)}<span>${c.status==="USED"?"USED":"ACTIVE"}</span></div>
+      <div class="coupon-body"><div class="coupon-title">${escapeHtml(c.title)}</div><div class="coupon-desc">${escapeHtml(c.description)}</div><div class="coupon-exp">หมดอายุ ${escapeHtml(c.expiry)}</div>
+      ${c.status==="ACTIVE"?`<div class="coupon-action"><button class="primary" onclick="useCoupon('${escapeHtml(c.id)}')">ใช้งานคูปอง</button></div>`:"<div style='font-size:9px;color:#999;margin-top:9px;font-weight:800'>คูปองนี้ถูกใช้แล้ว</div>"}</div>
+    </div>`).join("")}
+  </div>${nav()}`;
+}
+function rewards(){
+  return `<div class="screen fade">
+    <div class="page-head"><button class="back" onclick="go('HOME')">${icon("chevron-left",15)} กลับ</button><div class="page-title">แลกคะแนน</div><div style="background:var(--cream);color:var(--accent);font-size:9px;font-weight:900;padding:7px 9px;border-radius:99px">${Number(state.member.points||0)} พอยท์</div></div>
+    <section class="section"><div class="rewards-grid">${state.rewards.map(rewardCard).join("")}</div></section>
+  </div>${nav()}`;
+}
+function pageHtml(){
+  if(!state.member) return `<div class="error-box"><div class="error-icon">${icon("circle-alert",42)}</div><h3>ไม่พบข้อมูลสมาชิก</h3><p>กรุณาตรวจสอบการตั้งค่า หรือเชื่อมต่อระบบสมาชิกอีกครั้ง</p><button class="primary" onclick="loadData()">ลองอีกครั้ง</button></div>`;
+  if(state.page==="COLLECT") return collect();
+  if(state.page==="HISTORY") return historyPage();
+  if(state.page==="COUPONS") return coupons();
+  if(state.page==="REWARDS") return rewards();
+  return home();
+}
+
+/* ---------- Actions ---------- */
+function go(page){ state.page=page; render(); window.scrollTo({top:0,behavior:"smooth"}); }
+function setFilter(x){state.filter=x;render();}
+function showToast(msg){
+  const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(showToast.timer); showToast.timer=setTimeout(()=>t.classList.remove("show"),2400);
+}
+
+function openQR(){
+  const value=state.member.qrCodeValue || state.member.memberId;
+  const src=CONFIG.qrProvider+"?size=260x260&margin=10&data="+encodeURIComponent(value);
+  modal(`<div class="modal-head"><div class="modal-title">QR Code สมาชิกคำหวาน</div><button class="close" onclick="closeModal()">${icon("x",18)}</button></div>
+    <div class="tabs"><button id="tabQr" class="active" onclick="showQRTab('qr')">QR Code</button><button id="tabBar" onclick="showQRTab('bar')">รหัสสมาชิก</button></div>
+    <div id="qrTab" class="qr-wrap"><img src="${src}" alt="QR Code"><div class="code">${escapeHtml(value)}</div><div style="font-size:9px;color:#777;margin-top:8px">ยื่น QR Code นี้ให้พนักงานเพื่อสะสมคะแนน</div></div>
+    <div id="barTab" class="qr-wrap hidden"><div style="font-family:monospace;font-size:22px;letter-spacing:4px;background:#fff;padding:20px;border-radius:14px">|||| ||| | |||| || |</div><div class="code">${escapeHtml(state.member.memberId)}</div><div style="font-size:9px;color:#777;margin-top:8px">รหัสสำหรับอ้างอิงสมาชิก — ยังไม่ใช่ Barcode สำหรับเครื่องสแกน</div></div>`);
+}
+function showQRTab(x){
+  document.getElementById("qrTab").classList.toggle("hidden",x!=="qr");
+  document.getElementById("barTab").classList.toggle("hidden",x!=="bar");
+  document.getElementById("tabQr").classList.toggle("active",x==="qr");
+  document.getElementById("tabBar").classList.toggle("active",x==="bar");
+}
+
+function confirmRedeem(id){
+  const r=state.rewards.find(x=>x.id===id); if(!r)return;
+  if(Number(state.member.points)<Number(r.points)){showToast("คะแนนไม่เพียงพอ");return;}
+  const after=Number(state.member.points)-Number(r.points);
+  modal(`<div class="modal-head"><div class="modal-title">ยืนยันการแลกพอยท์</div><button class="close" onclick="closeModal()">${icon("x",18)}</button></div>
+    <div style="font-size:13px;font-weight:900">${escapeHtml(r.title)}</div>
+    <div class="confirm-cost"><strong>${r.points}</strong><span>พอยท์ที่ใช้</span><div style="margin-top:10px;font-size:10px;color:#777">คะแนนปัจจุบัน ${state.member.points} → หลังแลก ${after}</div></div>
+    <div class="notice">Demo Mode จะหักคะแนนและบันทึกประวัติไว้ในเครื่องนี้เท่านั้น หากเชื่อมต่อ Production ระบบควรให้ Google Apps Script เป็นผู้ตรวจสอบและตัดคะแนน</div>
+    <div class="modal-actions"><button class="secondary" onclick="closeModal()">ยกเลิก</button><button class="primary" onclick="redeem('${escapeHtml(r.id)}')">ยืนยันการแลก</button></div>`);
+}
+
+async function redeem(id){
+  const r=state.rewards.find(x=>x.id===id); if(!r)return;
+  closeModal();
+  if(CONFIG.env==="production" && CONFIG.gasUrl){
+    try{
+      const idToken=(window.liff&&state.liffReady&&liff.isLoggedIn())?liff.getIDToken():"";
+      const result=await gasGet("redeemReward",{rewardId:r.id,idToken,memberId:state.member.memberId});
+      if(result.member) state.member=result.member;
+      else state.member.points=result.points;
+      const h=await gasGet("getPointHistory",{memberId:state.member.memberId});
+      state.history=Array.isArray(h)?h:(h.history||[]);
+      showToast("แลกของรางวัลสำเร็จ");
+      render(); return;
+    }catch(e){console.error(e);showToast("แลกไม่สำเร็จ: "+e.message);return;}
+  }
+  if(Number(state.member.points)<Number(r.points))return;
+  state.member.points-=Number(r.points);
+  state.history.unshift({id:"DEMO-"+Date.now(),date:moneyDate(),time:nowTime(),type:"USE",description:"แลก "+r.title,points:-Number(r.points)});
+  state.coupons.unshift({id:"CP-"+Date.now(),title:"คูปอง: "+r.title,description:"สร้างจากการแลก "+r.points+" พอยท์",expiry:"ใช้ภายใน 30 วัน",status:"ACTIVE",type:"REWARD"});
+  saveDemo(); showToast("แลกของรางวัลสำเร็จ"); render();
+}
+
+async function useCoupon(id){
+  const c=state.coupons.find(x=>x.id===id); if(!c||c.status!=="ACTIVE")return;
+  modal(`<div class="modal-head"><div class="modal-title">ยืนยันการใช้คูปอง</div><button class="close" onclick="closeModal()">${icon("x",18)}</button></div>
+    <div style="font-size:14px;font-weight:900">${escapeHtml(c.title)}</div>
+    <div class="notice" style="margin-top:12px">เมื่อยืนยันแล้ว สถานะคูปองจะเปลี่ยนเป็น USED และไม่ควรสามารถนำกลับมาใช้ซ้ำได้</div>
+    <div class="modal-actions"><button class="secondary" onclick="closeModal()">ยกเลิก</button><button class="primary" onclick="confirmUseCoupon('${escapeHtml(c.id)}')">ยืนยันใช้งาน</button></div>`);
+}
+async function confirmUseCoupon(id){
+  closeModal();
+  if(CONFIG.env==="production" && CONFIG.gasUrl){
+    try{
+      const idToken=(window.liff&&state.liffReady&&liff.isLoggedIn())?liff.getIDToken():"";
+      await gasGet("useCoupon",{couponId:id,idToken,memberId:state.member.memberId});
+      const c=state.coupons.find(x=>x.id===id); if(c)c.status="USED";
+      showToast("ใช้งานคูปองสำเร็จ"); render(); return;
+    }catch(e){showToast("ใช้งานคูปองไม่สำเร็จ");return;}
+  }
+  const c=state.coupons.find(x=>x.id===id); if(c)c.status="USED";
+  saveDemo(); showToast("ใช้งานคูปองสำเร็จ"); render();
+}
+
+/* ---------- Settings ---------- */
+function openSettings(){
+  modal(`<div class="modal-head"><div class="modal-title">${icon("settings",17)} ตั้งค่าระบบ</div><button class="close" onclick="closeModal()">${icon("x",18)}</button></div>
+    <div class="notice"><b>Demo Mode:</b> เปิดไฟล์นี้แล้วทดลองสะสม/แลก/ใช้คูปองได้ทันที ข้อมูลเก็บใน localStorage ของ Browser<br><br><b>Production:</b> ใส่ LIFF ID และ Google Apps Script Web App URL ที่คุณสร้างไว้</div>
+    <div class="field"><label>MODE</label><select id="setEnv" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:11px"><option value="demo" ${CONFIG.env==="demo"?"selected":""}>Demo Mode — ทดลองในเครื่อง</option><option value="production" ${CONFIG.env==="production"?"selected":""}>Production — ใช้ Backend จริง</option></select></div>
+    <div class="field"><label>LIFF ID</label><input id="setLiff" value="${escapeHtml(CONFIG.liffId)}" placeholder="1234567890-AbcdEfgh"></div>
+    <div class="field"><label>GOOGLE APPS SCRIPT WEB APP URL</label><input id="setGas" value="${escapeHtml(CONFIG.gasUrl)}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+    <div class="notice">Production Backend ต้องตรวจสอบ LINE ID Token และห้ามเชื่อค่า points/memberId ที่ส่งมาจาก Browser โดยตรง</div>
+    <div class="modal-actions"><button class="secondary" onclick="resetDemo()">รีเซ็ต Demo</button><button class="primary" onclick="saveSettings()">บันทึก</button></div>`);
+}
+function saveSettings(){
+  CONFIG.env=document.getElementById("setEnv").value;
+  CONFIG.liffId=document.getElementById("setLiff").value.trim();
+  CONFIG.gasUrl=document.getElementById("setGas").value.trim();
+  localStorage.setItem("KW_ENV",CONFIG.env);
+  localStorage.setItem("KW_LIFF_ID",CONFIG.liffId);
+  localStorage.setItem("KW_GAS_URL",CONFIG.gasUrl);
+  closeModal(); showToast("บันทึกการตั้งค่าแล้ว"); loadData();
+}
+function resetDemo(){
+  localStorage.removeItem("KW_MEMBER");localStorage.removeItem("KW_HISTORY");localStorage.removeItem("KW_COUPONS");
+  CONFIG.env="demo";localStorage.setItem("KW_ENV","demo");closeModal();loadData();showToast("รีเซ็ตข้อมูล Demo แล้ว");
+}
+
+/* ---------- Modal ---------- */
+function modal(html){
+  document.getElementById("modalRoot").innerHTML=`<div class="modal" id="activeModal"><div class="modal-box">${html}</div></div>`;
+  if(window.lucide)lucide.createIcons();
+}
+function closeModal(){document.getElementById("modalRoot").innerHTML="";}
+
+/* Start */
+loadData();
+</script>
 </body>
 </html>
