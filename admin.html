@@ -1395,90 +1395,21 @@ async function checkAdmin(){
     );
 
 
-  /* =====================================================
-     INIT
-  ===================================================== */
+function init(){
 
-  async function init(){
+  state.isAdmin = true;
 
-    try{
+  $("accessDenied")
+    .style.display = "none";
 
-      setLoading(
-        true,
-        "กำลังตรวจสอบ LINE..."
-      );
+  $("adminContent")
+    .style.display = "block";
 
+  setLoading(false);
 
-      await initLIFF();
+}
 
-
-      setLoading(
-        true,
-        "กำลังตรวจสอบสิทธิ์ Admin..."
-      );
-
-
-      /*
-        ตรวจ Admin ผ่าน Backend
-      */
-
-      const admin =
-        await checkAdmin();
-
-
-      if(!admin){
-
-        $("accessDenied")
-          .style.display = "block";
-
-        $("adminContent")
-          .style.display = "none";
-
-        setLoading(false);
-
-        return;
-
-      }
-
-
-      state.isAdmin = true;
-
-
-      $("accessDenied")
-        .style.display = "none";
-
-
-      $("adminContent")
-        .style.display = "block";
-
-
-      setLoading(false);
-
-
-    }catch(error){
-
-      console.error(error);
-
-
-      setLoading(false);
-
-
-      $("accessDenied")
-        .style.display = "block";
-
-
-      $("adminContent")
-        .style.display = "none";
-
-
-      showMessage(
-        error.message ||
-        "ไม่สามารถเข้าสู่ระบบ Admin ได้"
-      );
-
-    }
-
-  }
+init();
 
 
   init();
