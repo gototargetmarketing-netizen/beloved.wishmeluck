@@ -6,9 +6,13 @@
 <meta name="theme-color" content="#1F1914">
 <title>คำหวาน CUISINE — Member</title>
 
+<!-- Performance: preconnect to the services used during startup -->
+<link rel="preconnect" href="https://static.line-scdn.net">
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
 <!-- Optional: LINE LIFF. The page still works in Demo Mode without LIFF. -->
-<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-<script src="https://unpkg.com/lucide@latest"></script>
+<script defer src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script defer src="https://unpkg.com/lucide@latest"></script>
 
 <style>
 :root{
@@ -282,13 +286,9 @@ async function initLIFF(){
       throw new Error("ไม่สามารถรับ LINE ID Token ได้ กรุณาเปิดผ่าน LIFF ใน LINE");
     }
 
-    // เก็บ LINE userId ไว้เพื่อใช้เป็นข้อมูลประกอบเท่านั้น
-    try{
-      const profile = await liff.getProfile();
-      state.lineId = profile.userId || "";
-    }catch(profileError){
-      console.warn("getProfile failed:", profileError);
-    }
+    // ไม่เรียก liff.getProfile() ตรงนี้
+    // เพราะ Backend ตรวจสอบ ID Token และดึงชื่อ/รูปจาก LINE ให้แล้ว
+    // ตัด 1 network request ออกจากช่วงเปิดระบบ เพื่อให้โหลดเร็วขึ้น
 
     return true;
   }catch(e){
@@ -358,9 +358,64 @@ async function getMemberReal(){
   throw new Error("Backend ไม่ส่งข้อมูลสมาชิกกลับมา");
 }
 
+function readMemberCache(){
+  try{
+    const raw = sessionStorage.getItem("KW_MEMBER_FAST");
+    if(!raw) return null;
+    const cached = JSON.parse(raw);
+    if(!cached || !cached.member) return null;
+    return cached.member;
+  }catch(e){
+    return null;
+  }
+}
+
+function writeMemberCache(member){
+  try{
+    sessionStorage.setItem("KW_MEMBER_FAST", JSON.stringify({
+      savedAt: Date.now(),
+      member
+    }));
+  }catch(e){}
+}
+
+async function loadSecondaryData(memberId){
+  if(!memberId) return;
+
+  const results = await Promise.allSettled([
+    gasGet("getPointHistory",{memberId}),
+    gasGet("getCoupons",{memberId}),
+    gasGet("getRewards")
+  ]);
+
+  let changed = false;
+
+  if(results[0].status === "fulfilled"){
+    const h = results[0].value;
+    state.history = Array.isArray(h) ? h : (h.history || []);
+    changed = true;
+  }
+
+  if(results[1].status === "fulfilled"){
+    const c = results[1].value;
+    state.coupons = Array.isArray(c) ? c : (c.coupons || []);
+    changed = true;
+  }
+
+  if(results[2].status === "fulfilled"){
+    const r = results[2].value;
+    state.rewards = Array.isArray(r) ? r : (r.rewards || REWARDS);
+    changed = true;
+  }
+
+  // อัปเดตเฉพาะข้อมูลรอง โดยไม่บล็อกการเปิดหน้า Member
+  if(changed) render();
+}
+
 async function loadData(){
   state.loading=true;
   render();
+
   try{
     await initLIFF();
   }catch(e){
@@ -370,30 +425,55 @@ async function loadData(){
     return;
   }
 
-  if(CONFIG.env === "production" && CONFIG.gasUrl){
-    try{
-      state.member = await getMemberReal();
-      const [h,c,r] = await Promise.all([
-        gasGet("getPointHistory",{memberId:state.member.memberId}),
-        gasGet("getCoupons",{memberId:state.member.memberId}),
-        gasGet("getRewards")
-      ]);
-      state.history = Array.isArray(h)?h:(h.history||[]);
-      state.coupons = Array.isArray(c)?c:(c.coupons||[]);
-      state.rewards = Array.isArray(r)?r:(r.rewards||REWARDS);
-    }catch(e){
-      console.error(e);
-      state.member = null;
-      state.history = [];
-      state.coupons = [];
-      showToast("เชื่อมต่อระบบสมาชิกไม่สำเร็จ");
-    }
-  }else{
+  if(CONFIG.env !== "production" || !CONFIG.gasUrl){
     loadDemo();
+    state.loading=false;
+    render();
+    return;
   }
 
-  state.loading=false;
-  render();
+  const cachedMember = readMemberCache();
+
+  // ถ้าเคยเปิดแล้ว: แสดงข้อมูลสมาชิกทันทีจาก cache
+  // แล้วค่อยตรวจข้อมูลจริงจาก Backend เบื้องหลัง
+  if(cachedMember){
+    state.member = cachedMember;
+    state.loading=false;
+    render();
+
+    try{
+      const freshMember = await getMemberReal();
+      state.member = freshMember;
+      writeMemberCache(freshMember);
+      render();
+      loadSecondaryData(freshMember.memberId);
+    }catch(e){
+      console.error("Background member refresh failed:", e);
+      loadSecondaryData(cachedMember.memberId);
+    }
+    return;
+  }
+
+  // เปิดครั้งแรก: รอเฉพาะข้อมูลสมาชิกที่จำเป็นต่อหน้าแรก
+  try{
+    const member = await getMemberReal();
+    state.member = member;
+    writeMemberCache(member);
+
+    state.loading=false;
+    render();
+
+    // ประวัติคะแนน / คูปอง / ของรางวัล โหลดต่อเบื้องหลัง
+    loadSecondaryData(member.memberId);
+  }catch(e){
+    console.error(e);
+    state.loading=false;
+    state.member=null;
+    state.history=[];
+    state.coupons=[];
+    render();
+    showToast("เชื่อมต่อระบบสมาชิกไม่สำเร็จ");
+  }
 }
 
 /* ---------- Rendering ---------- */
@@ -627,7 +707,9 @@ function closeModal(){document.getElementById("modalRoot").innerHTML="";}
 localStorage.removeItem("KW_ENV");
 localStorage.removeItem("KW_LIFF_ID");
 localStorage.removeItem("KW_GAS_URL");
-loadData();
+
+// รอให้ LIFF SDK + Lucide ที่ใส่ defer โหลดเสร็จก่อนเริ่มระบบ
+window.addEventListener("DOMContentLoaded", loadData);
 </script>
 </body>
 </html>
