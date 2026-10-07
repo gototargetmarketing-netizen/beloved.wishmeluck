@@ -552,7 +552,7 @@ function openSettings(){
     <div class="notice"><b>Demo Mode:</b> เปิดไฟล์นี้แล้วทดลองสะสม/แลก/ใช้คูปองได้ทันที ข้อมูลเก็บใน localStorage ของ Browser<br><br><b>Production:</b> ใส่ LIFF ID และ Google Apps Script Web App URL ที่คุณสร้างไว้</div>
     <div class="field"><label>MODE</label><select id="setEnv" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;font-size:11px"><option value="demo" ${CONFIG.env==="demo"?"selected":""}>Demo Mode — ทดลองในเครื่อง</option><option value="production" ${CONFIG.env==="production"?"selected":""}>Production — ใช้ Backend จริง</option></select></div>
     <div class="field"><label>LIFF ID</label><input id="setLiff" value="${escapeHtml(CONFIG.liffId)}" placeholder="1234567890-AbcdEfgh"></div>
-    <div class="field"><label>GOOGLE APPS SCRIPT WEB APP URL</label><input id="setGas" value="${escapeHtml(CONFIG.gasUrl)}" placeholder="https://script.google.com/macros/s/.../exec"></div>
+    <div class="field"><label>GOOGLE APPS SCRIPT WEB APP URL</label><input id="setGas" value="${escapeHtml(CONFIG.gasUrl)}" placeholder="https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbzpBFia2pACWDVTgQ1ckJc0aw3JejiiuhbFG3GHLN4yuysx0QyMMM_jyOQ8XRMF2pS6RA/exec/exec"></div>
     <div class="notice">Production Backend ต้องตรวจสอบ LINE ID Token และห้ามเชื่อค่า points/memberId ที่ส่งมาจาก Browser โดยตรง</div>
     <div class="modal-actions"><button class="secondary" onclick="resetDemo()">รีเซ็ต Demo</button><button class="primary" onclick="saveSettings()">บันทึก</button></div>`);
 }
