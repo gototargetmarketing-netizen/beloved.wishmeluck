@@ -925,64 +925,23 @@
   /* =====================================================
      CHECK ADMIN
   ===================================================== */
+async function checkAdmin(){
 
-  async function checkAdmin(){
+  try{
 
-    /*
-      เราจะใช้ getAdminMember
-      เพื่อให้ Backend เป็นคนตรวจสิทธิ์
+    const result = await gasGet("checkAdmin");
 
-      จะไม่เชื่อ Admin จาก Frontend
-    */
+    return !!(result && result.ok && result.isAdmin);
 
-    try{
+  }catch(error){
 
-      await gasGet(
-        "getAdminMember",
-        {
-          memberId:
-            "__CHECK_ADMIN__"
-        }
-      );
+    console.error("Admin check failed:", error);
 
-    }catch(error){
-
-      /*
-        ถ้าเป็น Admin จริง
-        แต่ Member ID ไม่มี
-        Backend จะตอบ "ไม่พบสมาชิก"
-
-        ถ้าไม่ใช่ Admin
-        Backend จะตอบ "ไม่มีสิทธิ์ใช้งานระบบ Admin"
-      */
-
-      const msg =
-        String(error.message || "");
-
-
-      if(
-        msg.includes(
-          "ไม่พบสมาชิก"
-        )
-      ){
-
-        state.isAdmin = true;
-
-        return true;
-
-      }
-
-
-      state.isAdmin = false;
-
-      return false;
-
-    }
-
-
-    return true;
+    return false;
 
   }
+
+}
 
 
   /* =====================================================
