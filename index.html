@@ -261,19 +261,39 @@ function saveDemo(){
 
 /* ---------- Optional LIFF ---------- */
 async function initLIFF(){
-  if(!CONFIG.liffId || !window.liff) return false;
+  if(!CONFIG.liffId || !window.liff) {
+    throw new Error("ไม่พบ LIFF SDK หรือ LIFF ID");
+  }
+
   try{
-    await liff.init({liffId:CONFIG.liffId});
+    await liff.init({ liffId: CONFIG.liffId });
     state.liffReady = true;
-    if(liff.isLoggedIn()){
+
+    // ถ้ายังไม่ได้ Login ให้ LIFF เปิดหน้า Login ของ LINE ทันที
+    // เพื่อให้สามารถรับ ID Token สำหรับตรวจสอบสมาชิกที่ Backend ได้
+    if(!liff.isLoggedIn()){
+      liff.login({ redirectUri: window.location.href });
+      return false;
+    }
+
+    // ID Token คือข้อมูลหลักที่ส่งให้ Apps Script ตรวจสอบกับ LINE
+    const idToken = liff.getIDToken();
+    if(!idToken){
+      throw new Error("ไม่สามารถรับ LINE ID Token ได้ กรุณาเปิดผ่าน LIFF ใน LINE");
+    }
+
+    // เก็บ LINE userId ไว้เพื่อใช้เป็นข้อมูลประกอบเท่านั้น
+    try{
       const profile = await liff.getProfile();
       state.lineId = profile.userId || "";
-      return true;
+    }catch(profileError){
+      console.warn("getProfile failed:", profileError);
     }
+
     return true;
   }catch(e){
-    console.warn("LIFF init failed:",e);
-    return false;
+    console.error("LIFF init failed:", e);
+    throw e;
   }
 }
 
@@ -312,7 +332,14 @@ async function getMemberReal(){
 async function loadData(){
   state.loading=true;
   render();
-  await initLIFF();
+  try{
+    await initLIFF();
+  }catch(e){
+    state.loading=false;
+    render();
+    showToast(e.message || "ไม่สามารถเข้าสู่ระบบ LINE ได้");
+    return;
+  }
 
   if(CONFIG.env === "production" && CONFIG.gasUrl){
     try{
